@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using StickFigureArmy.View;
 
 namespace StickFigureArmy
 {
@@ -8,6 +9,9 @@ namespace StickFigureArmy
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Camera camera;
+        public static int ScreenHeight;
+        public static int ScreenWidth;
 
         public Game1()
         {
@@ -24,12 +28,14 @@ namespace StickFigureArmy
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            camera = new Camera();
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            camera.Update();
             base.Update(gameTime);
         }
 
