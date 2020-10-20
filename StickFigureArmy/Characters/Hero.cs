@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StickFigureArmy.Animations;
 using StickFigureArmy.Input;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace StickFigureArmy.Characters
     class Hero
     {
         private Texture2D heroTexture;
+        private Animation animation;
         public Vector2 Position { get; set; }
         public Point PositionOld { get; set; } //Oude positie van collisionrectangle
         public Rectangle CollisionRectangle { get; set; }
@@ -17,6 +19,7 @@ namespace StickFigureArmy.Characters
         private IInput mouse;
         public Hero(Vector2 spawnCoordinates, Texture2D texture, IInput keyboardType) //Constructor met standaard spawnpositie
         {
+            animation = new Animation();
             Position = spawnCoordinates;
             CollisionRectangle = new Rectangle((int)Math.Round(Position.X), (int)Math.Round(Position.Y), 8, 24);
             heroTexture = texture;
@@ -30,7 +33,7 @@ namespace StickFigureArmy.Characters
             //Check collisions
             //Fix collisions
             //Update state
-            //Update animation
+            animation.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
