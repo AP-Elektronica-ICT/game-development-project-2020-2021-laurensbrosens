@@ -24,7 +24,7 @@ namespace StickFigureArmy.Animations
         }
         public void Update(GameTime gameTime)
         {
-            if (cooldown.CooldownTimerFPS(gameTime, 20))
+            if (cooldown.CooldownTimerFPS(gameTime, 5))
             {
                 FrameNumber++;
             }
