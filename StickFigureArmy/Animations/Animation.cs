@@ -12,6 +12,7 @@ namespace StickFigureArmy.Animations
         private List<Frame> frames;
         private Cooldown cooldown;
         private int FrameNumber = 0; //Huidige frame
+        private String Name = "";
         public Animation()
         {
             cooldown = new Cooldown();
@@ -33,6 +34,17 @@ namespace StickFigureArmy.Animations
                 FrameNumber = 0;
             }
             CurrentFrame = frames[FrameNumber];
+        }
+        static public Animation Create(int x, int y, int width, int height, int frameAmount, string name) //Creëert een animatie op dezelfde rij
+        {
+            Animation animation = new Animation();
+            animation.Name = "name";
+            for (int i = 0; i < frameAmount; i++)
+            {
+                animation.AddFrame(new Frame(new Rectangle(x, y, width, height)));
+                x += width;
+            }
+            return animation;
         }
     }
 }
