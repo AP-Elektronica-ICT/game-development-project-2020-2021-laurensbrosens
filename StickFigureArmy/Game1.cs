@@ -1,9 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.MediaFoundation;
 using StickFigureArmy.Characters;
 using StickFigureArmy.Input;
 using StickFigureArmy.View;
+using System;
+using System.Xml.Serialization;
 
 namespace StickFigureArmy
 {
@@ -16,6 +19,10 @@ namespace StickFigureArmy
         public static int ScreenWidth;
         public Hero hero;
         private Texture2D heroTexture;
+        private IKeyboard keyBoard;
+        private MouseInput mouse;
+
+        private bool paused = false;
 
         public Game1()
         {
@@ -31,16 +38,25 @@ namespace StickFigureArmy
 
         protected override void LoadContent()
         {
+            keyBoard = (IKeyboard)Activator.CreateInstance(Type.GetType($"StickFigureArmy.Input.KeyboardInput"), new Object[] { });
+            mouse = new MouseInput();
+            //keyBoard = new KeyboardInputQwerty();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             camera = new Camera();
             heroTexture = Content.Load<Texture2D>("SoldierAnimations");
-            hero = new Hero(new Vector2(30,30), heroTexture, new KeyboardInputQwerty());
+            hero = new Hero(new Vector2(30,30), heroTexture);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            keyBoard.KeyboardUpdate();
+            mouse.MouseUpdate();
+            if (keyBoard.KeyClicked(Keys.Escape))
                 Exit();
+            else if (keyBoard.KeyClicked(Keys.P))
+                paused = !paused;
+            if (paused)
+                return;
             camera.Update();
             hero.Update(gameTime);
             base.Update(gameTime);
