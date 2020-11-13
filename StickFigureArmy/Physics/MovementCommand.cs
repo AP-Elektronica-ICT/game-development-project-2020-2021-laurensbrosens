@@ -23,7 +23,7 @@ namespace StickFigureArmy.Physics
 
         public float horizontalInput = 0f; //De input van de speler horizontaal
         public float verticalInput = 0f; //De input van de speler verticaal
-        public void Execute(GameTime gameTime, State state, ITransform transform, IInput input)
+        public void Execute(GameTime gameTime, State state, ITransform transform, IInput input, ICollisionRectangle rectangle)
         {
             //Save old transform
             transform.PositionOld = transform.Position;
@@ -36,9 +36,9 @@ namespace StickFigureArmy.Physics
             //Check states
             VelocityX += inputAcceleration * horizontalInput - groundResistance * VelocityX; //Berekening van horizontale snelheid, snelheidx = acceleratie * input - grondweerstand * snelheidx
             VelocityY += VelocityY * deltaT + 50f * Gravity * deltaT * deltaT - airResistance * VelocityY; //Berekening van verticale snelheid met zwaartekracht
-            transform.Position += new Vector2(VelocityX * deltaT, VelocityY);
-            
-
+            Vector2 physicsDisplacment = new Vector2(VelocityX * deltaT, VelocityY);
+            //Update collisionRectangle
+            rectangle.CollisionRectangle = new Rectangle((int)Math.Round(transform.Position.X + physicsDisplacment.X), (int)Math.Round(transform.Position.Y + physicsDisplacment.Y), rectangle.RectangleWidth, rectangle.RectangleHeight);
 
 
 
@@ -55,7 +55,10 @@ namespace StickFigureArmy.Physics
 
             //Check collisions
             //Fix collisions
+            Vector2 collisionDisplacment = new Vector2(0, 0);
             //Update state
+            state.Update(this, collisionDisplacment);
+            transform.Position += collisionDisplacment + physicsDisplacment;
         }
     }
 }

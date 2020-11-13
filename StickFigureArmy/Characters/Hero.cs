@@ -22,6 +22,8 @@ namespace StickFigureArmy.Characters
         public Rectangle CollisionRectangle { get; set; }
         public Vector2 Position { get; set; }
         public Vector2 PositionOld { get; set; }
+        public int RectangleWidth { get; set; }
+        public int RectangleHeight { get; set; }
 
         public Hero(Vector2 spawnCoordinates, Texture2D texture, IKeyboard keyboardInput) //Constructor met standaard spawnpositie
         {
@@ -43,7 +45,7 @@ namespace StickFigureArmy.Characters
         public void Update(GameTime gameTime)
         {
             animations[2].Update(gameTime);
-            move.Execute(gameTime, state, this, playerInput);
+            move.Execute(gameTime, state, this, playerInput, this);
         }
         public void Draw(SpriteBatch spriteBatch)
         {

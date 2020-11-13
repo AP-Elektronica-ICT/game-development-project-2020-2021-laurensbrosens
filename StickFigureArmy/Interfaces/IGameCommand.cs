@@ -8,6 +8,6 @@ namespace StickFigureArmy.Interfaces
 {
     interface IGameCommand
     {
-        void Execute(GameTime gameTime, State state, ITransform transform, IInput input);
+        void Execute(GameTime gameTime, State state, ITransform transform, IInput input, ICollisionRectangle rectangle);
     }
 }
