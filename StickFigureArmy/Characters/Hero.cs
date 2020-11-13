@@ -2,22 +2,25 @@
 using Microsoft.Xna.Framework.Graphics;
 using StickFigureArmy.Animations;
 using StickFigureArmy.Input;
+using StickFigureArmy.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace StickFigureArmy.Characters
 {
-    public class Hero
+    public class Hero : ICollisionRectangle, ITransform
     {
         private Texture2D heroTexture;
-        public Vector2 Position { get; set; }
-        public Point PositionOld { get; set; } //Oude positie van collisionrectangle
-        public Rectangle CollisionRectangle { get; set; }
         private IKeyboard keyboard;
         private List<Animation> animations;
         private const int Width = 16; //FrameWidth
         private const int Height = 24; //FrameHeight
+
+        public Rectangle CollisionRectangle { get; set; }
+        public Vector2 Position { get; set; }
+        public Vector2 PositionOld { get; set; }
+
         public Hero(Vector2 spawnCoordinates, Texture2D texture, IKeyboard keyboardInput) //Constructor met standaard spawnpositie
         {
             keyboard = keyboardInput;
