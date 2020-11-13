@@ -23,7 +23,6 @@ namespace StickFigureArmy.Physics
             {
                 CollisionLeft = true;
                 physics.VelocityX = 0;
-                //hero.displacment += new Vector2(1f, 0); //Tegen trilling
             }
             else
             {
@@ -33,7 +32,6 @@ namespace StickFigureArmy.Physics
             {
                 CollisionRight = true;
                 physics.VelocityX = 0;
-                //hero.displacment += new Vector2(-1f, 0); //Tegen trilling
             }
             else
             {
@@ -44,7 +42,6 @@ namespace StickFigureArmy.Physics
                 physics.VelocityY = 0;
                 Grounded = true;
                 physics.Gravity = 0;
-                //hero.displacment += new Vector2(0, 1f); //Tegen trilling
             }
             else
             {
