@@ -33,6 +33,9 @@ namespace StickFigureArmy
 
         protected override void Initialize()
         {
+            _graphics.PreferredBackBufferHeight = 800;
+            _graphics.PreferredBackBufferWidth = 1500;
+            _graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -44,7 +47,7 @@ namespace StickFigureArmy
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             camera = new Camera();
             heroTexture = Content.Load<Texture2D>("SoldierAnimations");
-            hero = new Hero(new Vector2(30,30), heroTexture);
+            hero = new Hero(new Vector2(30,30), heroTexture, keyBoard);
         }
 
         protected override void Update(GameTime gameTime)
