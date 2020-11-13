@@ -10,21 +10,13 @@ namespace StickFigureArmy.Input
     {
         public MouseState mouseState { get; set; }
         public MouseState mouseStateOld { get; set; }
-        public Vector2 Inputs()
-        {
-            throw new NotImplementedException();
-        }
+        public Vector2 Position { get; set; }
 
         public void MouseUpdate()
         {
-            try
-            {
-                mouseStateOld = mouseState;
-            }
-            catch (Exception)
-            {
-            }
+            mouseStateOld = mouseState;
             mouseState = Mouse.GetState();
+            Position = new Vector2(mouseState.X, mouseState.Y);
         }
 
         public bool LeftKeyClicked()
