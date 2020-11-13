@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using SharpDX.MediaFoundation;
 using StickFigureArmy.Characters;
 using StickFigureArmy.Input;
+using StickFigureArmy.Physics;
 using StickFigureArmy.View;
 using System;
 using System.Xml.Serialization;

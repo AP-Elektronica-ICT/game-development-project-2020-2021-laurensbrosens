@@ -7,28 +7,34 @@ using StickFigureArmy.Input;
 using StickFigureArmy.View;
 using System;
 using System.Xml.Serialization;
+using StickFigureArmy.Interfaces;
 
-namespace StickFigureArmy.Characters
+namespace StickFigureArmy.Physics
 {
-    class MovementCommand
+    class PlayerInput : IInput
     {
-        public Vector2 Inputs(IKeyboard keyboard)
+        private IKeyboard keyboard;
+        public PlayerInput(IKeyboard keyboardInput)
         {
-            int displacmentX = 0;
-            int displacmentY = 0;
+            keyboard = keyboardInput;
+        }
+        public Vector2 Inputs()
+        {
+            int directionX = 0;
+            int directionY = 0;
             if (keyboard.keyboardState.IsKeyDown(Keys.A))
             {
-                displacmentX += -1;
+                directionX += -1;
             }
             if (keyboard.keyboardState.IsKeyDown(Keys.D))
             {
-                displacmentX += 1;
+                directionX += 1;
             }
             if (keyboard.keyboardState.IsKeyDown(Keys.Space))
             {
-                displacmentY += 1;
+                directionY += 1;
             }
-            return new Vector2(displacmentX, displacmentY);
+            return new Vector2(directionX, directionY);
         }
     }
 }
