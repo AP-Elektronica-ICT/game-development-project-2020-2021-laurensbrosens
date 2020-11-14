@@ -88,7 +88,8 @@ namespace StickFigureArmy
             ground.Draw(_spriteBatch);
             ground2.Draw(_spriteBatch);
             hero.Draw(_spriteBatch); //Hero laatst zodat overlappent
-            /* De verschillende points om te zien of iets geraakt wordt
+             //De verschillende points om te zien of iets geraakt wordt
+             /*
             _spriteBatch.Draw(pixel, new Rectangle(hero.CollisionBottom, new Point(40,40)), Color.White);
             _spriteBatch.Draw(pixel, new Rectangle(hero.CollisionTop, new Point(40, 40)), Color.White);
             _spriteBatch.Draw(pixel, new Rectangle(hero.CollisionLeft, new Point(40, 40)), Color.White);

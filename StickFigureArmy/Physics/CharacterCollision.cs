@@ -11,6 +11,9 @@ namespace StickFigureArmy.Physics
     {
         public void CollisionHandler(ICollision objectA, State state, MovementCommand physics, ITransform transform, List<ICollision> collidableObjects)
         {
+            //Update collisionRectangle
+            objectA.UpdateRectangle();
+
             Vector2 collisionDisplacment = new Vector2(0, 0);
             foreach (var collidableObject in collidableObjects)
             {
@@ -23,7 +26,6 @@ namespace StickFigureArmy.Physics
             transform.Position += collisionDisplacment;
             objectA.UpdateRectangle();
             //Update states
-            Debug.Write($"");
             bool head = false;
             bool left = false;
             bool right = false;
@@ -64,6 +66,8 @@ namespace StickFigureArmy.Physics
                     state.Falling = true;
                 }
             }
+            //Save old collisionRectangle
+            objectA.CollisionRectangleOld = objectA.CollisionRectangle;
         }
         /*
         public Vector2 CollisionFix(ICollision objectA, ICollision objectB)

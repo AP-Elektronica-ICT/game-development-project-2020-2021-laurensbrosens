@@ -12,14 +12,6 @@ namespace StickFigureArmy.Physics
     {
         public Vector2 CollisionFix(ICollision objectA, ICollision objectB, MovementCommand physics, ITransform transform)
         {
-            //Save old collisionRectangle
-            objectA.CollisionRectangleOld = objectA.CollisionRectangle;
-            //Update collisionRectangle en positie
-            objectA.UpdateRectangle();
-
-
-
-
             int heroCenterX = objectA.CollisionRectangleOld.Center.X;
             int heroCenterY = objectA.CollisionRectangleOld.Center.Y;
             int obstacleLeft = objectB.CollisionRectangle.Left;
@@ -30,11 +22,13 @@ namespace StickFigureArmy.Physics
             {
                 if (heroCenterY < obstacleBottom)
                 {
+                    Debug.Write($"6");
                     physics.VelocityY = 0;
                     return new Vector2(0, obstacleTop - objectA.CollisionRectangle.Bottom); //Naar boven
                 }
                 else
                 {
+                    Debug.Write($"5");
                     physics.VelocityY = 0;
                     return new Vector2(0, obstacleBottom - objectA.CollisionRectangle.Top); //Naar beneden
                 }
@@ -44,13 +38,14 @@ namespace StickFigureArmy.Physics
                 if (heroCenterX < obstacleLeft)
                 {
                     physics.VelocityX = 0;
-                    return new Vector2(obstacleLeft - objectA.CollisionRectangle.Right-1, 0); //Naar links
+                    return new Vector2(obstacleLeft - objectA.CollisionRectangle.Right, 0); //Naar links
 
                 }
                 else
                 {
+                    Debug.Write($"Huh");
                     physics.VelocityX = 0;
-                    return new Vector2(obstacleRight - objectA.CollisionRectangle.Left+1, 0); //Naar rechts
+                    return new Vector2(obstacleRight - objectA.CollisionRectangle.Left, 0); //Naar rechts
                 }
             }
             else if (obstacleTop > heroCenterY) //ObjectA is linksboven of rechtsboven ObjectB
@@ -61,6 +56,7 @@ namespace StickFigureArmy.Physics
                     int top = objectA.CollisionRectangle.Bottom - obstacleTop;
                     if (left > top)
                     {
+                        Debug.Write($"4");
                         physics.VelocityY = 0;
                         return new Vector2(0, -top); //Naar boven
                     }
@@ -76,6 +72,7 @@ namespace StickFigureArmy.Physics
                     int top = objectA.CollisionRectangle.Bottom - obstacleTop;
                     if (right > top)
                     {
+                        Debug.Write($"3");
                         physics.VelocityY = 0;
                         return new Vector2(0, -top); //Naar boven
                     }
@@ -94,6 +91,7 @@ namespace StickFigureArmy.Physics
                     int bottom = obstacleBottom - objectA.CollisionRectangle.Top;
                     if (left > bottom)
                     {
+                        Debug.Write($"2");
                         physics.VelocityY = 0;
                         return new Vector2(0, -bottom); //Naar beneden
                     }
@@ -110,6 +108,7 @@ namespace StickFigureArmy.Physics
                     int bottom = obstacleBottom - objectA.CollisionRectangle.Top;
                     if (right > bottom)
                     {
+                        Debug.Write($"1");
                         physics.VelocityY = 0;
                         return new Vector2(0, bottom); //Naar beneden
                     }
