@@ -6,7 +6,7 @@ using System.Text;
 
 namespace StickFigureArmy.Interfaces
 {
-    interface ITransform
+    public interface ITransform
     {
         public Vector2 Position { get; set; }
     }

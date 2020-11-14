@@ -24,9 +24,10 @@ namespace StickFigureArmy
         public Hero hero;
         public Obstacle ground;
         public Obstacle ground2;
-        public List<ICollisionRectangle> Map;
+        public List<ICollision> Map;
         private Texture2D heroTexture;
         private Texture2D blackSquare;
+        private Texture2D pixel;
         private IKeyboard keyBoard;
         private MouseInput mouse;
 
@@ -56,9 +57,10 @@ namespace StickFigureArmy
             camera = new Camera();
             heroTexture = Content.Load<Texture2D>("SoldierAnimations");
             blackSquare = Content.Load<Texture2D>("black100square");
+            pixel = Content.Load<Texture2D>("SinglePixel");
             ground = new Obstacle(new Vector2(-10, 600), blackSquare);
             ground2 = new Obstacle(new Vector2(200, 400), blackSquare);
-            Map = new List<ICollisionRectangle>();
+            Map = new List<ICollision>();
             Map.Add(ground);
             Map.Add(ground2);
             hero = new Hero(new Vector2(30,30), heroTexture, keyBoard, Map);
@@ -86,6 +88,12 @@ namespace StickFigureArmy
             ground.Draw(_spriteBatch);
             ground2.Draw(_spriteBatch);
             hero.Draw(_spriteBatch); //Hero laatst zodat overlappent
+            /* De verschillende points om te zien of iets geraakt wordt
+            _spriteBatch.Draw(pixel, new Rectangle(hero.CollisionBottom, new Point(40,40)), Color.White);
+            _spriteBatch.Draw(pixel, new Rectangle(hero.CollisionTop, new Point(40, 40)), Color.White);
+            _spriteBatch.Draw(pixel, new Rectangle(hero.CollisionLeft, new Point(40, 40)), Color.White);
+            _spriteBatch.Draw(pixel, new Rectangle(hero.CollisionRight, new Point(40, 40)), Color.White);
+            */
             _spriteBatch.End();
             base.Draw(gameTime);
         }

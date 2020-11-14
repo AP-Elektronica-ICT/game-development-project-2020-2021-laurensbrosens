@@ -6,7 +6,7 @@ using System.Text;
 
 namespace StickFigureArmy.Interfaces
 {
-    interface IInput
+    public interface IInput
     {
         public Vector2 Inputs();
     }

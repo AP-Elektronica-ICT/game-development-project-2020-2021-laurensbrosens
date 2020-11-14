@@ -1,46 +1,72 @@
 ﻿using Microsoft.Xna.Framework;
-using StickFigureArmy.Utilities;
+using StickFigureArmy.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using StickFigureArmy.Interfaces;
 using System.Diagnostics;
+using System.Text;
 
 namespace StickFigureArmy.Physics
 {
-    static class Collision
+    class CharacterCollision : ICollisionHandler //Moet refactored worden, doet momenteel collisions en states updaten
     {
-        static public Vector2 CollisionHandler(ICollisionRectangle objectA, ICollisionRectangle objectB)
+        public void CollisionHandler(ICollision objectA, State state, MovementCommand physics, ITransform transform, List<ICollision> collidableObjects)
         {
-            if (Check(objectA, objectB))
+            Vector2 collisionDisplacment = new Vector2(0, 0);
+            foreach (var collidableObject in collidableObjects)
             {
-                return CollisionFix(objectA, objectB);
+                if (CollisionCheck.CheckRectangleCollision(objectA, collidableObject)) //Check of er een collision is
+                {
+                    collisionDisplacment = collidableObject.CollisionFix.CollisionFix(objectA, collidableObject, physics, transform); //Los collision op met collisionfix van object waartegen gebotst werd
+                }
             }
-            return new Vector2(0, 0);
-        }
-        static public bool Check(ICollisionRectangle objectA, ICollisionRectangle objectB)
-        {
-            if (objectA.CollisionRectangle.Intersects(objectB.CollisionRectangle))
+            //Compenseer afwijking door collisions
+            transform.Position += collisionDisplacment;
+            objectA.UpdateRectangle();
+            //Update states
+            Debug.Write($"");
+            bool head = false;
+            bool left = false;
+            bool right = false;
+            bool bottom = false;
+            foreach (var collisionObject in collidableObjects) //Check of je ergens opstaat of niet
             {
-                return true;
+                if (CollisionCheck.CheckPointCollision(objectA.CollisionLeft, collisionObject))
+                {
+                    left = true;
+                }
+                if (CollisionCheck.CheckPointCollision(objectA.CollisionRight, collisionObject))
+                {
+                    right = true;
+                }
+                if (CollisionCheck.CheckPointCollision(objectA.CollisionBottom, collisionObject))
+                {
+                    bottom = true;
+                }
+                if (CollisionCheck.CheckPointCollision(objectA.CollisionTop, collisionObject))
+                {
+                    head = true;
+                }
             }
-            return false;
+            state.CollisionLeft = left;
+            state.CollisionRight = right;
+            state.Grounded = bottom;
+            state.BumpHead = head;
+            if (bottom)
+            {
+                physics.Gravity = 0;
+                state.Falling = false;
+            }
+            else
+            {
+                physics.Gravity = 9.8f;
+                if (physics.VelocityY > 0)
+                {
+                    state.Falling = true;
+                }
+            }
         }
-        static public Vector2 AntiShivering(Vector2 displacment) //Tegen trillingen, duwt het object in de hitbox waarmee hij collision had
-        {
-            Vector2 betterDisplacment = displacment;
-            if (displacment.X < 0)
-                betterDisplacment += new Vector2(1f, 0);
-
-            if (displacment.X > 0)
-                betterDisplacment += new Vector2(-1f, 0);
-
-            if (displacment.Y < 0)
-                betterDisplacment += new Vector2(0, 1f);
-
-            return betterDisplacment;
-        }
-        private static Vector2 CollisionFix(ICollisionRectangle objectA, ICollisionRectangle objectB)
+        /*
+        public Vector2 CollisionFix(ICollision objectA, ICollision objectB)
         {
             int heroCenterX = objectA.CollisionRectangleOld.Center.X;
             int heroCenterY = objectA.CollisionRectangleOld.Center.Y;
@@ -63,12 +89,12 @@ namespace StickFigureArmy.Physics
             {
                 if (heroCenterX < obstacleLeft)
                 {
-                    return new Vector2(obstacleLeft - objectA.CollisionRectangle.Right, 0); //Naar links
+                    return new Vector2(obstacleLeft - objectA.CollisionRectangle.Right - 1, 0); //Naar links
 
                 }
                 else
                 {
-                    return new Vector2(obstacleRight - objectA.CollisionRectangle.Left, 0); //Naar rechts
+                    return new Vector2(obstacleRight - objectA.CollisionRectangle.Left + 1, 0); //Naar rechts
                 }
             }
             else if (obstacleTop > heroCenterY) //ObjectA is linksboven of rechtsboven ObjectB
@@ -130,6 +156,7 @@ namespace StickFigureArmy.Physics
                     }
                 }
             }
-        }
+        }*/
+
     }
 }

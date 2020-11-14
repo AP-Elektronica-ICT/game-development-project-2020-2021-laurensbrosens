@@ -11,15 +11,24 @@ using StickFigureArmy.Interfaces;
 
 namespace StickFigureArmy.Physics
 {
-    class State
+    public class State
     {
+        public bool JumpDown { get; set; }
+        public bool Falling { get; set; }
         public bool Grounded { get; set; }
         public bool CollisionLeft { get; set; }
         public bool CollisionRight { get; set; }
         public bool BumpHead { get; set; } //CollisionTop
-        public void Update(MovementCommand physics, Vector2 displacment)
+        //public void Update
+        /*
+        public void Update(ICollision objectA, ICollision objectB, MovementCommand physics) 
         {
-            if (displacment.X < 0)
+            if (Grounded)
+            {
+
+            }
+            /*
+            if (CollisionCheck.CheckPointCollision(objectA.CollisionLeft, objectB))
             {
                 CollisionLeft = true;
                 physics.VelocityX = 0;
@@ -28,7 +37,7 @@ namespace StickFigureArmy.Physics
             {
                 CollisionLeft = false;
             }
-            if (displacment.X > 0)
+            if (CollisionCheck.CheckPointCollision(objectA.CollisionRight, objectB))
             {
                 CollisionRight = true;
                 physics.VelocityX = 0;
@@ -37,7 +46,7 @@ namespace StickFigureArmy.Physics
             {
                 CollisionRight = false;
             }
-            if (displacment.Y < 0) //Naar boven
+            if (CollisionCheck.CheckPointCollision(objectA.CollisionBottom, objectB)) //Naar boven
             {
                 physics.VelocityY = 0;
                 Grounded = true;
@@ -48,7 +57,7 @@ namespace StickFigureArmy.Physics
                 Grounded = false;
                 physics.Gravity = 9.8f;
             }
-            if (displacment.Y > 0)
+            if (CollisionCheck.CheckPointCollision(objectA.CollisionTop, objectB))
             {
                 physics.VelocityY = 0;
                 BumpHead = true;
@@ -57,6 +66,8 @@ namespace StickFigureArmy.Physics
             {
                 BumpHead = false;
             }
+            
         }
+        */
     }
 }

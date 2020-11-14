@@ -6,8 +6,8 @@ using System.Text;
 
 namespace StickFigureArmy.Interfaces
 {
-    interface IGameCommand
+    public interface IGameCommand
     {
-        void Execute(GameTime gameTime, State state, ITransform transform, IInput input, ICollisionRectangle rectangle, List<ICollisionRectangle> rectangles);
+        void Execute(GameTime gameTime, State state, ITransform transform, IInput input);
     }
 }
