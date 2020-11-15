@@ -21,15 +21,17 @@ namespace StickFigureArmy.MapStuff
         public int RectangleOffsetX { get; set; }
         public int RectangleOffsetY { get; set; }
         public ICollisionFix CollisionFix { get; set; }
+        public ICollisionCheck CollisionCheck { get; set; }
         public ICollisionHandler CollisionHandler { get; set; }
         public Point CollisionTop { get; set; }
         public Point CollisionBottom { get; set; }
         public Point CollisionLeft { get; set; }
         public Point CollisionRight { get; set; }
 
-        public Obstacle(Vector2 spawnCoordinates, Texture2D texture) //Constructor met standaard spawnpositie
+        public Obstacle(Vector2 spawnCoordinates, Texture2D texture, string collisionAlgo) //Constructor met standaard spawnpositie
         {
-            CollisionFix = (ICollisionFix)Activator.CreateInstance(Type.GetType($"StickFigureArmy.Physics.ObstacleCollision"), new Object[] { });
+            CollisionFix = (ICollisionFix)Activator.CreateInstance(Type.GetType($"StickFigureArmy.Physics.{collisionAlgo}"), new Object[] { });
+            CollisionCheck = (ICollisionCheck)Activator.CreateInstance(Type.GetType($"StickFigureArmy.Physics.{collisionAlgo}"), new Object[] { });
             Position = spawnCoordinates;
             RectangleWidth = 100;
             RectangleHeight = 300;
@@ -37,9 +39,10 @@ namespace StickFigureArmy.MapStuff
             CollisionRectangleOld = CollisionRectangle;
             texture2D = texture;
         }
-        public Obstacle(Vector2 spawnCoordinates, Texture2D texture, int width, int height) //Constructor met standaard spawnpositie en variabele breedte en hoogte
+        public Obstacle(Vector2 spawnCoordinates, Texture2D texture, int width, int height, string collisionAlgo) //Constructor met standaard spawnpositie en variabele breedte en hoogte
         {
-            CollisionFix = (ICollisionFix)Activator.CreateInstance(Type.GetType($"StickFigureArmy.Physics.ObstacleCollision"), new Object[] { });
+            CollisionFix = (ICollisionFix)Activator.CreateInstance(Type.GetType($"StickFigureArmy.Physics.{collisionAlgo}"), new Object[] { });
+            CollisionCheck = (ICollisionCheck)Activator.CreateInstance(Type.GetType($"StickFigureArmy.Physics.{collisionAlgo}"), new Object[] { });
             Position = spawnCoordinates;
             RectangleWidth = width;
             RectangleHeight = height;
@@ -54,6 +57,11 @@ namespace StickFigureArmy.MapStuff
         public void UpdateRectangle()
         {
             CollisionRectangle = new Rectangle((int)Math.Round(Position.X), (int)Math.Round(Position.Y), RectangleWidth, RectangleHeight);
+        }
+
+        public void UpdateCollisionPoints() //Obstacle heeft geen collisionPoints voor nu
+        {
+            throw new NotImplementedException();
         }
     }
 }

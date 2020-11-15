@@ -18,13 +18,5 @@ namespace StickFigureArmy.Physics
             }
             return false;
         }
-        static public bool CheckPointCollision(Point point, ICollision rectangle)
-        {
-            if (rectangle.CollisionRectangle.Contains(point))
-            {
-                return true;
-            }
-            return false;
-        }
     }
 }

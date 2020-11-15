@@ -58,8 +58,8 @@ namespace StickFigureArmy
             heroTexture = Content.Load<Texture2D>("SoldierAnimations");
             blackSquare = Content.Load<Texture2D>("black100square");
             pixel = Content.Load<Texture2D>("SinglePixel");
-            ground = new Obstacle(new Vector2(-10, 600), blackSquare);
-            ground2 = new Obstacle(new Vector2(200, 400), blackSquare);
+            ground = new Obstacle(new Vector2(-100, 600), blackSquare,3000,50, "ObstacleCollision");
+            ground2 = new Obstacle(new Vector2(200, 400), blackSquare,100,100, "OneWayCollision");
             Map = new List<ICollision>();
             Map.Add(ground);
             Map.Add(ground2);

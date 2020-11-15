@@ -9,6 +9,6 @@ namespace StickFigureArmy.Interfaces
 {
     public interface ICollisionFix
     {
-        public Vector2 CollisionFix(ICollision objectA, ICollision objectB, MovementCommand physics, ITransform transform);
+        public Vector2 CollisionFix(ICollision objectA, ICollision objectB, MovementCommand physics, ITransform transform, State state);
     }
 }

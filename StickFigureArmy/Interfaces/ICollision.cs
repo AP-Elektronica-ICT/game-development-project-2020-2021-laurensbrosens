@@ -19,7 +19,9 @@ namespace StickFigureArmy.Interfaces
         public int RectangleOffsetX { get; set; }
         public int RectangleOffsetY { get; set; }
         public void UpdateRectangle();
+        public void UpdateCollisionPoints();
         public ICollisionHandler CollisionHandler { get; set; }
         public ICollisionFix CollisionFix { get; set; }
+        public ICollisionCheck CollisionCheck { get; set; }
     }
 }

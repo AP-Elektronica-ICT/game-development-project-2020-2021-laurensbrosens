@@ -32,18 +32,19 @@ namespace StickFigureArmy.Characters
         public Point CollisionBottom { get; set; }
         public Point CollisionLeft { get; set; }
         public Point CollisionRight { get; set; }
+        public ICollisionCheck CollisionCheck { get; set; } //Null voor nu want niets kan met character botsen
 
         private List<ICollision> collidableObjects;
 
         public Hero(Vector2 spawnCoordinates, Texture2D texture, IKeyboard keyboardInput, List<ICollision> collisionRectangles) //Constructor met standaard spawnpositie
         {
             animations = new List<Animation>();
-            animations.Add(Animation.Create(0, 0, Width, Height, 4, "idleLeft"));
-            animations.Add(Animation.Create(Width * 4, 0, Width, Height, 4, "idleRight"));
-            animations.Add(Animation.Create(0, Height, Width, Height, 4, "RunLeft"));
-            animations.Add(Animation.Create(Width * 4, Height, Width, Height, 4, "RunRight"));
-            animations.Add(Animation.Create(0, Height * 2, Width, Height, 1, "jumpLeft"));
-            animations.Add(Animation.Create(0, Height * 2, Width, Height, 1, "jumpRight"));
+            animations.Add(Animation.Create(0, 0, Width, Height, 4, "idleLeft", 5f));
+            animations.Add(Animation.Create(Width * 4, 0, Width, Height, 4, "idleRight", 5f));
+            animations.Add(Animation.Create(0, Height, Width, Height, 4, "RunLeft", 5f));
+            animations.Add(Animation.Create(Width * 4, Height, Width, Height, 4, "RunRight", 5f));
+            animations.Add(Animation.Create(0, Height * 2, Width, Height, 1, "jumpLeft", 5f));
+            animations.Add(Animation.Create(0, Height * 2, Width, Height, 1, "jumpRight", 5f));
             Position = spawnCoordinates;
             CollisionHandler = new CharacterCollision();
             move = new MovementCommand();
@@ -54,6 +55,7 @@ namespace StickFigureArmy.Characters
             RectangleOffsetX = 4;
             RectangleOffsetY = 0;
             UpdateRectangle();
+            UpdateCollisionPoints();
             CollisionRectangleOld = CollisionRectangle;
             texture2D = texture;
             playerInput = new PlayerInput(keyboardInput);
@@ -63,7 +65,7 @@ namespace StickFigureArmy.Characters
         {
             move.Execute(gameTime, state, this, playerInput); //Beweeg hero
             CollisionHandler.CollisionHandler(this, state, move, this, collidableObjects); //Check op collisions
-            animations[2].Update(gameTime); //Update animaties
+            animations[2].Update(gameTime, state, move); //Update animaties
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -73,6 +75,10 @@ namespace StickFigureArmy.Characters
         public void UpdateRectangle()
         {
             CollisionRectangle = new Rectangle((int)Math.Round(Position.X + RectangleOffsetX), (int)Math.Round(Position.Y + RectangleOffsetY), RectangleWidth, RectangleHeight);
+        }
+
+        public void UpdateCollisionPoints()
+        {
             CollisionTop = new Point(CollisionRectangle.Center.X, CollisionRectangle.Top - 1);
             CollisionBottom = new Point(CollisionRectangle.Center.X, CollisionRectangle.Bottom + 1);
             CollisionLeft = new Point(CollisionRectangle.Left - 1, CollisionRectangle.Center.Y);

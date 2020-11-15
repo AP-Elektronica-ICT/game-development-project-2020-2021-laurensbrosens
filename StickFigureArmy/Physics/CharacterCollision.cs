@@ -19,41 +19,27 @@ namespace StickFigureArmy.Physics
             {
                 if (CollisionCheck.CheckRectangleCollision(objectA, collidableObject)) //Check of er een collision is
                 {
-                    collisionDisplacment = collidableObject.CollisionFix.CollisionFix(objectA, collidableObject, physics, transform); //Los collision op met collisionfix van object waartegen gebotst werd
+                    collisionDisplacment = collidableObject.CollisionFix.CollisionFix(objectA, collidableObject, physics, transform, state); //Los collision op met collisionfix van object waartegen gebotst werd
                 }
             }
             //Compenseer afwijking door collisions
             transform.Position += collisionDisplacment;
-            objectA.UpdateRectangle();
+            objectA.UpdateRectangle(); //Nog eens updaten want van positie veranderd
+            objectA.UpdateCollisionPoints();
             //Update states
-            bool head = false;
-            bool left = false;
-            bool right = false;
-            bool bottom = false;
-            foreach (var collisionObject in collidableObjects) //Check of je ergens opstaat of niet
+
+            //Reset states
+            state.CollisionLeft = false;
+            state.CollisionRight = false;
+            state.Grounded = false;
+            state.BumpHead = false;
+            foreach (var objectB in collidableObjects) //Check of je ergens opstaat of niet
             {
-                if (CollisionCheck.CheckPointCollision(objectA.CollisionLeft, collisionObject))
-                {
-                    left = true;
-                }
-                if (CollisionCheck.CheckPointCollision(objectA.CollisionRight, collisionObject))
-                {
-                    right = true;
-                }
-                if (CollisionCheck.CheckPointCollision(objectA.CollisionBottom, collisionObject))
-                {
-                    bottom = true;
-                }
-                if (CollisionCheck.CheckPointCollision(objectA.CollisionTop, collisionObject))
-                {
-                    head = true;
-                }
+                objectB.CollisionCheck.CollisionCheck(objectA, objectB, state);
             }
-            state.CollisionLeft = left;
-            state.CollisionRight = right;
-            state.Grounded = bottom;
-            state.BumpHead = head;
-            if (bottom)
+
+            /*
+            if (state.Grounded) //Kan in de setter van state.grounded worden gezet
             {
                 physics.Gravity = 0;
                 state.Falling = false;
@@ -65,7 +51,7 @@ namespace StickFigureArmy.Physics
                 {
                     state.Falling = true;
                 }
-            }
+            }*/
             //Save old collisionRectangle
             objectA.CollisionRectangleOld = objectA.CollisionRectangle;
         }

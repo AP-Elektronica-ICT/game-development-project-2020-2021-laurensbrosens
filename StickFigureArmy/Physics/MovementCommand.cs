@@ -47,9 +47,13 @@ namespace StickFigureArmy.Physics
                 verticalInput = 0;
             }
 
-            if (state.Grounded && verticalInput < 0) //Spring naar beneden
+            if (verticalInput < 0) //Spring naar beneden
             {
                 state.JumpDown = true;
+            }
+            else
+            {
+                state.JumpDown = false;
             }
 
             //Calculate physics

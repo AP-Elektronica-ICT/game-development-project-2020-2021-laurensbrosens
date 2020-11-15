@@ -8,9 +8,28 @@ using System.Diagnostics;
 
 namespace StickFigureArmy.Physics
 {
-    public class ObstacleCollision : ICollisionFix
+    public class ObstacleCollision : ICollisionFix, ICollisionCheck
     {
-        public Vector2 CollisionFix(ICollision objectA, ICollision objectB, MovementCommand physics, ITransform transform)
+        public void CollisionCheck(ICollision objectA, ICollision objectB, State state)
+        {
+            if (objectB.CollisionRectangle.Contains(objectA.CollisionLeft))
+            {
+                state.CollisionLeft = true;
+            }
+            if (objectB.CollisionRectangle.Contains(objectA.CollisionRight))
+            {
+                state.CollisionRight = true;
+            }
+            if (objectB.CollisionRectangle.Contains(objectA.CollisionBottom))
+            {
+                state.Grounded = true;
+            }
+            if (objectB.CollisionRectangle.Contains(objectA.CollisionTop))
+            {
+                state.BumpHead = true;
+            }
+        }
+        public Vector2 CollisionFix(ICollision objectA, ICollision objectB, MovementCommand physics, ITransform transform, State state)
         {
             int heroCenterX = objectA.CollisionRectangleOld.Center.X;
             int heroCenterY = objectA.CollisionRectangleOld.Center.Y;
@@ -22,13 +41,11 @@ namespace StickFigureArmy.Physics
             {
                 if (heroCenterY < obstacleBottom)
                 {
-                    Debug.Write($"6");
                     physics.VelocityY = 0;
                     return new Vector2(0, obstacleTop - objectA.CollisionRectangle.Bottom); //Naar boven
                 }
                 else
                 {
-                    Debug.Write($"5");
                     physics.VelocityY = 0;
                     return new Vector2(0, obstacleBottom - objectA.CollisionRectangle.Top); //Naar beneden
                 }
@@ -43,7 +60,6 @@ namespace StickFigureArmy.Physics
                 }
                 else
                 {
-                    Debug.Write($"Huh");
                     physics.VelocityX = 0;
                     return new Vector2(obstacleRight - objectA.CollisionRectangle.Left, 0); //Naar rechts
                 }
@@ -56,7 +72,6 @@ namespace StickFigureArmy.Physics
                     int top = objectA.CollisionRectangle.Bottom - obstacleTop;
                     if (left > top)
                     {
-                        Debug.Write($"4");
                         physics.VelocityY = 0;
                         return new Vector2(0, -top); //Naar boven
                     }
@@ -72,7 +87,6 @@ namespace StickFigureArmy.Physics
                     int top = objectA.CollisionRectangle.Bottom - obstacleTop;
                     if (right > top)
                     {
-                        Debug.Write($"3");
                         physics.VelocityY = 0;
                         return new Vector2(0, -top); //Naar boven
                     }
@@ -91,7 +105,6 @@ namespace StickFigureArmy.Physics
                     int bottom = obstacleBottom - objectA.CollisionRectangle.Top;
                     if (left > bottom)
                     {
-                        Debug.Write($"2");
                         physics.VelocityY = 0;
                         return new Vector2(0, -bottom); //Naar beneden
                     }
@@ -108,7 +121,6 @@ namespace StickFigureArmy.Physics
                     int bottom = obstacleBottom - objectA.CollisionRectangle.Top;
                     if (right > bottom)
                     {
-                        Debug.Write($"1");
                         physics.VelocityY = 0;
                         return new Vector2(0, bottom); //Naar beneden
                     }

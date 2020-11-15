@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using StickFigureArmy.Utilities;
+using StickFigureArmy.Physics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,7 @@ namespace StickFigureArmy.Animations
         public Frame CurrentFrame { get; set; }
         private List<Frame> frames;
         private Cooldown cooldown;
+        private float framesPerSecond;
         private int FrameNumber = 0; //Huidige frame
         private String Name = "";
         public Animation()
@@ -23,9 +25,9 @@ namespace StickFigureArmy.Animations
             frames.Add(frame);
             CurrentFrame = frames[0];
         }
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, State state, MovementCommand physics)
         {
-            if (cooldown.CooldownTimerFPS(gameTime, 5))
+            if (cooldown.CooldownTimerFPS(gameTime, framesPerSecond))
             {
                 FrameNumber++;
             }
@@ -35,10 +37,11 @@ namespace StickFigureArmy.Animations
             }
             CurrentFrame = frames[FrameNumber];
         }
-        static public Animation Create(int x, int y, int width, int height, int frameAmount, string name) //Creëert een animatie op dezelfde rij
+        static public Animation Create(int x, int y, int width, int height, int frameAmount, string name, float seconds) //Creëert een animatie op dezelfde rij
         {
             Animation animation = new Animation();
-            animation.Name = "name";
+            animation.framesPerSecond = seconds;
+            animation.Name = name;
             for (int i = 0; i < frameAmount; i++)
             {
                 animation.AddFrame(new Frame(new Rectangle(x, y, width, height)));
