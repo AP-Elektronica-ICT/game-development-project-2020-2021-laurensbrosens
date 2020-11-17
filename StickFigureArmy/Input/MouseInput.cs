@@ -6,7 +6,7 @@ using System.Text;
 
 namespace StickFigureArmy.Input
 {
-    class MouseInput
+    public class MouseInput
     {
         public MouseState mouseState { get; set; }
         public MouseState mouseStateOld { get; set; }

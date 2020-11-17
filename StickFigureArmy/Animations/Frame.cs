@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StickFigureArmy.Animations
 {
-    class Frame
+    public class Frame
     {
         public Rectangle SourceRectangle { get; set; }
         public Frame(Rectangle view)

@@ -14,7 +14,7 @@ namespace StickFigureArmy.Physics
         public void CollisionCheck(ICollision objectA, ICollision objectB, State state)
         {
             //Het is enkel mogelijk om op een one way platform te staan als je niet naar beneden springt en de collisionpoint werkt en je niet in het platform bent
-            if (objectB.CollisionRectangle.Contains(objectA.CollisionBottom) && state.JumpDown == false && objectA.CollisionRectangle.Center.Y < objectB.CollisionRectangle.Top)
+            if (objectB.CollisionRectangle.Contains(objectA.CollisionBottom) && state.JumpDown == false && objectA.CollisionRectangle.Bottom-0.1f < objectB.CollisionRectangle.Top)
             {
                 state.Grounded = true;
             }
@@ -27,7 +27,8 @@ namespace StickFigureArmy.Physics
             int obstacleLeft = objectB.CollisionRectangle.Left;
             int obstacleRight = objectB.CollisionRectangle.Right;
             int obstacleTop = objectB.CollisionRectangle.Top;
-            if (heroCenterX > obstacleLeft && heroCenterX < obstacleRight && heroCenterY < obstacleTop && state.JumpDown == false)
+            //Als problemen deze terugzetten(heroCenterX > obstacleLeft && heroCenterX < obstacleRight && heroCenterY < obstacleTop && state.JumpDown == false)
+            if (heroCenterX > obstacleLeft && heroCenterX < obstacleRight && objectA.CollisionRectangleOld.Bottom - 1 < obstacleTop && state.JumpDown == false) 
             {
                 physics.VelocityY = 0;
                 return new Vector2(0, obstacleTop - objectA.CollisionRectangle.Bottom); //Naar boven

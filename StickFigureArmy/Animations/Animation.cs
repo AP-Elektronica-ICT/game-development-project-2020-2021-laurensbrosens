@@ -7,14 +7,14 @@ using System.Text;
 
 namespace StickFigureArmy.Animations
 {
-    class Animation
+    public class Animation
     {
         public Frame CurrentFrame { get; set; }
         private List<Frame> frames;
         private Cooldown cooldown;
         private float framesPerSecond;
         private int FrameNumber = 0; //Huidige frame
-        private String Name = "";
+        public string Name { get; set; }
         public Animation()
         {
             cooldown = new Cooldown();
@@ -25,7 +25,7 @@ namespace StickFigureArmy.Animations
             frames.Add(frame);
             CurrentFrame = frames[0];
         }
-        public void Update(GameTime gameTime, State state, MovementCommand physics)
+        public void Update(GameTime gameTime)
         {
             if (cooldown.CooldownTimerFPS(gameTime, framesPerSecond))
             {

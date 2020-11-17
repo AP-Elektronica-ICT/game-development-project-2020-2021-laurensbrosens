@@ -10,14 +10,15 @@ using System.Text;
 
 namespace StickFigureArmy.Characters
 {
-    public class Hero : ICollision, ITransform, IDraw
+    public class Hero : ICollision, ITransform, IDraw, IAnimate
     {
-        private List<Animation> animations;
+        public List<Animation> animations { get; set; }
         private const int Width = 16; //FrameWidth
         private const int Height = 24; //FrameHeight
         private MovementCommand move;
         private State state;
         private PlayerInput playerInput;
+        private MouseInput mouse;
         public Rectangle CollisionRectangle { get; set; }
         public Rectangle CollisionRectangleOld { get; set; }
         public int RectangleOffsetX { get; set; }
@@ -26,6 +27,7 @@ namespace StickFigureArmy.Characters
         public int RectangleWidth { get; set; }
         public int RectangleHeight { get; set; }
         public Texture2D texture2D { get; set; }
+        public IAnimationHandler animationHandler {get; set;}
         public ICollisionHandler CollisionHandler { get; set; }
         public ICollisionFix CollisionFix { get; set; } //Null voor nu want niets kan met character botsen
         public Point CollisionTop { get; set; }
@@ -44,7 +46,8 @@ namespace StickFigureArmy.Characters
             animations.Add(Animation.Create(0, Height, Width, Height, 4, "RunLeft", 5f));
             animations.Add(Animation.Create(Width * 4, Height, Width, Height, 4, "RunRight", 5f));
             animations.Add(Animation.Create(0, Height * 2, Width, Height, 1, "jumpLeft", 5f));
-            animations.Add(Animation.Create(0, Height * 2, Width, Height, 1, "jumpRight", 5f));
+            animations.Add(Animation.Create(Width * 4, Height * 2, Width, Height, 1, "jumpRight", 5f));
+            animationHandler = new HeroAnimationHandler();
             Position = spawnCoordinates;
             CollisionHandler = new CharacterCollision();
             move = new MovementCommand();
@@ -59,17 +62,18 @@ namespace StickFigureArmy.Characters
             CollisionRectangleOld = CollisionRectangle;
             texture2D = texture;
             playerInput = new PlayerInput(keyboardInput);
-            //mouse = new MouseInput; muis moet nog geimplementeerd worden in Input folder!
+            mouse = new MouseInput();
         }
         public void Update(GameTime gameTime)
         {
+            mouse.MouseUpdate();
             move.Execute(gameTime, state, this, playerInput); //Beweeg hero
             CollisionHandler.CollisionHandler(this, state, move, this, collidableObjects); //Check op collisions
-            animations[2].Update(gameTime, state, move); //Update animaties
+            animationHandler.Update(gameTime, state, move, this, mouse, this); //Update animatie en kiest juiste animatie om af te spelen obv. huidige state
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch) //Deze nog aanpassen
         {
-            spriteBatch.Draw(texture2D, Position, animations[2].CurrentFrame.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+            animationHandler.Draw(texture2D, this, this, spriteBatch);
         }
 
         public void UpdateRectangle()
