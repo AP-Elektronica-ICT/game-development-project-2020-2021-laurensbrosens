@@ -18,8 +18,12 @@ namespace StickFigureArmy.Utilities
             elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
             return false;
         }
-        public bool CooldownTimerFPS(GameTime gameTime, float aantalFPS)
+        public bool CooldownTimerFPS(GameTime gameTime, float aantalFPS, bool Reset)
         {
+            if (Reset)
+            {
+                elapsedTime = 0;
+            }
             if (elapsedTime >= 1f / aantalFPS)
             {
                 elapsedTime = 0;

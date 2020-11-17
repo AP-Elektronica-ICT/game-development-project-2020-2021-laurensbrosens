@@ -10,7 +10,7 @@ namespace StickFigureArmy.Animations
     public class Animation
     {
         public Frame CurrentFrame { get; set; }
-        private List<Frame> frames;
+        public List<Frame> frames;
         private Cooldown cooldown;
         private float framesPerSecond;
         private int FrameNumber = 0; //Huidige frame
@@ -25,9 +25,9 @@ namespace StickFigureArmy.Animations
             frames.Add(frame);
             CurrentFrame = frames[0];
         }
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, float seconds, bool reset)
         {
-            if (cooldown.CooldownTimerFPS(gameTime, framesPerSecond))
+            if (cooldown.CooldownTimerFPS(gameTime, seconds, reset))
             {
                 FrameNumber++;
             }

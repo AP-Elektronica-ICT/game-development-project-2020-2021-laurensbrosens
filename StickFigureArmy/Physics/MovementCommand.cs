@@ -14,13 +14,13 @@ namespace StickFigureArmy.Physics
 {
     public class MovementCommand : IGameCommand
     {
-        public float groundResistance { get; set; } = 0.15f; //Weerstand op de grond
-        public float airResistance { get; set; } = 0.015f; //Weerstand in de lucht
-        public float inputAcceleration { get; set; } = 200f; //Acceleratie door input, default 100
-        public float Gravity { get; set; } = 9.8f; //Acceleratie door zwaartekracht
+        public float groundResistance { get; set; } = 0.10f; //Weerstand op de grond, default 0.15f, 0.01f is goed voor ijs lol
+        public float airResistance { get; set; } = 0.015f; //Weerstand in de lucht, default 0.015f
+        public float inputAcceleration { get; set; } = 20f; //Acceleratie door input, default 100
+        public float Gravity { get; set; } = 9.8f; //Acceleratie door zwaartekracht, default 9.8f
         public float jumpingSpeed { get; set; } = 4f; //Snelheid bij springen, default 8
-        public float VelocityX { get; set; } = 0; //Snelheid horizontaal
-        public float VelocityY { get; set; } = 0; //Snelheid verticaal
+        public float VelocityX { get; set; } = 0; //Snelheid horizontaal, default 0
+        public float VelocityY { get; set; } = 0; //Snelheid verticaal, default 0
 
         public float horizontalInput = 0f; //De input van de speler horizontaal
         public float verticalInput = 0f; //De input van de speler verticaal
