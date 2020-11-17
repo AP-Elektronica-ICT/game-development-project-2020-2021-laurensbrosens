@@ -19,8 +19,8 @@ namespace StickFigureArmy
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Camera camera;
-        public static int ScreenHeight;
-        public static int ScreenWidth;
+        public static int ScreenHeight = 800;
+        public static int ScreenWidth = 1500;
         public Hero hero;
         public Obstacle ground;
         public Obstacle ground2;
@@ -42,8 +42,8 @@ namespace StickFigureArmy
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferHeight = 800;
-            _graphics.PreferredBackBufferWidth = 1500;
+            _graphics.PreferredBackBufferHeight = ScreenHeight;
+            _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.ApplyChanges();
             base.Initialize();
         }
@@ -69,22 +69,22 @@ namespace StickFigureArmy
         protected override void Update(GameTime gameTime)
         {
             keyBoard.KeyboardUpdate();
-            mouse.MouseUpdate();
+            mouse.MouseUpdate(camera);
             if (keyBoard.KeyClicked(Keys.Escape))
                 Exit();
             else if (keyBoard.KeyClicked(Keys.P))
                 paused = !paused;
             if (paused)
                 return;
-            camera.Update();
-            hero.Update(gameTime);
+            hero.Update(gameTime, camera);
+            camera.Update(hero);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(transformMatrix: camera.Transform);
             ground.Draw(_spriteBatch);
             ground2.Draw(_spriteBatch);
             hero.Draw(_spriteBatch); //Hero laatst zodat overlappent

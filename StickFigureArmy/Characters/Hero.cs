@@ -4,6 +4,7 @@ using StickFigureArmy.Animations;
 using StickFigureArmy.Input;
 using StickFigureArmy.Interfaces;
 using StickFigureArmy.Physics;
+using StickFigureArmy.View;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -64,9 +65,9 @@ namespace StickFigureArmy.Characters
             playerInput = new PlayerInput(keyboardInput);
             mouse = new MouseInput();
         }
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Camera camera)
         {
-            mouse.MouseUpdate();
+            mouse.MouseUpdate(camera);
             move.Execute(gameTime, state, this, playerInput); //Beweeg hero
             CollisionHandler.CollisionHandler(this, state, move, this, collidableObjects); //Check op collisions
             animationHandler.Update(gameTime, state, move, this, mouse, this); //Update animatie en kiest juiste animatie om af te spelen obv. huidige state
