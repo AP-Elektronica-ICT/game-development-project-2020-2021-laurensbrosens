@@ -14,11 +14,14 @@ namespace StickFigureArmy.MapStuff
     {
         public int Height { get; set; }
         public List<Floor> Floors { get; set; }
+        public Vector2 Position { get; set; }
         public Building(int height, Texture2D main, Texture2D top, Rectangle viewMain, Rectangle viewTop, Vector2 position)
         {
+            Position = position;
             Height = height;
             Floors = new List<Floor>();
-            if (height <= 1)
+            position.Y -= viewMain.Height; //Anders is 1e floor onder de grond
+            if (height <= 2)
             {
                 Floors.Add(new Floor(viewMain, main, position));
             }
@@ -27,7 +30,7 @@ namespace StickFigureArmy.MapStuff
                 for (int i = 0; i < height - 1; i++)
                 {
                     Floors.Add(new Floor(viewMain, main, position));
-                    position.Y += viewMain.Height;
+                    position.Y -= viewMain.Height;
                 }
                 Floors.Add(new Floor(viewTop, top, position));
             }
