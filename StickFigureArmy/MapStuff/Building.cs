@@ -20,7 +20,7 @@ namespace StickFigureArmy.MapStuff
             Position = position;
             Height = height;
             Floors = new List<Floor>();
-            position.Y -= viewMain.Height; //Anders is 1e floor onder de grond
+            position.Y -= viewMain.Height-1; //Anders is 1e floor onder de grond
             if (height <= 2)
             {
                 Floors.Add(new Floor(viewMain, main, position));
@@ -30,7 +30,7 @@ namespace StickFigureArmy.MapStuff
                 for (int i = 0; i < height - 1; i++)
                 {
                     Floors.Add(new Floor(viewMain, main, position));
-                    position.Y -= viewMain.Height;
+                    position.Y -= viewMain.Height-1;
                 }
                 Floors.Add(new Floor(viewTop, top, position));
             }
