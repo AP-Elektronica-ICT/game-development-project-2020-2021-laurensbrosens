@@ -7,6 +7,7 @@ using StickFigureArmy.Physics;
 using StickFigureArmy.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace StickFigureArmy.MapStuff
@@ -35,10 +36,11 @@ namespace StickFigureArmy.MapStuff
             map.Buildings = new Building[buildingsAmount];
             for (int i = 0; i < map.Buildings.Length; i++) //Creëer array met random buildings
             {
-                height = RandomNumberClass.GenerateRandomNumber(minBuildingSize, maxBuildingSize);
+                //height = RandomNumberClass.GenerateRandomNumber(minBuildingSize, maxBuildingSize);
+                height = RandomNumberClass.GenerateRandomWeightedNumber2(minBuildingSize, maxBuildingSize, i, buildingsAmount / 2);
                 randomTexture = RandomNumberClass.GenerateRandomNumber(0, buildingTextures.Count-1);
-                buildingSpacing = RandomNumberClass.GenerateRandomNumber(buildingMain.Width, maxBuildingDistance); //minimum is breedte van texture anders overlappingen
-                //buildingSpacing = RandomNumberClass.GenerateRandomWeightedNumber(buildingMain.Width, maxBuildingDistance, buildingMain.Width); //Test
+                //buildingSpacing = RandomNumberClass.GenerateRandomNumber(buildingMain.Width, maxBuildingDistance); //minimum is breedte van texture anders overlappingen
+                buildingSpacing = RandomNumberClass.GenerateRandomWeightedNumber(buildingMain.Width, maxBuildingDistance, i, buildingsAmount / 2); //Test
                 position.X += buildingSpacing;
                 Texture2D texture = buildingTextures[randomTexture];
                 map.Buildings[i] = new Building(height, texture, texture, buildingMain, buildingTop, position);

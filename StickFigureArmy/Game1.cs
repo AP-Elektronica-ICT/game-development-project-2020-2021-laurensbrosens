@@ -73,7 +73,7 @@ namespace StickFigureArmy
             buildingTextures.Add(GreenBuilding);
             buildingTextures.Add(PinkBuilding);
             buildingTextures.Add(RoundBuilding);
-            map1 = mapGenerator.GenerateMap("City", 500, 40, 80, 10000, buildingTextures, new Rectangle(0, 0, 100, 100), new Rectangle(0, 101, 100, 100), 8, 3);
+            map1 = mapGenerator.GenerateMap("City", 400, 30, 50, 10000, buildingTextures, new Rectangle(0, 0, 100, 100), new Rectangle(0, 101, 100, 100), 7, 3);
             HeroCollidableObjects = new List<ICollision>();
             foreach (var platform in map1.Platforms)
             {

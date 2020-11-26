@@ -38,6 +38,10 @@ namespace StickFigureArmy.Physics
             {
                 directionY -= 1;
             }
+            if (keyboard.keyboardState.IsKeyDown(Keys.LeftShift))
+            {
+                directionX *= 10;
+            }
             return new Vector2(directionX, directionY);
         }
     }
