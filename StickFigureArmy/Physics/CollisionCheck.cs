@@ -10,9 +10,17 @@ namespace StickFigureArmy.Physics
 {
     static class CollisionCheck
     {
-        static public bool CheckRectangleCollision(ICollision objectA, ICollision objectB)
+        static public bool CheckRectangleCollision(ICollisionRectangle objectA, ICollisionRectangle objectB)
         {
             if (objectA.CollisionRectangle.Intersects(objectB.CollisionRectangle))
+            {
+                return true;
+            }
+            return false;
+        }
+        static public bool CheckPointCollision(ICollisionPoint objectA, ICollisionRectangle objectB)
+        {
+            if (objectB.CollisionRectangle.Contains(objectA.CollisionPoint))
             {
                 return true;
             }

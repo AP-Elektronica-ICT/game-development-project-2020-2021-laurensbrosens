@@ -10,7 +10,7 @@ using System.Text;
 
 namespace StickFigureArmy.MapStuff
 {
-    public class Obstacle : ICollision, ITransform, IDraw
+    public class Obstacle : ICollisionRectangle, ITransform, IDraw
     {
         public int RectangleWidth { get; set; }
         public int RectangleHeight { get; set; }
@@ -22,7 +22,7 @@ namespace StickFigureArmy.MapStuff
         public int RectangleOffsetY { get; set; }
         public ICollisionFix CollisionFix { get; set; }
         public ICollisionCheck CollisionCheck { get; set; }
-        public ICollisionHandler CollisionHandler { get; set; }
+        //public ICollisionHandler CollisionHandler { get; set; }
         public Point CollisionTop { get; set; }
         public Point CollisionBottom { get; set; }
         public Point CollisionLeft { get; set; }

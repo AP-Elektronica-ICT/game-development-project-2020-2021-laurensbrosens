@@ -24,7 +24,7 @@ namespace StickFigureArmy.Utilities
             {
                 double gaussianCalculation = -Math.Exp(-Math.Pow(x - center, 2) / (4 * Math.Pow(15, 2)));
                 number += max * (gaussianCalculation + 1);
-                Debug.Write($"space = {number}\n");
+                //Debug.Write($"space = {number}\n");
                 if (number < min)
                 {
                     number = GenerateRandomNumber(min, max);
@@ -61,7 +61,7 @@ namespace StickFigureArmy.Utilities
                 {
                     number = GenerateRandomNumber(min, max);
                 }
-                Debug.Write($"min = {min}, max = {max}, location = {location}, center = {center}, height = {number}, gaussian = {gaussianCalculation}\n");
+                //Debug.Write($"min = {min}, max = {max}, location = {location}, center = {center}, height = {number}, gaussian = {gaussianCalculation}\n");
             }
             else
             {

@@ -11,7 +11,7 @@ namespace StickFigureArmy.Physics
     class OneWayCollision : ICollisionFix, ICollisionCheck
     {
 
-        public void CollisionCheck(ICollision objectA, ICollision objectB, State state)
+        public void CollisionCheck(ICollisionRectangle objectA, ICollisionRectangle objectB, State state)
         {
             //Het is enkel mogelijk om op een one way platform te staan als je niet naar beneden springt en de collisionpoint werkt en je niet in het platform bent
             if (objectB.CollisionRectangle.Contains(objectA.CollisionBottom) && state.JumpDown == false && objectA.CollisionRectangle.Bottom-0.1f < objectB.CollisionRectangle.Top)
@@ -20,7 +20,7 @@ namespace StickFigureArmy.Physics
             }
         }
 
-        public Vector2 CollisionFix(ICollision objectA, ICollision objectB, MovementCommand physics, ITransform transform, State state)
+        public Vector2 CollisionFix(ICollisionRectangle objectA, ICollisionRectangle objectB, MovementCommand physics, ITransform transform, State state)
         {
             int heroCenterX = objectA.CollisionRectangleOld.Center.X;
             int heroCenterY = objectA.CollisionRectangleOld.Center.Y;

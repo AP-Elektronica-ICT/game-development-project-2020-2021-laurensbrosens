@@ -10,7 +10,7 @@ namespace StickFigureArmy.Physics
 {
     public class ObstacleCollision : ICollisionFix, ICollisionCheck
     {
-        public void CollisionCheck(ICollision objectA, ICollision objectB, State state)
+        public void CollisionCheck(ICollisionRectangle objectA, ICollisionRectangle objectB, State state)
         {
             if (objectB.CollisionRectangle.Contains(objectA.CollisionLeft))
             {
@@ -29,7 +29,7 @@ namespace StickFigureArmy.Physics
                 state.BumpHead = true;
             }
         }
-        public Vector2 CollisionFix(ICollision objectA, ICollision objectB, MovementCommand physics, ITransform transform, State state)
+        public Vector2 CollisionFix(ICollisionRectangle objectA, ICollisionRectangle objectB, MovementCommand physics, ITransform transform, State state)
         {
             int heroCenterX = objectA.CollisionRectangleOld.Center.X;
             int heroCenterY = objectA.CollisionRectangleOld.Center.Y;

@@ -23,12 +23,12 @@ namespace StickFigureArmy.Animations
         4 jumpLeft
         5 jumpRight
         */
-        public void Update(GameTime gameTime, State state, MovementCommand physics, IAnimate animations, MouseInput mouse, ICollision hero)
+        public void Update(GameTime gameTime, State state, MovementCommand physics, IAnimate animations, MouseInput mouse, ICollisionRectangle hero)
         {
             OldAnimation = CurrentAnimation;
             float animationSpeed = 5;
             //If state then animation enz.
-            if (state.Grounded)
+            if (state.Grounded && physics.VelocityY == 0)
             {
                 int threshold = 30; //Ontdendering
                 if (OldAnimation == 2 || OldAnimation == 3)

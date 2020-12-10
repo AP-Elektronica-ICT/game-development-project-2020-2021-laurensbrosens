@@ -11,7 +11,7 @@ using System.Text;
 
 namespace StickFigureArmy.Characters
 {
-    public class Hero : ICollision, ITransform, IDraw, IAnimate, IDamageable
+    public class Hero : ICollisionRectangle, ITransform, IDraw, IAnimate, IDamageable
     {
         public List<Animation> animations { get; set; }
         private const int Width = 16; //FrameWidth
@@ -29,19 +29,38 @@ namespace StickFigureArmy.Characters
         public int RectangleHeight { get; set; }
         public Texture2D texture2D { get; set; }
         public IAnimationHandler animationHandler {get; set;}
-        public ICollisionHandler CollisionHandler { get; set; }
+        private CharacterCollision CollisionHandler { get; set; }
         public ICollisionFix CollisionFix { get; set; } //Null voor nu want niets kan met character botsen
         public Point CollisionTop { get; set; }
         public Point CollisionBottom { get; set; }
         public Point CollisionLeft { get; set; }
         public Point CollisionRight { get; set; }
+        public int HP { get; set; }
+        private bool alive;
+        public bool Alive
+        {
+            get
+            {
+                if (alive == false)
+                {
+                    return false;
+                }
+                if (HP <= 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                alive = value;
+            }
+        }
         public ICollisionCheck CollisionCheck { get; set; } //Null voor nu want niets kan met character botsen
-        public int HP { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool Alive { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        private List<ICollision> collidableObjects;
+        private List<ICollisionRectangle> collidableObjects;
 
-        public Hero(Vector2 spawnCoordinates, Texture2D texture, IKeyboard keyboardInput, List<ICollision> collisionRectangles) //Constructor met standaard spawnpositie
+        public Hero(Vector2 spawnCoordinates, Texture2D texture, IKeyboard keyboardInput, List<ICollisionRectangle> collisionRectangles) //Constructor met standaard spawnpositie
         {
             animations = new List<Animation>();
             animations.Add(Animation.Create(0, 0, Width, Height, 4, "idleLeft", 5f));

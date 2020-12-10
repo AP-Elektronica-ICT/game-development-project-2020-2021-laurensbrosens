@@ -6,7 +6,7 @@ using System.Text;
 
 namespace StickFigureArmy.Interfaces
 {
-    public interface ICollision
+    public interface ICollisionRectangle
     {
         public int RectangleWidth { get; set; }
         public int RectangleHeight { get; set; }
@@ -20,7 +20,6 @@ namespace StickFigureArmy.Interfaces
         public int RectangleOffsetY { get; set; }
         public void UpdateRectangle();
         public void UpdateCollisionPoints();
-        public ICollisionHandler CollisionHandler { get; set; }
         public ICollisionFix CollisionFix { get; set; }
         public ICollisionCheck CollisionCheck { get; set; }
     }

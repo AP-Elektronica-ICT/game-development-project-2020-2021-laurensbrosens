@@ -14,5 +14,6 @@ namespace StickFigureArmy.Interfaces
     {
         public int HP { get; set; }
         public bool Alive { get; set; }
+
     }
 }

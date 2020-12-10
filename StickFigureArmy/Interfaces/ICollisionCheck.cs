@@ -10,6 +10,6 @@ namespace StickFigureArmy.Interfaces
 {
     public interface ICollisionCheck
     {
-        public void CollisionCheck(ICollision objectA, ICollision objectB, State state);
+        public void CollisionCheck(ICollisionRectangle objectA, ICollisionRectangle objectB, State state);
     }
 }
