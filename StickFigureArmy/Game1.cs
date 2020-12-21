@@ -34,16 +34,13 @@ namespace StickFigureArmy
         private Texture2D PinkBuilding;
         private Texture2D RoundBuilding;
         private Texture2D bulletTexture;
+        private Texture2D gunTexture;
         private List<Texture2D> buildingTextures;
         private RandomNumberClass randomNumberGenerator;
         //private Texture2D pixel;
         private IKeyboard keyBoard;
-        private BulletInput bulletDirection; //Terug verwijderen wanneer bullet getest is
         private MouseInput mouse;
-        private Bullet bullet1;
-        private Bullet bullet2;
         private List<Bullet> bullets;
-
         private bool paused = false;
 
         public Game1()
@@ -71,11 +68,13 @@ namespace StickFigureArmy
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             camera = new Camera();
             heroTexture = Content.Load<Texture2D>("SoldierAnimations");
-            bulletTexture = Content.Load<Texture2D>("Bullet_Blue");
             BlueBuilding = Content.Load<Texture2D>("BlueBuilding");
             GreenBuilding = Content.Load<Texture2D>("GreenBuilding");
             PinkBuilding = Content.Load<Texture2D>("PinkBuilding");
             RoundBuilding = Content.Load<Texture2D>("RoundBuilding");
+            bulletTexture = Content.Load<Texture2D>("Bullet_Blue");
+            gunTexture = Content.Load<Texture2D>("MachineGunAnimation");
+            bullets = new List<Bullet>();
             buildingTextures = new List<Texture2D>();
             buildingTextures.Add(BlueBuilding);
             buildingTextures.Add(GreenBuilding);
@@ -89,34 +88,28 @@ namespace StickFigureArmy
             }
             HeroCollidableObjects.Add(map1.Ground);
             hero = new Hero(new Vector2(150,1999), heroTexture, keyBoard, HeroCollidableObjects);
-            bulletDirection = new BulletInput(new Vector2(200f,-200f));
-            bullet1 = new Bullet(HeroCollidableObjects, new Vector2(190, 1999), bulletTexture, bulletDirection);//Terug verwijderen wanneer bullet getest is
-            bullet2 = new Bullet(HeroCollidableObjects, new Vector2(200, 1999), bulletTexture, bulletDirection);//Terug verwijderen wanneer bullet getest is
-            bullets = new List<Bullet>();
-            bullets.Add(bullet1);
-            bullets.Add(bullet2);
         }
 
         protected override void Update(GameTime gameTime)
         {
+            mouse.MouseUpdate(camera); //Is voor verschillende dingen nodig, gebeurd 1 keer per update
             keyBoard.KeyboardUpdate();
-            mouse.MouseUpdate(camera);
             if (keyBoard.KeyClicked(Keys.Escape))
                 Exit();
             else if (keyBoard.KeyClicked(Keys.P))
                 paused = !paused;
             if (paused)
                 return;
+            camera.Update(hero, mouse);
+            mouse.MouseUpdate(camera);
             hero.Update(gameTime, camera);
-            for (int i = 0; i < bullets.Count; i++)
+            foreach (Bullet bullet in bullets) //Update alle bullets in de game
             {
-                bullets[i].Update(gameTime);
-                if (!bullets[i].Alive)
+                if (bullet.Alive)
                 {
-                    bullets.RemoveAt(i);
+                    bullet.Update(gameTime);
                 }
-            }//Terug verwijderen wanneer bullet getest is
-            camera.Update(hero,mouse);
+            }
             base.Update(gameTime);
         }
 
@@ -127,12 +120,13 @@ namespace StickFigureArmy
             map1.Draw(_spriteBatch); //Map eerst zodat achtergrond
             hero.Draw(_spriteBatch); //Hero laatst zodat overlappent
 
-            foreach (var bulletje in bullets)
+            foreach (Bullet bullet in bullets) //Teken alle bullets in de game
             {
-                bulletje.Draw(_spriteBatch);
-            }//Terug verwijderen wanneer bullet getest is
-
-
+                if (bullet.Alive)
+                {
+                    bullet.Draw(_spriteBatch);
+                }
+            }
             //De verschillende points om te zien of iets geraakt wordt
             /*
            _spriteBatch.Draw(pixel, new Rectangle(hero.CollisionBottom, new Point(40,40)), Color.White);

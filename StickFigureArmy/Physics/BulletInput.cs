@@ -11,16 +11,19 @@ using StickFigureArmy.Interfaces;
 
 namespace StickFigureArmy.Physics
 {
-    class BulletInput : IInput
+    class BulletInput : IInput //Berekent hoek waarop bullet moet geschoten worden
     {
-        private Vector2 direction;
-        public BulletInput(Vector2 angle)
+        private MouseInput mouse;
+        private ITransform launchPosition;
+        public BulletInput(MouseInput mouseInput, ITransform transform)
         {
-            direction = angle;
+            mouse = mouseInput;
+            launchPosition = transform;
         }
         public Vector2 Inputs()
         {
-            return direction;
+            //berekening met mouseposition en launcposition
+            return new Vector2(1,-1);
         }
     }
 }

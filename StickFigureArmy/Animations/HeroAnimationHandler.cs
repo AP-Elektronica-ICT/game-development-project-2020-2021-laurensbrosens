@@ -23,7 +23,7 @@ namespace StickFigureArmy.Animations
         4 jumpLeft
         5 jumpRight
         */
-        public void Update(GameTime gameTime, State state, MovementCommand physics, IAnimate animations, MouseInput mouse, ICollisionRectangle hero)
+        public void Update(GameTime gameTime, State state, MovementCommand physics, IAnimate animations, MouseInput mouse, ICollisionRectangle hero, ITransform notNeeded)
         {
             OldAnimation = CurrentAnimation;
             float animationSpeed = 5;

@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using StickFigureArmy.Animations;
 using StickFigureArmy.Input;
 using StickFigureArmy.Interfaces;
 using StickFigureArmy.Physics;
 using StickFigureArmy.View;
+using StickFigureArmy.Weapons;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +22,7 @@ namespace StickFigureArmy.Characters
         private State state;
         private PlayerInput playerInput;
         private MouseInput mouse;
+        private Rifle gun;
         public Rectangle CollisionRectangle { get; set; }
         public Rectangle CollisionRectangleOld { get; set; }
         public int RectangleOffsetX { get; set; }
@@ -60,7 +63,7 @@ namespace StickFigureArmy.Characters
 
         private List<ICollisionRectangle> collidableObjects;
 
-        public Hero(Vector2 spawnCoordinates, Texture2D texture, IKeyboard keyboardInput, List<ICollisionRectangle> collisionRectangles) //Constructor met standaard spawnpositie
+        public Hero(Vector2 spawnCoordinates, Texture2D textureHero, Texture2D textureGun, IKeyboard keyboardInput, List<ICollisionRectangle> collisionRectangles) //Constructor met standaard spawnpositie
         {
             animations = new List<Animation>();
             animations.Add(Animation.Create(0, 0, Width, Height, 4, "idleLeft", 5f));
@@ -82,20 +85,25 @@ namespace StickFigureArmy.Characters
             UpdateRectangle();
             UpdateCollisionPoints();
             CollisionRectangleOld = CollisionRectangle;
-            texture2D = texture;
+            texture2D = textureHero;
             playerInput = new PlayerInput(keyboardInput);
             mouse = new MouseInput();
+            gun = new Rifle(textureGun, mouse);
         }
         public void Update(GameTime gameTime, Camera camera)
         {
-            mouse.MouseUpdate(camera);
             move.Execute(gameTime, state, this, playerInput); //Beweeg hero
             CollisionHandler.CollisionHandler(this, state, move, this, collidableObjects); //Check op collisions
-            animationHandler.Update(gameTime, state, move, this, mouse, this); //Update animatie en kiest juiste animatie om af te spelen obv. huidige state
+            if (mouse.mouseState.LeftButton == ButtonState.Pressed)
+            {
+                gun.Shoot(enemies);
+            }
+            animationHandler.Update(gameTime, state, move, this, mouse, this, null); //Moet mss naar Draw verhuist worden???              //Update animatie en kiest juiste animatie om af te spelen obv. huidige state
         }
         public void Draw(SpriteBatch spriteBatch) //Deze nog aanpassen
         {
             animationHandler.Draw(texture2D, this, this, spriteBatch);
+            gun.Draw(spriteBatch);
         }
 
         public void UpdateRectangle()

@@ -12,7 +12,7 @@ namespace StickFigureArmy.Interfaces
 {
     public interface IAnimationHandler
     {
-        public void Update(GameTime gameTime, State state, MovementCommand physics, IAnimate animations, MouseInput mouse, ICollisionRectangle hero);
+        public void Update(GameTime gameTime, State state, MovementCommand physics, IAnimate animations, MouseInput mouse, ICollisionRectangle hero, ITransform position);
         public void Draw(Texture2D texture2D, ITransform Hero, IAnimate animations, SpriteBatch spriteBatch);
     }
 }

@@ -20,7 +20,7 @@ namespace StickFigureArmy.Weapons
         public IInput Direction { get; set; }
         public Texture2D texture2D { get; set; }
         public Point CollisionPoint { get; set; }
-        public int HP { get; set; } = 1;
+        public int HP { get; set; } = 1; //Wordt nog niet gebruikt
         private bool alive = true;
         public bool Alive {
             get
@@ -59,6 +59,11 @@ namespace StickFigureArmy.Weapons
         {
             move.Execute(gameTime, null, this, Direction); //Beweeg bullet
             CollisionHandler.CollisionHandler(this, move, this, collidableObjects); //Check op collisions
+            if (lifeSpan.CooldownTimer(gameTime, 2)) //Bullet stop wanneer 2 seconden oud
+            {
+                Alive = false;
+            }
+            
         }
         public void Draw(SpriteBatch spriteBatch)
         {
