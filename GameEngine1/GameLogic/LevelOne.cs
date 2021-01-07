@@ -48,7 +48,7 @@ namespace GameEngine1.GameLogic
                 }
                 position.X += buildingSpacing;
             }
-            hero = (Hero)Factory.CreateHero(new Vector2(250, 1800), obstacles);
+            hero = (Hero)Factory.CreateHero(new Vector2(150, 1800), obstacles);
             humans.Add(hero);
         }
         public override void Draw(SpriteBatch spriteBatch)

@@ -10,6 +10,7 @@ using GameEngine1.GameObjects;
 using GameEngine1.Input;
 using GameEngine1.Interfaces;
 using GameEngine1.Physics;
+using GameEngine1.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -97,6 +98,30 @@ namespace GameEngine1
             animations.Add(CreateAnimation(Width * 4, Height * 2, Width, Height, 1, "jumpRight", 5f));
             return animations;
         }
+        public static Weapon CreateWeapon(Entity anObject)
+        {
+            Weapon weapon = new Weapon();
+            WeaponPhysicsHandler physicsHandler = new WeaponPhysicsHandler();
+            physicsHandler.Mouse = Game1.mouse;
+            weapon._PhysicsHandler = physicsHandler;
+            GunAnimationHandler animationHandler = new GunAnimationHandler(Textures.gunTexture);
+            animationHandler.Mouse = Game1.mouse;
+            animationHandler.animations = CreateGunAnimations();
+            weapon._AnimationHandler = animationHandler;
+            weapon.Position = anObject.Position;
+            return weapon;
+        }
+        public static List<Animation> CreateGunAnimations()
+        {
+            int Width = 80;
+            int Height = 80;
+            List<Animation> animations = new List<Animation>();
+            animations.Add(CreateAnimation(0, 0, Width, Height, 9, "ShootLeft", 10f));
+            animations.Add(CreateAnimation(0, Height, Width, Height, 9, "ShootRight", 10f));
+            animations.Add(CreateAnimation(0, Height*2, Width, Height, 1, "idleLeft", 1f));
+            animations.Add(CreateAnimation(Width, Height*2, Width, Height, 1, "idleRight", 1f));
+            return animations;
+        }
         public static IEntity CreateHero(Vector2 spawnPosition, List<IEntity> obstacles)
         {
             PhysicsHandler physics = new PhysicsHandler();
@@ -125,6 +150,7 @@ namespace GameEngine1
                 _collision = collision,
                 Input = input
             };
+            hero.Weapon = CreateWeapon(hero);
             return hero;
         }
         static public Animation CreateAnimation(int x, int y, int width, int height, int frameAmount, string name, float fps) //Creëert een animatie op dezelfde rij

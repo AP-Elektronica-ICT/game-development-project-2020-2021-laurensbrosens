@@ -25,7 +25,7 @@ namespace GameEngine1.Physics
 
         public float horizontalInput = 0f;
         public float verticalInput = 0f;
-        public void Move(GameTime gameTime, ITransform transform, IInput input)
+        public virtual void Move(GameTime gameTime, ITransform transform, IInput input)
         {
             Vector2 movementInput = input.Inputs();
             horizontalInput = movementInput.X;

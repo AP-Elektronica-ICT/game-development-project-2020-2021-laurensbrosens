@@ -14,7 +14,7 @@ namespace GameEngine1.Animations
         public List<Frame> frames;
         private Cooldown cooldown;
         public float FramesPerSecond { get; set; }
-        private int FrameNumber = 0; //Huidige frame
+        public int FrameNumber = 0; //Huidige frame
         public string Name { get; set; }
         public Animation()
         {

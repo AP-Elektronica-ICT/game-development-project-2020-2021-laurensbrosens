@@ -1,4 +1,5 @@
-﻿using GameEngine1.GameObjects;
+﻿using GameEngine1.Art;
+using GameEngine1.GameObjects;
 using GameEngine1.Input;
 using GameEngine1.Interfaces;
 using GameEngine1.Utilities;
@@ -74,6 +75,9 @@ namespace GameEngine1
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, transformMatrix: camera.Transform);
             currentLevel.Draw(_spriteBatch);
+            
+_spriteBatch.Draw(Textures.gunTexture, new Vector2(150,1800), new Rectangle(0,0,80,80), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+            
             _spriteBatch.End();
             base.Draw(gameTime);
         }

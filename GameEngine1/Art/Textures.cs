@@ -29,7 +29,7 @@ namespace GameEngine1.Art
             PinkBuilding = Content.Load<Texture2D>("PinkBuilding");
             RoundBuilding = Content.Load<Texture2D>("RoundBuilding");
             bulletTexture = Content.Load<Texture2D>("Bullet_Blue");
-            gunTexture = Content.Load<Texture2D>("MachineGunAnimation");
+            gunTexture = Content.Load<Texture2D>("blueGun");
         }
     }
 }

@@ -15,6 +15,7 @@ namespace GameEngine1.GameObjects
             _PhysicsHandler.Move(gameTime, this, Input);
             _collision.HanldeCollisions(_PhysicsHandler, this);
             _AnimationHandler.Update(gameTime, _PhysicsHandler, _collision);
+            Weapon.Update(gameTime);
         }
     }
 }
