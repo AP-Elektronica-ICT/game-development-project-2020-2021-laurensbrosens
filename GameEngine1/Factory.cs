@@ -114,13 +114,13 @@ namespace GameEngine1
             animations.Add(CreateAnimation(0, Height * 5, Width, Height, 1, "jumpRight", 5f));
             return animations;
         }
-        public static Weapon CreateWeapon(Entity anObject)
+        public static Weapon CreateWeapon(Entity anObject, IMouseInput mouse)
         {
             Weapon weapon = new Weapon();
-            weapon.Mouse = Game1.mouse;
+            weapon.Mouse = mouse;
             GunAnimationHandler animationHandler = new GunAnimationHandler();
             animationHandler.Texture = Textures.gunTexture;
-            animationHandler.Mouse = Game1.mouse;
+            animationHandler.Mouse = mouse;
             animationHandler.animations = CreateGunAnimations();
             animationHandler.ParentTransform = anObject; //Volg object
             weapon._AnimationHandler = animationHandler;
@@ -195,12 +195,13 @@ namespace GameEngine1
                 Health = 5
             };
             hero._collision.Parent = hero;
-            hero.Weapon = CreateWeapon(hero);
+            hero.Weapon = CreateWeapon(hero, animationHandler.Mouse);
             return hero;
         }
         public static IEntity CreateSoldier(Vector2 spawnPosition, List<IEntity> obstacles, int teamNumber)
         {
             PhysicsHandler physics = new PhysicsHandler();
+            physics.Gravity = 0;
             HeroAnimationHandler animationHandler = new HeroAnimationHandler(Textures.heroTexture);
             animationHandler.animations = CreateHeroAnimations();
             AIMouseInput aiMouse = new AIMouseInput();
@@ -227,8 +228,9 @@ namespace GameEngine1
                 Input = input,
                 Health = 5
             };
+            aiMouse.Parent = soldier;
             soldier._collision.Parent = soldier;
-            soldier.Weapon = CreateWeapon(soldier);
+            soldier.Weapon = CreateWeapon(soldier, aiMouse);
             return soldier;
         }
         static public Animation CreateAnimation(int x, int y, int width, int height, int frameAmount, string name, float fps) //Creëert een animatie op dezelfde rij

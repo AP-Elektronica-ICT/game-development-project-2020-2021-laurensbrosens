@@ -19,7 +19,7 @@ namespace GameEngine1.Collisions
             {
                 if (CollisionUtilities.CheckRectangleCollision(CollisionRectangle, collidableObject.CollisionRectangle)) //Check of er een collision is
                 {
-                    if (collidableObject is Human)
+                    if (collidableObject.Parent is Human)
                     {
                         ((Human)collidableObject.Parent).Health -= ((Bullet)Parent).Damage; //Als het mens is verminder HP met 1
                     }
