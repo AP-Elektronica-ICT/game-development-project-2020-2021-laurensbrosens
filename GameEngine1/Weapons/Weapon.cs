@@ -29,7 +29,8 @@ namespace GameEngine1.Weapons
         public void Shoot(GameTime gameTime)
         {
             ((GunAnimationHandler)_AnimationHandler).Shoot = true; //Default is niet auto-fire
-            Factory.CreateBullet(this, Team);
+            Vector2 direction = Mouse.Position - new Vector2(_collision.CollisionRectangle.X, _collision.CollisionRectangle.Y);
+            Factory.CreateBullet(this, Team, direction);
         }
         public override void Update(GameTime gameTime)
         {

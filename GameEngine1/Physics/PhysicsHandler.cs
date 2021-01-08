@@ -22,7 +22,6 @@ namespace GameEngine1.Physics
         public bool CollisionLeft { get; set; }
         public bool CollisionRight { get; set; }
         public bool CollisionTop { get; set; }
-
         public float horizontalInput = 0f;
         public float verticalInput = 0f;
         public virtual void Move(GameTime gameTime, ITransform transform, IInput input)

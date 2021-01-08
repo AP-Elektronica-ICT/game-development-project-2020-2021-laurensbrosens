@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using GameEngine1.GameObjects;
 using GameEngine1.Interfaces;
 using GameEngine1.Utilities;
 using Microsoft.Xna.Framework;
@@ -16,6 +17,8 @@ namespace GameEngine1.Collisions
         public int RectangleOffsetY { get; set; }
         public int RectangleWidth { get; set; }
         public int RectangleHeight { get; set; }
+        public Entity Parent { get; set; }
+
         public void HanldeCollisions(IPhysicsHandler physics, ITransform transform)
         {
             //

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine1.GameObjects;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,7 @@ namespace GameEngine1.Interfaces
     {
         public Rectangle CollisionRectangle { get; set; }
         public Rectangle CollisionRectangleOld { get; set; }
+        public Entity Parent { get; set; }
         public int RectangleOffsetX { get; set; }
         public int RectangleOffsetY { get; set; }
         public int RectangleWidth { get; set; }

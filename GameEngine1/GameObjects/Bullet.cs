@@ -2,6 +2,7 @@
 using GameEngine1.Interfaces;
 using GameEngine1.Utilities;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,7 @@ namespace GameEngine1.GameObjects
     {
         public Level currentLevel;
         private Cooldown cooldown;
+        public int Damage { get; set; } = 1;
         public Bullet()
         {
             cooldown = new Cooldown();
@@ -25,6 +27,10 @@ namespace GameEngine1.GameObjects
             {
                 Alive = false;
             }
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Texture, Position, new Rectangle(0,0,32,32), Color.White, Rotation, new Vector2(0, 0), Scale, SpriteEffects.None, 0);
         }
     }
 }

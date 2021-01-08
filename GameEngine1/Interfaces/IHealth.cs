@@ -6,5 +6,6 @@ namespace GameEngine1.Interfaces
 {
     public interface IHealth
     {
+        public int Health { get; set; }
     }
 }

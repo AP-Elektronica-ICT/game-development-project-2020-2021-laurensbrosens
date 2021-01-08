@@ -10,6 +10,7 @@ using GameEngine1.GameObjects;
 using GameEngine1.Input;
 using GameEngine1.Interfaces;
 using GameEngine1.Physics;
+using GameEngine1.Utilities;
 using GameEngine1.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -114,7 +115,7 @@ namespace GameEngine1
             weapon.Team = ((Human)anObject).Team;
             return weapon;
         }
-        public static void CreateBullet(ITransform transform, int team)
+        public static void CreateBullet(ITransform transform, int team, Vector2 direction)
         {
             Bullet bullet = new Bullet();
             List<ICollision> targets = new List<ICollision>(); //is nog leeg
@@ -125,9 +126,15 @@ namespace GameEngine1
                     targets.Add(human._collision);
                 }
             }
+            targets.Add(((Level)bullet.currentLevel).obstacles[0]._collision); //Voeg grond toe, hardcoded voor nu
             bullet.Texture = Textures.bulletTexture;
-            bullet._PhysicsHandler = new PhysicsHandler();
-            bullet._collision = new HeroCollision(transform.Position, targets);
+            BulletPhysicsHandler physicsHandler = new BulletPhysicsHandler();
+            physicsHandler.Direction = Vector2.Normalize(direction);
+            bullet._PhysicsHandler = physicsHandler;
+            bullet._collision = new BulletCollision(transform.Position, targets);
+            bullet._collision.Parent = bullet;
+            bullet.Scale = 1f;
+            bullet.Rotation = MathUtilities.VectorToAngle(direction);
             ((Level)bullet.currentLevel).bullets.Add(bullet);
         }
         public static List<Animation> CreateGunAnimations()
@@ -156,6 +163,7 @@ namespace GameEngine1
                 }
             }
             HeroCollision collision = new HeroCollision(spawnPosition, collidableList);
+            
             PlayerInput input = new PlayerInput(Game1.keyBoard);
             Hero hero = new Hero
             {
@@ -166,8 +174,10 @@ namespace GameEngine1
                 _PhysicsHandler = physics,
                 _AnimationHandler = animationHandler,
                 _collision = collision,
-                Input = input
+                Input = input,
+                Health = 5
             };
+            hero._collision.Parent = hero;
             hero.Weapon = CreateWeapon(hero);
             return hero;
         }

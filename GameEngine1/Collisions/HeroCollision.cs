@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using GameEngine1.GameObjects;
 using GameEngine1.Interfaces;
 using GameEngine1.Utilities;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine1.Collisions
 {
-    class HeroCollision : ICollision
+    public class HeroCollision : ICollision
     {
         public Rectangle CollisionRectangle { get; set; }
         public Rectangle CollisionRectangleOld { get; set; }
@@ -16,8 +17,9 @@ namespace GameEngine1.Collisions
         public int RectangleOffsetY { get; set; }
         public int RectangleWidth { get; set; } = 8;
         public int RectangleHeight { get; set; } = 24;
-        private List<ICollision> collidableObstacles;
-        public void HanldeCollisions(IPhysicsHandler physics, ITransform transform)
+        protected List<ICollision> collidableObstacles;
+        public Entity Parent { get; set; }
+        public virtual void HanldeCollisions(IPhysicsHandler physics, ITransform transform)
         {
             UpdateRectangle(transform.Position);
             Vector2 collisionDisplacment = new Vector2(0, 0);
@@ -41,7 +43,7 @@ namespace GameEngine1.Collisions
             UpdateRectangle(transform.Position); //Opnieuw update want nieuwe positie
             CollisionRectangleOld = CollisionRectangle;
         }
-        private void UpdateRectangle(Vector2 position)
+        protected void UpdateRectangle(Vector2 position)
         {
             CollisionRectangle = new Rectangle((int)Math.Round(position.X + RectangleOffsetX), (int)Math.Round(position.Y + RectangleOffsetY), RectangleWidth, RectangleHeight);
         }
@@ -58,13 +60,16 @@ namespace GameEngine1.Collisions
             CollisionRight = new Point(CollisionRectangle.Right + 1, CollisionRectangle.Center.Y);
         }*/
 
-        public Vector2 CollisionFix(IPhysicsHandler physics, ICollision objectA)
+        public virtual Vector2 CollisionFix(IPhysicsHandler physics, ICollision objectA)
         {
-            //nog doen
+            if (objectA is BulletCollision)
+            {
+
+            }
             return new Vector2(0,0);
         }
 
-        public void CollisionCheck(Rectangle rectangle, IPhysicsHandler physics)
+        public virtual void CollisionCheck(Rectangle rectangle, IPhysicsHandler physics)
         {
             //throw new NotImplementedException(); nog niet nodig
         }
