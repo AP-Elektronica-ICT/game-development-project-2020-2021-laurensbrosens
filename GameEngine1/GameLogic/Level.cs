@@ -46,10 +46,6 @@ namespace GameEngine1.GameLogic
             }
             foreach (Human human in humans)
             {
-                if (human.Team == 2)
-                {
-                    Debug.Write(human.Health);
-                }
                 human.Update(gameTime);
             }
             foreach (Bullet bullet in bullets)

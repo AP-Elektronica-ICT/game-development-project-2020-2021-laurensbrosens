@@ -1,5 +1,6 @@
 ﻿using GameEngine1.GameObjects;
 using GameEngine1.Interfaces;
+using GameEngine1.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -11,7 +12,14 @@ namespace GameEngine1.Input
     public class AIInput : IInput
     {
         public Soldier Parent { get; set; }
-        public Vector2 Inputs()
+        public int JumpChance { get; set; }
+        private Cooldown cooldown { get; set; }
+        public AIInput()
+        {
+            cooldown = new Cooldown();
+            JumpChance = RandomNumberClass.GenerateRandomNumber(0, 10);
+        }
+        public Vector2 Inputs(GameTime gameTime)
         {
             int directionX = 0;
             int directionY = 0;
@@ -56,19 +64,26 @@ namespace GameEngine1.Input
             {
                 directionY++;
             }*/
-            if (Parent.Position.X < Parent.Target.Position.X - 30)
+            if (Parent.Target != null)
             {
-                directionX++;
+                if (Parent.Position.X < Parent.Target.Position.X - 30)
+                {
+                    directionX++;
+                }
+                if (Parent.Position.X > Parent.Target.Position.X + 30)
+                {
+                    directionX--;
+                }
+                if (Parent.Position.Y < Parent.Target.Position.Y - 110)
+                {
+                    directionY--;
+                }
+                if (Parent.Position.Y > Parent.Target.Position.Y + 130)
+                {
+                    directionY++;
+                }
             }
-            if (Parent.Position.X > Parent.Target.Position.X + 30)
-            {
-                directionX--;
-            }
-            if (Parent.Position.Y < Parent.Target.Position.Y - 110)
-            {
-                directionY--;
-            }
-            if (Parent.Position.Y > Parent.Target.Position.Y + 110)
+            if (cooldown.CooldownTimer(gameTime, JumpChance))
             {
                 directionY++;
             }

@@ -11,7 +11,7 @@ namespace GameEngine1.Physics
     {
         public float groundResistance { get; set; } = 0.10f; //Weerstand op de grond, default 0.15f, 0.01f is goed voor ijs lol
         public float airResistance { get; set; } = 0.015f; //Weerstand in de lucht, default 0.015f
-        public float inputAcceleration { get; set; } = 20f; //Acceleratie door input, default 100
+        public float inputAcceleration { get; set; } = 15f; //Acceleratie door input, default 100
         public float Gravity { get; set; } = 9.8f; //Acceleratie door zwaartekracht, default 9.8f
         public float jumpingSpeed { get; set; } = 5.5f; //Snelheid bij springen, default 8
         public float VelocityX { get; set; } = 0; //Snelheid horizontaal, default 0
@@ -26,7 +26,7 @@ namespace GameEngine1.Physics
         public float verticalInput = 0f;
         public virtual void Move(GameTime gameTime, ITransform transform, IInput input)
         {
-            Vector2 movementInput = input.Inputs();
+            Vector2 movementInput = input.Inputs(gameTime);
             horizontalInput = movementInput.X;
             verticalInput = movementInput.Y;
             if (CollisionLeft && horizontalInput < 0) //Kan niet naar links als links botsing

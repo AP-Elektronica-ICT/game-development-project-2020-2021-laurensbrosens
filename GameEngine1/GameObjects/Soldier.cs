@@ -12,8 +12,9 @@ namespace GameEngine1.GameObjects
     public class Soldier : Human
     {
         public Human Target { get; set; }
-        public Soldier() //Start met random target te kiezen
+        public Soldier(int team) //Start met random target te kiezen
         {
+            Team = team;
             RandomTarget();
         }
         public override void Update(GameTime gameTime)
@@ -50,6 +51,10 @@ namespace GameEngine1.GameObjects
                     }
                 }
                 Target = target;
+            }
+            if (target == null)
+            {
+                Game1.gameOver = true;
             }
         }
     }

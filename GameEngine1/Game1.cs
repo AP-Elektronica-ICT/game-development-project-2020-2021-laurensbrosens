@@ -19,12 +19,13 @@ namespace GameEngine1
         private SpriteBatch _spriteBatch;
         public static int ScreenHeight = 1000;
         public static int ScreenWidth = 1900;
-        public static ILevel currentLevel;
+        public static Level currentLevel;
         private RandomNumberClass randomNumberGenerator;
         private Camera camera;
         public static IKeyboard keyBoard; //Static zodat niet miljoen keer moet doorgegeven worden
         public static MouseInput mouse; //Static zodat niet miljoen keer moet doorgegeven worden
         private bool paused = false;
+        public static bool gameOver = false;
 
         public Game1()
         {
@@ -66,6 +67,10 @@ namespace GameEngine1
             if (paused)
                 return;
             camera.Update(currentLevel.hero, mouse);
+            if (currentLevel.humans.Count <= 1 || !currentLevel.hero.Alive)
+            {
+                gameOver = true;
+            }
             currentLevel.Update(gameTime);
             base.Update(gameTime);
         }
@@ -75,6 +80,17 @@ namespace GameEngine1
             GraphicsDevice.Clear(Color.AliceBlue);
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, transformMatrix: camera.Transform);
             currentLevel.Draw(_spriteBatch);
+            if (gameOver)
+            {
+                if (currentLevel.hero.Health >= 1)
+                {
+                    _spriteBatch.DrawString(Textures.font, "GG", currentLevel.hero.Position, Color.Black);
+                }
+                else
+                {
+                    _spriteBatch.DrawString(Textures.font, "Game Over", currentLevel.hero.Position, Color.Black);
+                }
+            }
             _spriteBatch.End();
             base.Draw(gameTime);
         }

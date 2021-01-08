@@ -19,7 +19,7 @@ namespace GameEngine1
 {
     public static class Factory
     {
-        public static ILevel CreateLevel(string EntityType)
+        public static Level CreateLevel(string EntityType)
         {
             try
             {
@@ -144,12 +144,20 @@ namespace GameEngine1
             targets.Add(((Level)bullet.currentLevel).obstacles[0]._collision); //Voeg grond toe, hardcoded voor nu
             bullet.Texture = Textures.bulletTexture;
             BulletPhysicsHandler physicsHandler = new BulletPhysicsHandler();
-            physicsHandler.inputAcceleration = 800; //Default 800
+            physicsHandler.inputAcceleration = 700; //Default 800
+            Vector2 accuracyReduction = new Vector2(RandomNumberClass.GenerateRandomFloat(-0.15f,0.15f), RandomNumberClass.GenerateRandomFloat(-0.10f, 0.08f));
+            direction = Vector2.Normalize(direction);
+            direction += accuracyReduction;
             physicsHandler.Direction = Vector2.Normalize(direction);
             bullet._PhysicsHandler = physicsHandler;
-            bullet._collision = new BulletCollision(transform.Position, targets);
+            BulletCollision collision = new BulletCollision(transform.Position, targets);
+            collision.RectangleWidth = 5;
+            collision.RectangleHeight = 3;
+            //collision.RectangleOffsetX = 13;
+            //collision.RectangleOffsetY = 14;
+            bullet._collision = collision;
             bullet._collision.Parent = bullet;
-            bullet.Scale = 1f;
+            bullet.Scale = 2.5f;
             bullet.Rotation = MathUtilities.VectorToAngle(direction);
             bullet.Position = new Vector2(transform.Position.X + 9, transform.Position.Y + 13);
             ((Level)bullet.currentLevel).bullets.Add(bullet);
@@ -192,7 +200,7 @@ namespace GameEngine1
                 _AnimationHandler = animationHandler,
                 _collision = collision,
                 Input = input,
-                Health = 5
+                Health = 20
             };
             hero._collision.Parent = hero;
             hero.Weapon = CreateWeapon(hero, animationHandler.Mouse);
@@ -215,17 +223,16 @@ namespace GameEngine1
             }
             HeroCollision collision = new HeroCollision(spawnPosition, collidableList);
             AIInput input = new AIInput();
-            Soldier soldier = new Soldier
+            Soldier soldier = new Soldier(teamNumber)
             {
                 Texture = Textures.heroTexture,
-                Team = teamNumber,
                 Scale = 1f,
                 Position = spawnPosition,
                 _PhysicsHandler = physics,
                 _AnimationHandler = animationHandler,
                 _collision = collision,
                 Input = input,
-                Health = 5
+                Health = 10
             };
             aiMouse.Parent = soldier;
             input.Parent = soldier;

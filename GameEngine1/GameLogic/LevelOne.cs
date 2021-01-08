@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using GameEngine1.Art;
 using GameEngine1.GameObjects;
@@ -50,10 +51,15 @@ namespace GameEngine1.GameLogic
             }
             hero = (Hero)Factory.CreateHero(new Vector2(150, 1800), obstacles);
             humans.Add(hero);
-            Soldier soldier = (Soldier)Factory.CreateSoldier(new Vector2(120, 1800), obstacles, 1);
-            Soldier soldier2 = (Soldier)Factory.CreateSoldier(new Vector2(180, 1800), obstacles, 2);
-            humans.Add(soldier);
-            humans.Add(soldier2);
+            Soldier soldier;
+            Soldier soldier2;
+            for (int i = 0; i < 100; i++)
+            {
+                soldier = (Soldier)Factory.CreateSoldier(new Vector2(i*14, 1800), obstacles, 1);
+                soldier2 = (Soldier)Factory.CreateSoldier(new Vector2(6000+i*14, 1800), obstacles, 2);
+                humans.Add(soldier);
+                humans.Add(soldier2);
+            }
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

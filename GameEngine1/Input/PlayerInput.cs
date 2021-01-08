@@ -14,7 +14,7 @@ namespace GameEngine1.Input
         {
             keyboard = keyboardInput;
         }
-        public Vector2 Inputs()
+        public Vector2 Inputs(GameTime gameTime)
         {
             int directionX = 0;
             int directionY = 0;

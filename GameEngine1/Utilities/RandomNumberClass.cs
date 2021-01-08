@@ -15,6 +15,10 @@ namespace GameEngine1.Utilities
         {
             return rng.Next(min, max + 1);
         }
+        static public float GenerateRandomFloat(float min, float max)
+        {
+            return (float)rng.NextDouble() * (max - min) + min;
+        }
         static public int GenerateRandomWeightedNumber(int min, int max, int location, int center) //Gives a random number that is more likely to be around a certain value
         {
             double x = location;

@@ -22,13 +22,22 @@ namespace GameEngine1.Input
         {
             if (Parent.Target == null || Parent.Target.Health <= 0)
             {
-                Parent.ClosestTarget();
+                Parent.RandomTarget();
             }
-            Position = Parent.Target.Position;
+            if (Parent.Target != null)
+            {
+                Position = Parent.Target.Position;
+            }
         }
         public bool LeftKeyClicked()
         {
-            //throw new NotImplementedException();
+            if (Parent.Target != null)
+            {
+                if (Vector2.Distance(Parent.Position, Parent.Target.Position) < 400)
+                {
+                    return true;
+                }
+            }
             return false;
         }
         public bool RightKeyClicked()
