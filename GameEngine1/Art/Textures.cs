@@ -21,6 +21,8 @@ namespace GameEngine1.Art
         public static Texture2D RoundBuilding { get; private set; }
         public static Texture2D bulletTexture { get; private set; }
         public static Texture2D gunTexture { get; private set; }
+        public static Texture2D EnemyTexture { get; private set; }
+        public static Texture2D GroundTexture { get; private set; }
         public static void Load(ContentManager Content)
         {
             heroTexture = Content.Load<Texture2D>("SoldierAnimations");
@@ -30,6 +32,8 @@ namespace GameEngine1.Art
             RoundBuilding = Content.Load<Texture2D>("RoundBuilding");
             bulletTexture = Content.Load<Texture2D>("Bullet_Blue");
             gunTexture = Content.Load<Texture2D>("blueGun");
+            EnemyTexture = Content.Load<Texture2D>("Enemies");
+            GroundTexture = Content.Load<Texture2D>("GroundTexture");
         }
     }
 }

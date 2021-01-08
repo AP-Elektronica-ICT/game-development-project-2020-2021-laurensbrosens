@@ -17,8 +17,8 @@ namespace GameEngine1
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        public static int ScreenHeight = 800;
-        public static int ScreenWidth = 1500;
+        public static int ScreenHeight = 1000;
+        public static int ScreenWidth = 1900;
         public static ILevel currentLevel;
         private RandomNumberClass randomNumberGenerator;
         private Camera camera;

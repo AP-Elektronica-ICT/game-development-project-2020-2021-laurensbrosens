@@ -59,14 +59,16 @@ namespace GameEngine1
         {
             RigidBodyCollision collision = new RigidBodyCollision
             {
-                RectangleHeight = 300,
+                RectangleHeight = 100,
                 RectangleWidth = 10000
             };
             collision.UpdateRectangle(position);
-            Entity ground = new Entity
+            Entity ground = new Ground()
             {
+                Length = collision.RectangleWidth,
+                Height = 1000,
                 Position = position,
-                Texture = Textures.heroTexture, //Moet nog grond texture worden
+                Texture = Textures.GroundTexture, //Moet nog grond texture worden
                 _collision = collision
             };
             return ground;

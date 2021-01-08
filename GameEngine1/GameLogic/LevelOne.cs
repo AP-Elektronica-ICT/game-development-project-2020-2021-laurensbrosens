@@ -17,7 +17,7 @@ namespace GameEngine1.GameLogic
         public override void Load()
         {
             base.Load();
-            obstacles.Add(Factory.CreateGround(new Vector2(-200, 2000)));
+            obstacles.Add(Factory.CreateGround(new Vector2(-1000, 2000)));
             List<Texture2D> buildingTextures = new List<Texture2D>();
             buildingTextures.Add(Textures.GreenBuilding);
             buildingTextures.Add(Textures.PinkBuilding);
