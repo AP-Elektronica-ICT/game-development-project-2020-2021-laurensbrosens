@@ -16,7 +16,7 @@ namespace GameEngine1.Weapons
     public class Weapon : MovableEntity, IWeapon, ITeam
     {
         private bool canShoot = true;
-        public MouseInput Mouse { get; set; }
+        public IMouseInput Mouse { get; set; }
         public int Team { get; set; }
 
         private Cooldown cooldown;

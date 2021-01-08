@@ -10,12 +10,5 @@ namespace GameEngine1.GameObjects
 {
     public sealed class Hero : Human
     {
-        public override void Update(GameTime gameTime)
-        {
-            _PhysicsHandler.Move(gameTime, this, Input);
-            _collision.HanldeCollisions(_PhysicsHandler, this);
-            _AnimationHandler.Update(gameTime, _PhysicsHandler, _collision, this);
-            Weapon.Update(gameTime);
-        }
     }
 }

@@ -101,6 +101,19 @@ namespace GameEngine1
             animations.Add(CreateAnimation(Width * 4, Height * 2, Width, Height, 1, "jumpRight", 5f));
             return animations;
         }
+        public static List<Animation> CreateEnemyAnimations()
+        {
+            int Width = 16;
+            int Height = 24;
+            List<Animation> animations = new List<Animation>();
+            animations.Add(CreateAnimation(0, 0, Width, Height, 4, "idleLeft", 5f));
+            animations.Add(CreateAnimation(0, Height, Width, Height, 4, "idleRight", 5f));
+            animations.Add(CreateAnimation(0, Height * 2, Width, Height, 4, "RunLeft", 5f));
+            animations.Add(CreateAnimation(0, Height * 3, Width, Height, 4, "RunRight", 5f));
+            animations.Add(CreateAnimation(0, Height * 4, Width, Height, 1, "jumpLeft", 5f));
+            animations.Add(CreateAnimation(0, Height * 5, Width, Height, 1, "jumpRight", 5f));
+            return animations;
+        }
         public static Weapon CreateWeapon(Entity anObject)
         {
             Weapon weapon = new Weapon();
@@ -184,6 +197,39 @@ namespace GameEngine1
             hero._collision.Parent = hero;
             hero.Weapon = CreateWeapon(hero);
             return hero;
+        }
+        public static IEntity CreateSoldier(Vector2 spawnPosition, List<IEntity> obstacles, int teamNumber)
+        {
+            PhysicsHandler physics = new PhysicsHandler();
+            HeroAnimationHandler animationHandler = new HeroAnimationHandler(Textures.heroTexture);
+            animationHandler.animations = CreateHeroAnimations();
+            AIMouseInput aiMouse = new AIMouseInput();
+            animationHandler.Mouse = aiMouse;
+            List<ICollision> collidableList = new List<ICollision>();
+            foreach (var obstacle in obstacles)
+            {
+                if (obstacle._collision != null)
+                {
+                    collidableList.Add(obstacle._collision);
+                }
+            }
+            HeroCollision collision = new HeroCollision(spawnPosition, collidableList);
+            AIInput input = new AIInput();
+            Soldier soldier = new Soldier
+            {
+                Texture = Textures.heroTexture,
+                Team = teamNumber,
+                Scale = 1f,
+                Position = spawnPosition,
+                _PhysicsHandler = physics,
+                _AnimationHandler = animationHandler,
+                _collision = collision,
+                Input = input,
+                Health = 5
+            };
+            soldier._collision.Parent = soldier;
+            soldier.Weapon = CreateWeapon(soldier);
+            return soldier;
         }
         static public Animation CreateAnimation(int x, int y, int width, int height, int frameAmount, string name, float fps) //Creëert een animatie op dezelfde rij
         {

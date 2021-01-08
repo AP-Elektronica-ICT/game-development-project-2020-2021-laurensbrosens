@@ -17,7 +17,9 @@ namespace GameEngine1.GameObjects
         public int Health { get; set; }
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
+            _PhysicsHandler.Move(gameTime, this, Input);
+            _collision.HanldeCollisions(_PhysicsHandler, this);
+            _AnimationHandler.Update(gameTime, _PhysicsHandler, _collision, this);
             Weapon.Update(gameTime);
         }
         public override void Draw(SpriteBatch spriteBatch)

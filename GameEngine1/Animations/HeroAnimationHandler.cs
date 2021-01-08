@@ -11,7 +11,7 @@ namespace GameEngine1.Animations
     class HeroAnimationHandler : IAnimationHandler
     {
         public List<Animation> animations { get; set; }
-        public MouseInput Mouse { get; set; }
+        public IMouseInput Mouse { get; set; }
         private int CurrentAnimation;
         private int OldAnimation;
         private Texture2D texture;

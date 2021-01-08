@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine1.Input
 {
-    public class MouseInput
+    public class MouseInput : IMouseInput
     {
         public MouseState mouseState { get; set; }
         public MouseState mouseStateOld { get; set; }

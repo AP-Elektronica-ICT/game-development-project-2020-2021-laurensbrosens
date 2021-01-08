@@ -16,7 +16,7 @@ namespace GameEngine1.Animations
     {
         public List<Animation> animations { get; set; }
         public ITransform ParentTransform { get; set; } //Nodig om parent te volgen
-        public MouseInput Mouse { get; set; }
+        public IMouseInput Mouse { get; set; }
         private int CurrentAnimation = 3;
         private int OldAnimation;
         public Texture2D Texture { get; set; }

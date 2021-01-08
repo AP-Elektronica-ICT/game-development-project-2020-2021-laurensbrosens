@@ -50,6 +50,10 @@ namespace GameEngine1.GameLogic
             }
             hero = (Hero)Factory.CreateHero(new Vector2(150, 1800), obstacles);
             humans.Add(hero);
+            Soldier soldier = (Soldier)Factory.CreateSoldier(new Vector2(120, 1800), obstacles, 1);
+            Soldier soldier2 = (Soldier)Factory.CreateSoldier(new Vector2(180, 1800), obstacles, 2);
+            humans.Add(soldier);
+            humans.Add(soldier2);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
