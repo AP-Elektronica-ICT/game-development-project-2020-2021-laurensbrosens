@@ -11,6 +11,7 @@ namespace GameEngine1.Weapons
 {
     public class Weapon : MovableEntity, IWeapon
     {
+        public ITransform Parent { get; set; }
         public void Shoot()
         {
             throw new NotImplementedException();
@@ -19,6 +20,10 @@ namespace GameEngine1.Weapons
         {
             _PhysicsHandler.Move(gameTime, this, null);
             _AnimationHandler.Update(gameTime, _PhysicsHandler, _collision);
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            _AnimationHandler.Draw(spriteBatch, Parent);
         }
     }
 }

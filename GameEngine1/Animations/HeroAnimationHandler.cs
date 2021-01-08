@@ -33,38 +33,17 @@ namespace GameEngine1.Animations
                 }
                 if (physics.VelocityX < threshold && physics.VelocityX > -threshold)
                 {
-                    if (Mouse.Position.X < hero.CollisionRectangle.Center.X)
-                    {
-                        CurrentAnimation = 0;
-                    }
-                    else
-                    {
-                        CurrentAnimation = 1;
-                    }
+                    CurrentAnimation = Mouse.Position.X < hero.CollisionRectangle.Center.X ? 0 : 1;
                 }
                 else
                 {
                     animationSpeed = Math.Abs(physics.VelocityX) / 20f;
-                    if (Mouse.Position.X < hero.CollisionRectangle.Center.X)
-                    {
-                        CurrentAnimation = 2;
-                    }
-                    else
-                    {
-                        CurrentAnimation = 3;
-                    }
+                    CurrentAnimation = Mouse.Position.X < hero.CollisionRectangle.Center.X ? 2 : 3;
                 }
             }
             else
             {
-                if (Mouse.Position.X < hero.CollisionRectangle.Center.X)
-                {
-                    CurrentAnimation = 4;
-                }
-                else
-                {
-                    CurrentAnimation = 5;
-                }
+                CurrentAnimation = Mouse.Position.X < hero.CollisionRectangle.Center.X ? 4 : 5;
             }
             bool reset = false;
             if (CurrentAnimation != OldAnimation)

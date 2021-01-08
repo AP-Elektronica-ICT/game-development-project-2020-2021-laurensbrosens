@@ -10,7 +10,7 @@ namespace GameEngine1.Physics
 {
     class WeaponPhysicsHandler : PhysicsHandler
     {
-        public bool Shoot { get; set; }
+        public bool Shoot { get; set; } = false;
         public MouseInput Mouse { get; set; }
         public override void Move(GameTime gameTime, ITransform transform, IInput input)
         {
@@ -18,6 +18,10 @@ namespace GameEngine1.Physics
             {
                 Debug.Write("   asdfsaf    ");
                 Shoot = true;
+            }
+            else
+            {
+                Shoot = false;
             }
         }
     }

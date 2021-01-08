@@ -65,7 +65,7 @@ namespace GameEngine1
             Entity ground = new Entity
             {
                 Position = position,
-                Texture = Textures.gunTexture, //Moet nog grond texture worden
+                Texture = Textures.heroTexture, //Moet nog grond texture worden
                 _collision = collision
             };
             return ground;
@@ -104,11 +104,15 @@ namespace GameEngine1
             WeaponPhysicsHandler physicsHandler = new WeaponPhysicsHandler();
             physicsHandler.Mouse = Game1.mouse;
             weapon._PhysicsHandler = physicsHandler;
-            GunAnimationHandler animationHandler = new GunAnimationHandler(Textures.gunTexture);
+            GunAnimationHandler animationHandler = new GunAnimationHandler();
+            animationHandler.Texture = Textures.gunTexture;
             animationHandler.Mouse = Game1.mouse;
             animationHandler.animations = CreateGunAnimations();
             weapon._AnimationHandler = animationHandler;
-            weapon.Position = anObject.Position;
+            weapon._collision = anObject._collision;
+            weapon.Position = anObject.Position; //Startpositie
+            weapon.Parent = anObject; //Volg object
+            weapon.Scale = 0.8f;
             return weapon;
         }
         public static List<Animation> CreateGunAnimations()
