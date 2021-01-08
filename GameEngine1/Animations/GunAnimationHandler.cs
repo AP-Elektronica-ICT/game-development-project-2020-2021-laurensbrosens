@@ -20,6 +20,7 @@ namespace GameEngine1.Animations
         private int CurrentAnimation = 3;
         private int OldAnimation;
         public Texture2D Texture { get; set; }
+        public bool Shoot { get; set; } = false;
         public void Update(GameTime gameTime, IPhysicsHandler physics, ICollision hero, ITransform transform)
         {
             OldAnimation = CurrentAnimation;
@@ -40,9 +41,10 @@ namespace GameEngine1.Animations
                 CurrentAnimation = Mouse.Position.X < hero.CollisionRectangle.Center.X ? 2 : 3;
             }
 
-            if (((WeaponPhysicsHandler)physics).Shoot)
+            if (Shoot)
             {
                 reset = true;
+                Shoot = false;
                 CurrentAnimation = Mouse.Position.X < hero.CollisionRectangle.Center.X ? 0 : 1;
                 animations[CurrentAnimation].FrameNumber = 0;
             }

@@ -1,29 +1,47 @@
-﻿using GameEngine1.GameObjects;
+﻿using GameEngine1.Animations;
+using GameEngine1.GameObjects;
 using GameEngine1.Input;
 using GameEngine1.Interfaces;
 using GameEngine1.Physics;
+using GameEngine1.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace GameEngine1.Weapons
 {
-    public class Weapon : MovableEntity, IWeapon
+    public class Weapon : MovableEntity, IWeapon, ITeam
     {
-        public void Shoot()
+        private bool canShoot = true;
+        public MouseInput Mouse { get; set; }
+        public int Team { get; set; }
+
+        private Cooldown cooldown;
+        private float shootingSpeed; //Max kliksnelheid voor schieten
+        public Weapon()
         {
-            //throw new NotImplementedException();
-            //Bullets aanmaken
+            cooldown = new Cooldown();
+            shootingSpeed = 0.5f;
+        }
+        public void Shoot(GameTime gameTime)
+        {
+            ((GunAnimationHandler)_AnimationHandler).Shoot = true; //Default is niet auto-fire
+            Factory.CreateBullet(this, Team);
         }
         public override void Update(GameTime gameTime)
         {
-            _PhysicsHandler.Move(gameTime, this, null);
             _AnimationHandler.Update(gameTime, _PhysicsHandler, _collision, this);
-            if (((WeaponPhysicsHandler)_PhysicsHandler).Shoot)
+            if (cooldown.CooldownTimer(gameTime, shootingSpeed))
             {
-                Shoot();
+                canShoot = true;
+            }
+            if (Mouse.LeftKeyClicked() && canShoot)
+            {
+                Shoot(gameTime);
+                canShoot = false;
             }
         }
         public override void Draw(SpriteBatch spriteBatch)

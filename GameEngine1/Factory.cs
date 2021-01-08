@@ -101,9 +101,7 @@ namespace GameEngine1
         public static Weapon CreateWeapon(Entity anObject)
         {
             Weapon weapon = new Weapon();
-            WeaponPhysicsHandler physicsHandler = new WeaponPhysicsHandler();
-            physicsHandler.Mouse = Game1.mouse;
-            weapon._PhysicsHandler = physicsHandler;
+            weapon.Mouse = Game1.mouse;
             GunAnimationHandler animationHandler = new GunAnimationHandler();
             animationHandler.Texture = Textures.gunTexture;
             animationHandler.Mouse = Game1.mouse;
@@ -113,7 +111,24 @@ namespace GameEngine1
             weapon._collision = anObject._collision;
             weapon.Position = anObject.Position; //Startpositie
             weapon.Scale = 0.9f;
+            weapon.Team = ((Human)anObject).Team;
             return weapon;
+        }
+        public static void CreateBullet(ITransform transform, int team)
+        {
+            Bullet bullet = new Bullet();
+            List<ICollision> targets = new List<ICollision>(); //is nog leeg
+            foreach (var human in ((Level)bullet.currentLevel).humans)
+            {
+                if (human.Team != team)
+                {
+                    targets.Add(human._collision);
+                }
+            }
+            bullet.Texture = Textures.bulletTexture;
+            bullet._PhysicsHandler = new PhysicsHandler();
+            bullet._collision = new HeroCollision(transform.Position, targets);
+            ((Level)bullet.currentLevel).bullets.Add(bullet);
         }
         public static List<Animation> CreateGunAnimations()
         {
@@ -145,8 +160,7 @@ namespace GameEngine1
             Hero hero = new Hero
             {
                 Texture = Textures.heroTexture,
-                Team1 = true,
-                Team2 = false,
+                Team = 1,
                 Scale = 1f,
                 Position = spawnPosition,
                 _PhysicsHandler = physics,

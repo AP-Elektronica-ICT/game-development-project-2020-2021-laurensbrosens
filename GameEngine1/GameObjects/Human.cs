@@ -12,8 +12,7 @@ namespace GameEngine1.GameObjects
     public class Human : MovableEntity, IHealth, ITeam
     {
         public IInput Input { protected get; set; }
-        public bool Team1 { get; set; }
-        public bool Team2 { get; set; }
+        public int Team { get; set; }
         public Weapon Weapon {get; set;}
         public override void Update(GameTime gameTime)
         {

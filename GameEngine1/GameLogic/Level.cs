@@ -36,6 +36,9 @@ namespace GameEngine1.GameLogic
         }
         public virtual void Update(GameTime gameTime)
         {
+            obstacles.RemoveAll(x => x.Alive == false);
+            humans.RemoveAll(x => x.Alive == false);
+            bullets.RemoveAll(x => x.Alive == false);
             foreach (IEntity entity in obstacles)
             {
                 entity.Update(gameTime);
@@ -49,10 +52,9 @@ namespace GameEngine1.GameLogic
                 bullet.Update(gameTime);
             }
         }
-
-        protected List<Bullet> bullets;
-        protected List<Human> humans;
-        protected List<IEntity> obstacles;
+        public List<Bullet> bullets { get; set; }
+        public List<Human> humans { get; set; }
+        public List<IEntity> obstacles { get; set; }
         public Hero hero { get; set; }
     }
 }

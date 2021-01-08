@@ -1,4 +1,5 @@
 ﻿using GameEngine1.Art;
+using GameEngine1.GameLogic;
 using GameEngine1.GameObjects;
 using GameEngine1.Input;
 using GameEngine1.Interfaces;
@@ -18,11 +19,11 @@ namespace GameEngine1
         private SpriteBatch _spriteBatch;
         public static int ScreenHeight = 800;
         public static int ScreenWidth = 1500;
-        private ILevel currentLevel;
+        public static ILevel currentLevel;
         private RandomNumberClass randomNumberGenerator;
         private Camera camera;
-        public static IKeyboard keyBoard;
-        public static MouseInput mouse;
+        public static IKeyboard keyBoard; //Static zodat niet miljoen keer moet doorgegeven worden
+        public static MouseInput mouse; //Static zodat niet miljoen keer moet doorgegeven worden
         private bool paused = false;
 
         public Game1()
@@ -44,7 +45,7 @@ namespace GameEngine1
         protected override void LoadContent()
         {
             randomNumberGenerator = new RandomNumberClass();
-            Art.Textures.Load(Content);
+            Textures.Load(Content);
             camera = new Camera();
             keyBoard = (IKeyboard)Activator.CreateInstance(Type.GetType($"GameEngine1.Input.KeyboardInput"), new object[] { });
             mouse = new MouseInput();
@@ -64,7 +65,6 @@ namespace GameEngine1
                 paused = !paused;
             if (paused)
                 return;
-            //Debug.Write($"zoom = {currentLevel.hero.Position.Y}\n");
             camera.Update(currentLevel.hero, mouse);
             currentLevel.Update(gameTime);
             base.Update(gameTime);
