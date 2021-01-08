@@ -19,7 +19,10 @@ namespace GameEngine1.Collisions
             {
                 if (CollisionUtilities.CheckRectangleCollision(CollisionRectangle, collidableObject.CollisionRectangle)) //Check of er een collision is
                 {
-                    ((Human)collidableObject.Parent).Health -= ((Bullet)Parent).Damage; //Als het mens is verminder HP met 1
+                    if (collidableObject is Human)
+                    {
+                        ((Human)collidableObject.Parent).Health -= ((Bullet)Parent).Damage; //Als het mens is verminder HP met 1
+                    }
                     Parent.Alive = false; //Bullet destroys itself when hit
                 }
             }

@@ -7,6 +7,7 @@ namespace GameEngine1.Interfaces
 {
     public interface IPhysicsHandler
     {
+        public float inputAcceleration { get; set; }
         public float VelocityX { get; set; }
         public float VelocityY { get; set; }
         public bool JumpingDown { get; set; } //Nodig bij platforms

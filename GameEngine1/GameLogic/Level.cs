@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using GameEngine1.GameObjects;
 using GameEngine1.Interfaces;
@@ -51,6 +52,8 @@ namespace GameEngine1.GameLogic
             {
                 bullet.Update(gameTime);
             }
+            Debug.Write(bullets.Count);
+            Debug.Write("\n");
         }
         public List<Bullet> bullets { get; set; }
         public List<Human> humans { get; set; }

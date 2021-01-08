@@ -30,7 +30,7 @@ namespace GameEngine1.GameObjects
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, new Rectangle(0,0,32,32), Color.White, Rotation, new Vector2(0, 0), Scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(Texture, Position, new Rectangle(0,0,32,32), Color.White, Rotation, new Vector2(15, 15), Scale, SpriteEffects.None, 0);
         }
     }
 }

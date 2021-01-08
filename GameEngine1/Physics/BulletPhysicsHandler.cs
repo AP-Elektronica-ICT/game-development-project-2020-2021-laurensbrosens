@@ -9,6 +9,7 @@ namespace GameEngine1.Physics
 {
     class BulletPhysicsHandler : IPhysicsHandler
     {
+        public float inputAcceleration { get; set; }
         public Vector2 Direction { get; set; }
         public float VelocityX { get; set; }
         public float VelocityY { get; set; }
@@ -22,7 +23,7 @@ namespace GameEngine1.Physics
         public void Move(GameTime gameTime, ITransform transform, IInput input)
         {
             float deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            transform.Position += Direction * deltaT;
+            transform.Position += Direction * deltaT * inputAcceleration;
         }
     }
 }

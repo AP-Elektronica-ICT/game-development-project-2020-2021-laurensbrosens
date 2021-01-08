@@ -15,7 +15,6 @@ namespace GameEngine1.GameObjects
         public int Team { get; set; }
         public Weapon Weapon {get; set;}
         public int Health { get; set; }
-
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);

@@ -129,12 +129,14 @@ namespace GameEngine1
             targets.Add(((Level)bullet.currentLevel).obstacles[0]._collision); //Voeg grond toe, hardcoded voor nu
             bullet.Texture = Textures.bulletTexture;
             BulletPhysicsHandler physicsHandler = new BulletPhysicsHandler();
+            physicsHandler.inputAcceleration = 800; //Default 800
             physicsHandler.Direction = Vector2.Normalize(direction);
             bullet._PhysicsHandler = physicsHandler;
             bullet._collision = new BulletCollision(transform.Position, targets);
             bullet._collision.Parent = bullet;
             bullet.Scale = 1f;
             bullet.Rotation = MathUtilities.VectorToAngle(direction);
+            bullet.Position = new Vector2(transform.Position.X + 9, transform.Position.Y + 13);
             ((Level)bullet.currentLevel).bullets.Add(bullet);
         }
         public static List<Animation> CreateGunAnimations()
