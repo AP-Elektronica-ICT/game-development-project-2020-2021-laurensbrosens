@@ -19,7 +19,7 @@ namespace GameEngine1.Animations
         {
             texture = texture2D;
         }
-        public void Update(GameTime gameTime, IPhysicsHandler physics, ICollision hero)
+        public void Update(GameTime gameTime, IPhysicsHandler physics, ICollision hero, ITransform transform)
         {
             OldAnimation = CurrentAnimation;
             float animationSpeed = 5; //Reset snelheid

@@ -15,7 +15,7 @@ namespace GameEngine1.GameObjects
         {
             _PhysicsHandler.Move(gameTime, this, null);
             _collision.HanldeCollisions(null, this);
-            _AnimationHandler.Update(gameTime, _PhysicsHandler, _collision);
+            _AnimationHandler.Update(gameTime, _PhysicsHandler, _collision, this);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

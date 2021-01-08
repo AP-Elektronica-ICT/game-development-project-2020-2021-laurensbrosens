@@ -108,11 +108,11 @@ namespace GameEngine1
             animationHandler.Texture = Textures.gunTexture;
             animationHandler.Mouse = Game1.mouse;
             animationHandler.animations = CreateGunAnimations();
+            animationHandler.ParentTransform = anObject; //Volg object
             weapon._AnimationHandler = animationHandler;
             weapon._collision = anObject._collision;
             weapon.Position = anObject.Position; //Startpositie
-            weapon.Parent = anObject; //Volg object
-            weapon.Scale = 0.8f;
+            weapon.Scale = 0.9f;
             return weapon;
         }
         public static List<Animation> CreateGunAnimations()
@@ -120,8 +120,8 @@ namespace GameEngine1
             int Width = 80;
             int Height = 80;
             List<Animation> animations = new List<Animation>();
-            animations.Add(CreateAnimation(0, 0, Width, Height, 9, "ShootLeft", 10f));
-            animations.Add(CreateAnimation(0, Height, Width, Height, 9, "ShootRight", 10f));
+            animations.Add(CreateAnimation(0, 0, Width, Height, 9, "ShootLeft", 15f));
+            animations.Add(CreateAnimation(0, Height, Width, Height, 9, "ShootRight", 15f));
             animations.Add(CreateAnimation(0, Height*2, Width, Height, 1, "idleLeft", 1f));
             animations.Add(CreateAnimation(Width, Height*2, Width, Height, 1, "idleRight", 1f));
             return animations;

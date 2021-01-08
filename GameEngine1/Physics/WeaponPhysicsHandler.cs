@@ -14,15 +14,7 @@ namespace GameEngine1.Physics
         public MouseInput Mouse { get; set; }
         public override void Move(GameTime gameTime, ITransform transform, IInput input)
         {
-            if (Mouse.LeftKeyClicked())
-            {
-                Debug.Write("   asdfsaf    ");
-                Shoot = true;
-            }
-            else
-            {
-                Shoot = false;
-            }
+            Shoot = Mouse.LeftKeyClicked();
         }
     }
 }

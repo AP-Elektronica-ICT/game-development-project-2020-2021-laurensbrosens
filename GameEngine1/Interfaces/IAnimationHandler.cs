@@ -9,7 +9,7 @@ namespace GameEngine1.Interfaces
 {
     public interface IAnimationHandler
     {
-        public void Update(GameTime gameTime, IPhysicsHandler physics, ICollision hero);
+        public void Update(GameTime gameTime, IPhysicsHandler physics, ICollision hero, ITransform transform);
         public void Draw(SpriteBatch spriteBatch, ITransform hero);
     }
 }
