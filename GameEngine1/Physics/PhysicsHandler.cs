@@ -13,7 +13,7 @@ namespace GameEngine1.Physics
         public float airResistance { get; set; } = 0.015f; //Weerstand in de lucht, default 0.015f
         public float inputAcceleration { get; set; } = 20f; //Acceleratie door input, default 100
         public float Gravity { get; set; } = 9.8f; //Acceleratie door zwaartekracht, default 9.8f
-        public float jumpingSpeed { get; set; } = 4f; //Snelheid bij springen, default 8
+        public float jumpingSpeed { get; set; } = 5.5f; //Snelheid bij springen, default 8
         public float VelocityX { get; set; } = 0; //Snelheid horizontaal, default 0
         public float VelocityY { get; set; } = 0; //Snelheid verticaal, default 0
         public bool JumpingDown { get; set; }
@@ -55,7 +55,7 @@ namespace GameEngine1.Physics
             float deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
             VelocityX += inputAcceleration * horizontalInput - groundResistance * VelocityX; //Berekening van horizontale snelheid, snelheidx = acceleratie * input - grondweerstand * snelheidx
 
-            if (verticalInput > 0) //Als op de grond staat en springt, of vliegen zonder && OnGround == true
+            if (verticalInput > 0 && OnGround == true) //Als op de grond staat en springt, of vliegen zonder && OnGround == true
             {
                 VelocityY = -jumpingSpeed;
             }

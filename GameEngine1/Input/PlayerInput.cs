@@ -20,19 +20,19 @@ namespace GameEngine1.Input
             int directionY = 0;
             if (keyboard.keyboardState.IsKeyDown(Keys.A))
             {
-                directionX += -1;
+                directionX--;
             }
             if (keyboard.keyboardState.IsKeyDown(Keys.D))
             {
-                directionX += 1;
+                directionX++;
             }
             if (keyboard.keyboardState.IsKeyDown(Keys.Space))
             {
-                directionY += 1;
+                directionY++;
             }
             if (keyboard.keyboardState.IsKeyDown(Keys.S))
             {
-                directionY -= 1;
+                directionY--;
             }
             if (keyboard.keyboardState.IsKeyDown(Keys.LeftShift)) //Sprint
             {

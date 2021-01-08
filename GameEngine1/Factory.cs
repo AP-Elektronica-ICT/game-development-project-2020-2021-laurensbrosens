@@ -201,7 +201,6 @@ namespace GameEngine1
         public static IEntity CreateSoldier(Vector2 spawnPosition, List<IEntity> obstacles, int teamNumber)
         {
             PhysicsHandler physics = new PhysicsHandler();
-            physics.Gravity = 0;
             HeroAnimationHandler animationHandler = new HeroAnimationHandler(Textures.heroTexture);
             animationHandler.animations = CreateHeroAnimations();
             AIMouseInput aiMouse = new AIMouseInput();
@@ -229,6 +228,7 @@ namespace GameEngine1
                 Health = 5
             };
             aiMouse.Parent = soldier;
+            input.Parent = soldier;
             soldier._collision.Parent = soldier;
             soldier.Weapon = CreateWeapon(soldier, aiMouse);
             return soldier;
