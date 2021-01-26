@@ -13,6 +13,7 @@ namespace GameEngine1.AILogic
     {
         public int Team { get; set; }
         public ITransform Target { get; set; }
+        public IHealth TargetAlive { get; set; }
         public ITransform Soldier { get; set; }
         public void RandomTarget()
         {
@@ -20,9 +21,10 @@ namespace GameEngine1.AILogic
             {
                 if (human.Team != Team) //Zal exception gooien als gemikt wordt op target dat niet human is
                 {
-                    if (RandomNumberClass.GenerateRandomNumber(1, 100) <= 50) //Target is dichtste enemy
+                    if (RandomNumberClass.GenerateRandomNumber(1, 100) <= 50)
                     {
                         Target = human;
+                        TargetAlive = human;
                     }
                 }
             }

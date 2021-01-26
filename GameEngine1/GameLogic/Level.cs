@@ -44,10 +44,25 @@ namespace GameEngine1.GameLogic
             {
                 entity.Update(gameTime);
             }
+            int countHeroes = 0;
+            int countEnemies = 0;
             foreach (Human human in humans)
             {
+                if (human.Team == 1)
+                {
+                    countHeroes++;
+                }
+                else
+                {
+                    countEnemies++;
+                }
                 human.Update(gameTime);
             }
+            if (countEnemies == 0)
+            {
+                //Game1.gameOver = true;
+            }
+            Debug.Write($"Heroes = {countHeroes}, enemies = {countEnemies}\n");
             foreach (Bullet bullet in bullets)
             {
                 bullet.Update(gameTime);

@@ -12,7 +12,6 @@ namespace GameEngine1.GameObjects
 {
     public class Soldier : Human
     {
-        public Human Target { get; set; }
         public SoldierAI soldierAI { get; set; }
         public Soldier(int team) //Start met random target te kiezen
         {

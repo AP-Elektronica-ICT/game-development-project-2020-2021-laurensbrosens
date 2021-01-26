@@ -201,7 +201,7 @@ namespace GameEngine1
                 _AnimationHandler = animationHandler,
                 _collision = collision,
                 Input = input,
-                Health = 40
+                Health = 20
             };
             hero._collision.Parent = hero;
             hero.Weapon = CreateWeapon(hero, animationHandler.Mouse);
@@ -245,7 +245,7 @@ namespace GameEngine1
                 _AnimationHandler = animationHandler,
                 _collision = collision,
                 Input = input,
-                Health = 20
+                Health = 15
             };
             AI.Soldier = soldier;
             soldier.soldierAI = AI;
