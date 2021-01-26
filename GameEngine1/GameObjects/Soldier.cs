@@ -1,4 +1,5 @@
-﻿using GameEngine1.GameLogic;
+﻿using GameEngine1.AILogic;
+using GameEngine1.GameLogic;
 using GameEngine1.Input;
 using GameEngine1.Interfaces;
 using GameEngine1.Utilities;
@@ -12,50 +13,16 @@ namespace GameEngine1.GameObjects
     public class Soldier : Human
     {
         public Human Target { get; set; }
+        public SoldierAI soldierAI { get; set; }
         public Soldier(int team) //Start met random target te kiezen
         {
             Team = team;
-            RandomTarget();
         }
         public override void Update(GameTime gameTime)
         {
             ((AIMouseInput)Weapon.Mouse).Update();
             base.Update(gameTime);
         }
-        public void RandomTarget()
-        {
-            Human target = null;
-            foreach (var human in ((Level)Game1.currentLevel).humans)
-            {
-                if (human.Team != Team) //Zal exception gooien als gemikt wordt op target dat niet human is
-                {
-                    if (RandomNumberClass.GenerateRandomNumber(1,100) <= 50) //Target is dichtste enemy
-                    {
-                        target = human;
-                    }
-                }
-                Target = target;
-            }
-        }
-
-        public void ClosestTarget()
-        {
-            Human target = null;
-            foreach (var human in ((Level)Game1.currentLevel).humans)
-            {
-                if (human.Team != Team) //Zal exception gooien als gemikt wordt op target dat niet human is
-                {
-                    if (target == null || Vector2.Distance(human.Position, Position) < Vector2.Distance(target.Position, Position)) //Target is dichtste enemy
-                    {
-                        target = human;
-                    }
-                }
-                Target = target;
-            }
-            if (target == null)
-            {
-                Game1.gameOver = true;
-            }
-        }
+        
     }
 }

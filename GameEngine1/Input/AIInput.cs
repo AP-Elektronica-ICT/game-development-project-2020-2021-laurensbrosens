@@ -1,4 +1,5 @@
-﻿using GameEngine1.GameObjects;
+﻿using GameEngine1.AILogic;
+using GameEngine1.GameObjects;
 using GameEngine1.Interfaces;
 using GameEngine1.Utilities;
 using Microsoft.Xna.Framework;
@@ -11,7 +12,7 @@ namespace GameEngine1.Input
 {
     public class AIInput : IInput
     {
-        public Soldier Parent { get; set; }
+        public SoldierAI soldierAI { get; set; }
         public int JumpChance { get; set; }
         private Cooldown cooldown { get; set; }
         public AIInput()
@@ -64,21 +65,21 @@ namespace GameEngine1.Input
             {
                 directionY++;
             }*/
-            if (Parent.Target != null)
+            if (soldierAI.Target != null)
             {
-                if (Parent.Position.X < Parent.Target.Position.X - 30)
+                if (soldierAI.Soldier.Position.X < soldierAI.Target.Position.X - 30)
                 {
                     directionX++;
                 }
-                if (Parent.Position.X > Parent.Target.Position.X + 30)
+                if (soldierAI.Soldier.Position.X > soldierAI.Target.Position.X + 30)
                 {
                     directionX--;
                 }
-                if (Parent.Position.Y < Parent.Target.Position.Y - 110)
+                if (soldierAI.Soldier.Position.Y < soldierAI.Target.Position.Y - 110)
                 {
                     directionY--;
                 }
-                if (Parent.Position.Y > Parent.Target.Position.Y + 130)
+                if (soldierAI.Soldier.Position.Y > soldierAI.Target.Position.Y + 130)
                 {
                     directionY++;
                 }

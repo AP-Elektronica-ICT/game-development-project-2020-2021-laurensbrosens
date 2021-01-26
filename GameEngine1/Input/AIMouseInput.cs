@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using GameEngine1.AILogic;
 using GameEngine1.Art;
 using GameEngine1.Collisions;
 using GameEngine1.GameLogic;
@@ -17,23 +18,23 @@ namespace GameEngine1.Input
     class AIMouseInput : IMouseInput
     {
         public Vector2 Position { get; set; }
-        public Soldier Parent { get; set; }
+        public SoldierAI soldierAI { get; set; }
         public void Update()
         {
-            if (Parent.Target == null || Parent.Target.Health <= 0)
+            if (soldierAI.Target == null) //|| soldierAI.Target.Health <= 0) check of target nog leeft, wss niet nodig
             {
-                Parent.RandomTarget();
+                soldierAI.RandomTarget();
             }
-            if (Parent.Target != null)
+            if (soldierAI.Target != null)
             {
-                Position = Parent.Target.Position;
+                Position = soldierAI.Target.Position;
             }
         }
         public bool LeftKeyClicked()
         {
-            if (Parent.Target != null)
+            if (soldierAI.Target != null)
             {
-                if (Vector2.Distance(Parent.Position, Parent.Target.Position) < 400)
+                if (Vector2.Distance(soldierAI.Soldier.Position, soldierAI.Target.Position) < 400)
                 {
                     return true;
                 }

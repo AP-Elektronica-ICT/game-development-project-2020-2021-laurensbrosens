@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using GameEngine1.AILogic;
 using GameEngine1.Animations;
 using GameEngine1.Art;
 using GameEngine1.Collisions;
@@ -210,6 +211,8 @@ namespace GameEngine1
         {
             PhysicsHandler physics = new PhysicsHandler();
             HeroAnimationHandler animationHandler = new HeroAnimationHandler(Textures.heroTexture);
+            SoldierAI AI = new SoldierAI();
+            AI.Team = teamNumber;
             animationHandler.animations = CreateHeroAnimations();
             AIMouseInput aiMouse = new AIMouseInput();
             animationHandler.Mouse = aiMouse;
@@ -234,8 +237,10 @@ namespace GameEngine1
                 Input = input,
                 Health = 10
             };
-            aiMouse.Parent = soldier;
-            input.Parent = soldier;
+            AI.Soldier = soldier;
+            soldier.soldierAI = AI;
+            aiMouse.soldierAI = AI;
+            input.soldierAI = AI;
             soldier._collision.Parent = soldier;
             soldier.Weapon = CreateWeapon(soldier, aiMouse);
             return soldier;
