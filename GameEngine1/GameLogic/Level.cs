@@ -60,9 +60,8 @@ namespace GameEngine1.GameLogic
             }
             if (countEnemies == 0)
             {
-                //Game1.gameOver = true;
+                Game1.gameOver = true;
             }
-            Debug.Write($"Heroes = {countHeroes}, enemies = {countEnemies}\n");
             foreach (Bullet bullet in bullets)
             {
                 bullet.Update(gameTime);
