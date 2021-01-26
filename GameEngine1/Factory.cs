@@ -201,7 +201,7 @@ namespace GameEngine1
                 _AnimationHandler = animationHandler,
                 _collision = collision,
                 Input = input,
-                Health = 20
+                Health = 40
             };
             hero._collision.Parent = hero;
             hero.Weapon = CreateWeapon(hero, animationHandler.Mouse);
@@ -210,10 +210,20 @@ namespace GameEngine1
         public static IEntity CreateSoldier(Vector2 spawnPosition, List<IEntity> obstacles, int teamNumber)
         {
             PhysicsHandler physics = new PhysicsHandler();
-            HeroAnimationHandler animationHandler = new HeroAnimationHandler(Textures.heroTexture);
             SoldierAI AI = new SoldierAI();
+            HeroAnimationHandler animationHandler;
             AI.Team = teamNumber;
-            animationHandler.animations = CreateHeroAnimations();
+            if (AI.Team == 1)
+            {
+                animationHandler = new HeroAnimationHandler(Textures.heroTexture);
+                animationHandler.animations = CreateHeroAnimations();
+            }
+            else
+            {
+                animationHandler = new HeroAnimationHandler(Textures.EnemyTexture);
+                animationHandler.animations = CreateEnemyAnimations();
+            }
+            
             AIMouseInput aiMouse = new AIMouseInput();
             animationHandler.Mouse = aiMouse;
             List<ICollision> collidableList = new List<ICollision>();
@@ -235,7 +245,7 @@ namespace GameEngine1
                 _AnimationHandler = animationHandler,
                 _collision = collision,
                 Input = input,
-                Health = 10
+                Health = 20
             };
             AI.Soldier = soldier;
             soldier.soldierAI = AI;
