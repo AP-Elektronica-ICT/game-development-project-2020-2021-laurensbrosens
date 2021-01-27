@@ -32,7 +32,7 @@ namespace GameEngine1.Input
         }
         public bool LeftKeyClicked()
         {
-            if (soldierAI.Target != null || soldierAI.TargetAlive.Health <= 0)
+            if (soldierAI.Target != null && soldierAI.TargetAlive.Health > 0)
             {
                 if (Vector2.Distance(soldierAI.Soldier.Position, soldierAI.Target.Position) < 400)
                 {

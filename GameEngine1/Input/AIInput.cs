@@ -18,7 +18,7 @@ namespace GameEngine1.Input
         public AIInput()
         {
             cooldown = new Cooldown();
-            JumpChance = RandomNumberClass.GenerateRandomNumber(0, 10);
+            JumpChance = RandomNumberClass.GenerateRandomNumber(1, 10);
         }
         public Vector2 Inputs(GameTime gameTime)
         {
@@ -84,7 +84,7 @@ namespace GameEngine1.Input
                     directionY++;
                 }
             }
-            if (cooldown.CooldownTimer(gameTime, JumpChance))
+            if (cooldown.CooldownTimer(gameTime, JumpChance) && soldierAI.TargetAlive.Health > 0)
             {
                 directionY++;
             }

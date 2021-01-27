@@ -53,7 +53,7 @@ namespace GameEngine1.GameLogic
             humans.Add(hero);
             Soldier soldier;
             Soldier soldier2;
-            for (int i = 0; i < 22; i++)
+            for (int i = 0; i < 25; i++)
             {
                 soldier = (Soldier)Factory.CreateSoldier(new Vector2(i*14, 1800), obstacles, 1);
                 humans.Add(soldier);
