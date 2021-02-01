@@ -23,7 +23,10 @@ namespace GameEngine1.Art
         public static Texture2D gunTexture { get; private set; }
         public static Texture2D EnemyTexture { get; private set; }
         public static Texture2D GroundTexture { get; private set; }
-        public static SpriteFont font { get; private set; }
+        public static Texture2D IntroTexture { get; private set; }
+        public static SpriteFont font1 { get; private set; }
+        public static SpriteFont font2 { get; private set; }
+        public static SpriteFont font3 { get; private set; }
         public static void Load(ContentManager Content)
         {
             heroTexture = Content.Load<Texture2D>("SoldierAnimations");
@@ -35,7 +38,10 @@ namespace GameEngine1.Art
             gunTexture = Content.Load<Texture2D>("blueGun");
             EnemyTexture = Content.Load<Texture2D>("Enemies");
             GroundTexture = Content.Load<Texture2D>("GroundTexture");
-            font = Content.Load<SpriteFont>("Arial");
+            IntroTexture = Content.Load<Texture2D>("IntroBackground");
+            font1 = Content.Load<SpriteFont>("Arial");
+            font2 = Content.Load<SpriteFont>("Arial2");
+            font3 = Content.Load<SpriteFont>("Arial3");
         }
     }
 }

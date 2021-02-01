@@ -25,6 +25,7 @@ namespace GameEngine1
         public static IKeyboard keyBoard; //Static zodat niet miljoen keer moet doorgegeven worden
         public static MouseInput mouse; //Static zodat niet miljoen keer moet doorgegeven worden
         private bool paused = false;
+        private bool intro = true;
         public static bool gameOver = false;
 
         public Game1()
@@ -60,13 +61,22 @@ namespace GameEngine1
         {
             mouse.MouseUpdate(camera);
             keyBoard.KeyboardUpdate();
+            camera.Update(currentLevel.hero, mouse);
             if (keyBoard.KeyClicked(Keys.Escape))
                 Exit();
-            else if (keyBoard.KeyClicked(Keys.P))
+
+            if (intro) {
+                if (mouse.LeftKeyClicked())
+                {
+                    intro = false;
+                }
+                return;
+            }
+            if (keyBoard.KeyClicked(Keys.P))
                 paused = !paused;
             if (paused)
                 return;
-            camera.Update(currentLevel.hero, mouse);
+            
             if (currentLevel.humans.Count <= 1 || !currentLevel.hero.Alive)
             {
                 gameOver = true;
@@ -79,17 +89,28 @@ namespace GameEngine1
         {
             GraphicsDevice.Clear(Color.AliceBlue);
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, transformMatrix: camera.Transform);
-            currentLevel.Draw(_spriteBatch);
-            if (gameOver)
+            if (intro)
+            {
+                _spriteBatch.Draw(Textures.IntroTexture, new Vector2(currentLevel.hero.Position.X-2000, currentLevel.hero.Position.Y-500), new Rectangle(0, 0, 3000, 3000), Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+                _spriteBatch.DrawString(Textures.font1, "Stick figure army", new Vector2(currentLevel.hero.Position.X -200, currentLevel.hero.Position.Y-80), Color.Black);
+                _spriteBatch.DrawString(Textures.font2, "Klik met je muis om te starten", new Vector2(currentLevel.hero.Position.X -200, currentLevel.hero.Position.Y-20), Color.Black);
+            }
+            else if (gameOver)
             {
                 if (currentLevel.hero.Health >= 1)
                 {
-                    _spriteBatch.DrawString(Textures.font, "GG", currentLevel.hero.Position, Color.Black);
+                    _spriteBatch.Draw(Textures.IntroTexture, new Vector2(currentLevel.hero.Position.X - 2000, currentLevel.hero.Position.Y - 500), new Rectangle(0, 0, 3000, 3000), Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+                    _spriteBatch.DrawString(Textures.font1, "You won!", new Vector2(currentLevel.hero.Position.X - 200, currentLevel.hero.Position.Y - 80), Color.Black);
                 }
                 else
                 {
-                    _spriteBatch.DrawString(Textures.font, "Game Over", currentLevel.hero.Position, Color.Black);
+                    _spriteBatch.Draw(Textures.IntroTexture, new Vector2(currentLevel.hero.Position.X - 2000, currentLevel.hero.Position.Y - 500), new Rectangle(0, 0, 3000, 3000), Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+                    _spriteBatch.DrawString(Textures.font1, "Game Over", new Vector2(currentLevel.hero.Position.X - 200, currentLevel.hero.Position.Y - 80), Color.Black);
                 }
+            }
+            else
+            {
+                currentLevel.Draw(_spriteBatch);
             }
             _spriteBatch.End();
             base.Draw(gameTime);

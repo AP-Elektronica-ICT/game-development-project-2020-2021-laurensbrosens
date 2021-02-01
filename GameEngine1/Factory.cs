@@ -69,7 +69,7 @@ namespace GameEngine1
                 Length = collision.RectangleWidth,
                 Height = 1000,
                 Position = position,
-                Texture = Textures.GroundTexture, //Moet nog grond texture worden
+                Texture = Textures.GroundTexture,
                 _collision = collision
             };
             return ground;
