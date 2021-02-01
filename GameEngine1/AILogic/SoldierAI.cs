@@ -18,11 +18,12 @@ namespace GameEngine1.AILogic
         public ITransform Soldier { get; set; }
         public IHealth SoldierHealth { get; set; }
         public Entity Location { get; set; } //Locatie om naar toe te gaan
-        public bool Fleeing { get; set; }
+        public bool Fleeing { get; set; } = true;
         public bool Hit { get; set; } = false;
 
         public void RandomTarget()
         {
+            Target = null;
             foreach (var human in (Game1.currentLevel).humans)
             {
                 if (human.Team != Team) //Zal exception gooien als gemikt wordt op target dat niet human is
@@ -39,6 +40,9 @@ namespace GameEngine1.AILogic
         public void ClosestTarget()
         {
             ITransform target = null;
+            IHealth targetHealth = null;
+            Target = null;
+            TargetHealth = null;
             foreach (var human in (Game1.currentLevel).humans)
             {
                 if (human.Team != Team) //Zal exception gooien als gemikt wordt op target dat niet human is
@@ -46,10 +50,12 @@ namespace GameEngine1.AILogic
                     if (target == null || Vector2.Distance(human.Position, Soldier.Position) < Vector2.Distance(target.Position, Soldier.Position)) //Target is dichtste enemy
                     {
                         target = human;
+                        targetHealth = human;
                     }
                 }
-                Target = target;
             }
+            Target = target;
+            TargetHealth = targetHealth;
             if (target == null)
             {
                 Game1.gameOver = true;

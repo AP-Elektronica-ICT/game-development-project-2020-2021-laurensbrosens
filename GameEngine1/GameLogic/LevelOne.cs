@@ -53,14 +53,17 @@ namespace GameEngine1.GameLogic
             humans.Add(hero);
             Soldier soldier;
             Soldier soldier2;
+            int randomSpacing = 10;
             for (int i = 0; i < 25; i++)
             {
-                soldier = (Soldier)Factory.CreateSoldier(new Vector2(i*14 - 300, 1800), obstacles, 1);
+                randomSpacing = RandomNumberClass.GenerateRandomNumber(-10,40);
+                soldier = (Soldier)Factory.CreateSoldier(new Vector2(i*randomSpacing - 300, 1800), obstacles, 1);
                 humans.Add(soldier);
             }
             for (int i = 0; i < 20; i++)
             {
-                soldier2 = (Soldier)Factory.CreateSoldier(new Vector2(6000 + i * 14, 1800), obstacles, 2);
+                randomSpacing = RandomNumberClass.GenerateRandomNumber(-10, 40);
+                soldier2 = (Soldier)Factory.CreateSoldier(new Vector2(6000 + i * randomSpacing, 1800), obstacles, 2);
                 humans.Add(soldier2);
             }
         }

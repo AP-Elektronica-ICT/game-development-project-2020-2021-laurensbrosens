@@ -254,6 +254,7 @@ namespace GameEngine1
             input.soldierAI = AI;
             soldier._collision.Parent = soldier;
             soldier.Weapon = CreateWeapon(soldier, aiMouse);
+            soldier.soldierAI.RandomPlatform();
             return soldier;
         }
         static public Animation CreateAnimation(int x, int y, int width, int height, int frameAmount, string name, float fps) //Creëert een animatie op dezelfde rij
