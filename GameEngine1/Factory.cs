@@ -46,7 +46,7 @@ namespace GameEngine1
                 throw;
             }
         }
-        public static IEntity CreateBuilding(Vector2 position, Texture2D texture, int height = 2)
+        public static Entity CreateBuilding(Vector2 position, Texture2D texture, int height = 2)
         {
             Building skyScraper = new Building
             {
@@ -56,7 +56,7 @@ namespace GameEngine1
             };
             return skyScraper;
         }
-        public static IEntity CreateGround(Vector2 position)
+        public static Entity CreateGround(Vector2 position)
         {
             RigidBodyCollision collision = new RigidBodyCollision
             {
@@ -74,7 +74,7 @@ namespace GameEngine1
             };
             return ground;
         }
-        public static IEntity CreatePlatform(Vector2 position) //Onzichtbaar want geen texture
+        public static Entity CreatePlatform(Vector2 position) //Onzichtbaar want geen texture
         {
             OneWayCollision collision = new OneWayCollision
             {
@@ -174,7 +174,7 @@ namespace GameEngine1
             animations.Add(CreateAnimation(Width, Height*2, Width, Height, 1, "idleRight", 1f));
             return animations;
         }
-        public static IEntity CreateHero(Vector2 spawnPosition, List<IEntity> obstacles)
+        public static IEntity CreateHero(Vector2 spawnPosition, List<Entity> obstacles)
         {
             PhysicsHandler physics = new PhysicsHandler();
             HeroAnimationHandler animationHandler = new HeroAnimationHandler(Textures.heroTexture);
@@ -207,7 +207,7 @@ namespace GameEngine1
             hero.Weapon = CreateWeapon(hero, animationHandler.Mouse);
             return hero;
         }
-        public static IEntity CreateSoldier(Vector2 spawnPosition, List<IEntity> obstacles, int teamNumber)
+        public static IEntity CreateSoldier(Vector2 spawnPosition, List<Entity> obstacles, int teamNumber)
         {
             PhysicsHandler physics = new PhysicsHandler();
             SoldierAI AI = new SoldierAI();
@@ -248,6 +248,7 @@ namespace GameEngine1
                 Health = 15
             };
             AI.Soldier = soldier;
+            AI.SoldierHealth = soldier;
             soldier.soldierAI = AI;
             aiMouse.soldierAI = AI;
             input.soldierAI = AI;

@@ -17,12 +17,12 @@ namespace GameEngine1.GameLogic
         {
             bullets = new List<Bullet>();
             humans = new List<Human>();
-            obstacles = new List<IEntity>();
+            obstacles = new List<Entity>();
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            foreach (IEntity entity in obstacles)
+            foreach (Entity entity in obstacles)
             {
                 entity.Draw(spriteBatch);
             }
@@ -40,7 +40,7 @@ namespace GameEngine1.GameLogic
             obstacles.RemoveAll(x => x.Alive == false);
             humans.RemoveAll(x => x.Alive == false);
             bullets.RemoveAll(x => x.Alive == false);
-            foreach (IEntity entity in obstacles)
+            foreach (Entity entity in obstacles)
             {
                 entity.Update(gameTime);
             }
@@ -69,7 +69,7 @@ namespace GameEngine1.GameLogic
         }
         public List<Bullet> bullets { get; set; }
         public List<Human> humans { get; set; }
-        public List<IEntity> obstacles { get; set; }
+        public List<Entity> obstacles { get; set; }
         public Hero hero { get; set; }
     }
 }

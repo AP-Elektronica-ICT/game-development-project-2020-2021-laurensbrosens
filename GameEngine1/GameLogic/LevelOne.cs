@@ -24,7 +24,7 @@ namespace GameEngine1.GameLogic
             buildingTextures.Add(Textures.PinkBuilding);
             buildingTextures.Add(Textures.RoundBuilding);
             buildingTextures.Add(Textures.BlueBuilding);
-            IEntity building;
+            Entity building;
             int height = 2;
             int randomTexture = 0; //Random index in buildingTextures
             int buildingSpacing = 0; //Minimum space between buildings
@@ -41,7 +41,7 @@ namespace GameEngine1.GameLogic
                 buildingSpacing = RandomNumberClass.GenerateRandomWeightedNumber(textureWidth, maxBuildingSpacing, i, buildingAmount / 2);
                 building = Factory.CreateBuilding(position, buildingTextures[randomTexture], height);
                 obstacles.Add(building);
-                IEntity platform;
+                Entity platform;
                 for (int j = 0; j < height+1; j++)
                 {
                     platform = Factory.CreatePlatform(new Vector2(position.X, position.Y - j * 100));

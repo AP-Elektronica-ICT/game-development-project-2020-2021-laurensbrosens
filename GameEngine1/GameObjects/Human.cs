@@ -15,6 +15,8 @@ namespace GameEngine1.GameObjects
         public int Team { get; set; }
         public Weapon Weapon {get; set;}
         public int Health { get; set; }
+        public bool Hit { get; set; } = false;
+
         public override void Update(GameTime gameTime)
         {
             if (Health <= 0)

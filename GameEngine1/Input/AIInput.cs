@@ -24,69 +24,73 @@ namespace GameEngine1.Input
         {
             int directionX = 0;
             int directionY = 0;
-            /* Andere volg methode die beter kan klimmen, maar minder tof ;)
-            if (Parent.Position.X < Parent.Target.Position.X - 40)
+            Vector2 soldier = soldierAI.Soldier.Position;
+            if (soldierAI.SoldierHealth.Hit)
             {
-                directionX++;
+                soldierAI.SoldierHealth.Hit = false;
+                if (RandomNumberClass.GenerateRandomNumber(1,100)<=10) //10% kans dat soldier vlucht als hij geraakt wordt
+                {
+                    soldierAI.Fleeing = true;
+                    soldierAI.RandomPlatform();
+                }
             }
-            if (Parent.Position.X > Parent.Target.Position.X + 40)
+            
+
+            if (soldierAI.Fleeing)
             {
-                directionX--;
+                Vector2 location = soldierAI.Location.Position;
+                if (soldier.X > location.X && soldier.X <= location.X + 99 && soldier.Y <= location.Y + 10) //Als je op destinatie staat
+                {
+                    soldierAI.ClosestTarget();
+                    soldierAI.Location = null;
+                    soldierAI.Fleeing = false;
+                }
+                if (location != null)
+                {
+                    if (soldier.X < location.X + 45)
+                    {
+                        directionX++;
+                    }
+                    if (soldier.X > location.X + 55)
+                    {
+                        directionX--;
+                    }
+                    if (soldier.Y < location.Y)
+                    {
+                        directionY--;
+                    }
+                    if (soldier.Y > location.Y && soldier.X > location.X - 200 || soldier.X < location.X + 200)
+                    {
+                        directionY++;
+                    }
+                }
             }
-            if (Parent.Position.Y < Parent.Target.Position.Y - 110)
+            else
             {
-                directionY--;
-            }
-            if (Parent.Position.Y > Parent.Target.Position.Y + 330)
-            {
-                if (Parent.Position.X < Parent.Target.Position.X)
+                if (soldierAI.Target != null)
                 {
-                    directionX++;
+                    Vector2 target = soldierAI.Target.Position;
+                    if (soldier.X < target.X - 30)
+                    {
+                        directionX++;
+                    }
+                    if (soldier.X > target.X + 30)
+                    {
+                        directionX--;
+                    }
+                    if (soldier.Y < target.Y - 110)
+                    {
+                        directionY--;
+                    }
+                    if (soldier.Y > target.Y + 130)
+                    {
+                        directionY++;
+                    }
                 }
-                if (Parent.Position.X > Parent.Target.Position.X)
-                {
-                    directionX--;
-                }
-                directionY++;
-            }
-            else if (Parent.Position.Y > Parent.Target.Position.Y + 230)
-            {
-                if (Parent.Position.X < Parent.Target.Position.X + 4)
-                {
-                    directionX++;
-                }
-                if (Parent.Position.X > Parent.Target.Position.X - 4)
-                {
-                    directionX--;
-                }
-                directionY++;
-            }
-            else if (Parent.Position.Y > Parent.Target.Position.Y + 130)
-            {
-                directionY++;
-            }*/
-            if (soldierAI.Target != null)
-            {
-                if (soldierAI.Soldier.Position.X < soldierAI.Target.Position.X - 30)
-                {
-                    directionX++;
-                }
-                if (soldierAI.Soldier.Position.X > soldierAI.Target.Position.X + 30)
-                {
-                    directionX--;
-                }
-                if (soldierAI.Soldier.Position.Y < soldierAI.Target.Position.Y - 110)
-                {
-                    directionY--;
-                }
-                if (soldierAI.Soldier.Position.Y > soldierAI.Target.Position.Y + 130)
+                if (cooldown.CooldownTimer(gameTime, JumpChance) && soldierAI.TargetHealth.Health > 0)
                 {
                     directionY++;
                 }
-            }
-            if (cooldown.CooldownTimer(gameTime, JumpChance) && soldierAI.TargetAlive.Health > 0)
-            {
-                directionY++;
             }
             return new Vector2(directionX, directionY);
         }

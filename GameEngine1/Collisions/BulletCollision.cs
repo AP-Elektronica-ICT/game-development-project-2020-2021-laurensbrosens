@@ -22,6 +22,7 @@ namespace GameEngine1.Collisions
                     if (collidableObject.Parent is Human)
                     {
                         ((Human)collidableObject.Parent).Health -= ((Bullet)Parent).Damage; //Als het mens is verminder HP met 1
+                        ((Human)collidableObject.Parent).Hit = true;
                     }
                     Parent.Alive = false; //Bullet destroys itself when hit
                 }
