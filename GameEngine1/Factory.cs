@@ -146,7 +146,7 @@ namespace GameEngine1
             bullet.Texture = Textures.bulletTexture;
             BulletPhysicsHandler physicsHandler = new BulletPhysicsHandler();
             physicsHandler.inputAcceleration = 700; //Default 800
-            Vector2 accuracyReduction = new Vector2(RandomNumberClass.GenerateRandomFloat(-0.15f,0.15f), RandomNumberClass.GenerateRandomFloat(-0.10f, 0.08f));
+            Vector2 accuracyReduction = new Vector2(RandomNumberClass.GenerateRandomFloat(-0.12f,0.12f), RandomNumberClass.GenerateRandomFloat(-0.07f, 0.03f));
             direction = Vector2.Normalize(direction);
             direction += accuracyReduction;
             physicsHandler.Direction = Vector2.Normalize(direction);

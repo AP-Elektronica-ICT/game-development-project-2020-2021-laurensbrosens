@@ -49,13 +49,13 @@ namespace GameEngine1.GameLogic
                 }
                 position.X += buildingSpacing;
             }
-            hero = (Hero)Factory.CreateHero(new Vector2(150, 1800), obstacles);
+            hero = (Hero)Factory.CreateHero(new Vector2(-320, 1800), obstacles);
             humans.Add(hero);
             Soldier soldier;
             Soldier soldier2;
             for (int i = 0; i < 25; i++)
             {
-                soldier = (Soldier)Factory.CreateSoldier(new Vector2(i*14, 1800), obstacles, 1);
+                soldier = (Soldier)Factory.CreateSoldier(new Vector2(i*14 - 300, 1800), obstacles, 1);
                 humans.Add(soldier);
             }
             for (int i = 0; i < 20; i++)
