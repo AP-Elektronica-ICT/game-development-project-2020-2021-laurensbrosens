@@ -16,7 +16,7 @@ namespace GameEngine1.GameObjects
         public int Team { get; set; }
         public IWeapon Weapon {get; set;}
         public HealthBar healthBar { get; set; }
-        public int Health { get; set; }
+        public float Health { get; set; }
         public int MaxHealth { get; set; }
         public bool Hit { get; set; } = false;
 

@@ -24,7 +24,7 @@ namespace GameEngine1.Weapons
         public Weapon()
         {
             cooldown = new Cooldown();
-            shootingSpeed = 0.2f;
+            shootingSpeed = 0.03f;
         }
         public void Shoot(GameTime gameTime)
         {

@@ -13,7 +13,7 @@ namespace GameEngine1.GameObjects
     {
         public Level currentLevel;
         internal Cooldown cooldown;
-        public int Damage { get; set; } = 1;
+        public float Damage { get; set; } = 0.05f;
         public Bullet()
         {
             cooldown = new Cooldown();
