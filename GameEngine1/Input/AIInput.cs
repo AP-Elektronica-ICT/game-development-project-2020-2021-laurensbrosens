@@ -22,13 +22,13 @@ namespace GameEngine1.Input
         }
         public Vector2 Inputs(GameTime gameTime)
         {
-            int directionX = 0;
-            int directionY = 0;
+            float directionX = 0;
+            float directionY = 0;
             Vector2 soldier = soldierAI.Soldier.Position;
             if (soldierAI.SoldierHealth.Hit)
             {
                 soldierAI.SoldierHealth.Hit = false;
-                if (RandomNumberClass.GenerateRandomNumber(1,100)<=10) //10% kans dat soldier vlucht als hij geraakt wordt
+                if (RandomNumberClass.GenerateRandomNumber(1,100)<=5) //5% kans dat soldier vlucht als hij geraakt wordt
                 {
                     soldierAI.Fleeing = true;
                     soldierAI.RandomPlatform();
@@ -63,6 +63,7 @@ namespace GameEngine1.Input
                         directionY++;
                     }
                 }
+                directionX *= 1.8f;
             }
             else
             {
@@ -89,6 +90,7 @@ namespace GameEngine1.Input
                     {
                         directionY++;
                     }
+                    directionX *= 1.2f;
                 }
             }
             return new Vector2(directionX, directionY);
