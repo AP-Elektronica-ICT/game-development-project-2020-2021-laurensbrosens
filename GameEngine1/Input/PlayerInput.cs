@@ -9,7 +9,7 @@ namespace GameEngine1.Input
 {
     class PlayerInput : IInput
     {
-        private IKeyboard keyboard;
+        public IKeyboard keyboard;
         public PlayerInput(IKeyboard keyboardInput)
         {
             keyboard = keyboardInput;
