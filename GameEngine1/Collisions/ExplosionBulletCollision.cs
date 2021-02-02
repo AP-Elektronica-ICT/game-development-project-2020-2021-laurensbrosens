@@ -33,7 +33,7 @@ namespace GameEngine1.Collisions
                 float distance = Vector2.Distance(collidableObject.Parent.Position, Parent.Position);
                 if (distance < 50)
                 {
-                    float damage = (float)((Bullet)Parent).Damage - 0.18f * distance;
+                    float damage = ((Bullet)Parent).Damage - 0.18f * distance;
                     if (collidableObject.Parent is Human)
                         ((Human)collidableObject.Parent).Health -= (int)Math.Round(damage); //Als het mens is verminder HP met 1
                     ((Human)collidableObject.Parent).Hit = true;

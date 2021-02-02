@@ -85,10 +85,10 @@ namespace GameEngine1.Input
                     {
                         directionY++;
                     }
-                }
-                if (cooldown.CooldownTimer(gameTime, JumpChance) && soldierAI.TargetHealth.Health > 0)
-                {
-                    directionY++;
+                    if (cooldown.CooldownTimer(gameTime, JumpChance) && soldierAI.TargetHealth.Health > 0)
+                    {
+                        directionY++;
+                    }
                 }
             }
             return new Vector2(directionX, directionY);

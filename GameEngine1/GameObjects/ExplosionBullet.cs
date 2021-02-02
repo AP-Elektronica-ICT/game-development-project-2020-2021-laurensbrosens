@@ -22,6 +22,5 @@ namespace GameEngine1.GameObjects
                 Alive = false;
             }
         }
-
     }
 }
