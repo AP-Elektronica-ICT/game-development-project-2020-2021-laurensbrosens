@@ -1,4 +1,5 @@
 ﻿using GameEngine1.Art;
+using GameEngine1.Factories;
 using GameEngine1.GameLogic;
 using GameEngine1.GameObjects;
 using GameEngine1.Input;
@@ -15,17 +16,18 @@ namespace GameEngine1
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
-        public static int ScreenHeight = 1000;
-        public static int ScreenWidth = 1900;
-        public static Level currentLevel;
-        private RandomNumberClass randomNumberGenerator;
-        private Camera camera;
-        public static IKeyboard keyBoard; //Static zodat niet miljoen keer moet doorgegeven worden
-        public static MouseInput mouse; //Static zodat niet miljoen keer moet doorgegeven worden
-        private bool paused = false;
-        private bool intro = true;
+        GraphicsDeviceManager _graphics;
+        SpriteBatch _spriteBatch;
+        LevelFactory levelFactory;
+        int ScreenHeight = 1000;
+        int ScreenWidth = 1900;
+        public static Level currentLevel; //Static voor nu zodat makkelijk overal bereikbaar
+        RandomNumberClass randomNumberGenerator; //Moet 1 keer geinitialiseerd worden
+        Camera camera;
+        public static IKeyboard keyBoard;
+        public static MouseInput mouse;
+        bool paused = false;
+        bool intro = true;
         public static bool gameOver = false;
 
         public Game1()
@@ -37,7 +39,6 @@ namespace GameEngine1
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             _graphics.PreferredBackBufferHeight = ScreenHeight;
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.ApplyChanges();
@@ -48,13 +49,13 @@ namespace GameEngine1
         {
             randomNumberGenerator = new RandomNumberClass();
             Textures.Load(Content);
-            camera = new Camera();
+            camera = new Camera(ScreenWidth, ScreenHeight);
             keyBoard = (IKeyboard)Activator.CreateInstance(Type.GetType($"GameEngine1.Input.KeyboardInput"), new object[] { });
             mouse = new MouseInput();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            currentLevel = Factory.CreateLevel("LevelOne");
+            levelFactory = new LevelFactory();
+            currentLevel = levelFactory.CreateLevel("LevelOne");
             currentLevel.Load();
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)

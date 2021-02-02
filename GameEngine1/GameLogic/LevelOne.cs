@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using GameEngine1.Art;
+using GameEngine1.Factories;
 using GameEngine1.GameObjects;
+using GameEngine1.Input;
 using GameEngine1.Interfaces;
 using GameEngine1.Utilities;
 using Microsoft.Xna.Framework;
@@ -15,19 +17,21 @@ namespace GameEngine1.GameLogic
 {
     public class LevelOne : Level
     {
+        EntityFactory entityFactory;
         public override void Load()
         {
             base.Load();
-            obstacles.Add(Factory.CreateGround(new Vector2(-1000, 2000)));
+            entityFactory = new EntityFactory();
+            obstacles.Add(entityFactory.CreateEntity("Ground", new Vector2(-1000, 2000), Textures.GroundTexture));
             List<Texture2D> buildingTextures = new List<Texture2D>();
             buildingTextures.Add(Textures.GreenBuilding);
             buildingTextures.Add(Textures.PinkBuilding);
             buildingTextures.Add(Textures.RoundBuilding);
             buildingTextures.Add(Textures.BlueBuilding);
             Entity building;
-            int height = 2;
-            int randomTexture = 0; //Random index in buildingTextures
-            int buildingSpacing = 0; //Minimum space between buildings
+            int height;
+            int randomTexture; //Random index in buildingTextures
+            int buildingSpacing; //Minimum space between buildings
             int maxBuildingSpacing = 400; //Minimum space between buildings
             int buildingAmount = 40;
             int minBuildingSize = 2;
@@ -39,12 +43,12 @@ namespace GameEngine1.GameLogic
                 height = RandomNumberClass.GenerateRandomWeightedNumber2(minBuildingSize, maxBuildingSize, i, buildingAmount / 2);
                 randomTexture = RandomNumberClass.GenerateRandomNumber(0, buildingTextures.Count - 1);
                 buildingSpacing = RandomNumberClass.GenerateRandomWeightedNumber(textureWidth, maxBuildingSpacing, i, buildingAmount / 2);
-                building = Factory.CreateBuilding(position, buildingTextures[randomTexture], height);
+                building = entityFactory.CreateEntity("Building", position, buildingTextures[randomTexture], height);
                 obstacles.Add(building);
                 Entity platform;
                 for (int j = 0; j < height+1; j++)
                 {
-                    platform = Factory.CreatePlatform(new Vector2(position.X, position.Y - j * 100));
+                    platform = entityFactory.CreateEntity("Platform", new Vector2(position.X, position.Y - j * 100));
                     obstacles.Add(platform);
                 }
                 position.X += buildingSpacing;
@@ -53,7 +57,7 @@ namespace GameEngine1.GameLogic
             humans.Add(hero);
             Soldier soldier;
             Soldier soldier2;
-            int randomSpacing = 10;
+            int randomSpacing;
             for (int i = 0; i < 25; i++)
             {
                 randomSpacing = RandomNumberClass.GenerateRandomNumber(-10,40);

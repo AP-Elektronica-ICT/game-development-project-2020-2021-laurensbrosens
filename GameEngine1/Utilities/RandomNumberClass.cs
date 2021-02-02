@@ -40,7 +40,6 @@ namespace GameEngine1.Utilities
             {
                 number = GenerateRandomNumber(min, max / 2 + min);
             }
-
             return (int)number;
         }
         static public int GenerateRandomWeightedNumber2(int min, int max, int location, int center) //Gives a random number that is more likely to be around a certain value
@@ -68,7 +67,6 @@ namespace GameEngine1.Utilities
             {
                 number = GenerateRandomNumber(min, max / 2 + min);
             }
-
             return (int)number;
         }
     }

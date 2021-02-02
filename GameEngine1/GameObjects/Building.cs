@@ -10,8 +10,14 @@ namespace GameEngine1.GameObjects
     public class Building : Entity
     {
         public int Height;
-        private Rectangle sizeMain = new Rectangle(0, 0, 100, 100);
-        private Rectangle sizeTop = new Rectangle(0, 101, 100, 100);
+        Rectangle sizeMain = new Rectangle(0, 0, 100, 100);
+        Rectangle sizeTop = new Rectangle(0, 101, 100, 100);
+        public Building(Vector2 position, Texture2D texture, int height = 2)
+        {
+            Texture = texture;
+            Height = height;
+            Position = position;
+        }
         public override void Draw(SpriteBatch spriteBatch)
         {
             float y;

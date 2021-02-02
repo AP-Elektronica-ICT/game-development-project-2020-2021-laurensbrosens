@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GameEngine1.GameObjects
 {
-    public class MovableEntity : Entity, IPhysics, IAnimated
+    public abstract class MovableEntity : Entity, IPhysics, IAnimated
     {
         public IPhysicsHandler _PhysicsHandler { get; set; }
         public IAnimationHandler _AnimationHandler { get; set; }

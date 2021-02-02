@@ -8,9 +8,13 @@ namespace GameEngine1.View
     {
         public Matrix Transform { get; set; }
         public float Zoom { get; set; }
-        public Camera()
+        public int ScreenWidth { get; set; }
+        public int ScreenHeight { get; set; }
+        public Camera(int screenWidth, int screenHeight)
         {
             Zoom = 1f;
+            ScreenWidth = screenWidth;
+            ScreenHeight = screenHeight;
         }
         public void Update(ITransform transform, MouseInput mouse)
         {
@@ -31,19 +35,7 @@ namespace GameEngine1.View
                 Zoom = 4f;
             }
             Transform = Matrix.CreateTranslation(-transform.Position.X, -transform.Position.Y, 0) * Matrix.CreateScale(Zoom);
-            Transform *= Matrix.CreateTranslation(Game1.ScreenWidth / 2, Game1.ScreenHeight / 2, 0);
-        }/*
-        public void Zooming(float zoomAmount)
-        {
-            Zoom += zoomAmount;
-            if (Zoom < .3f)
-            {
-                Zoom = .3f;
-            }
-            if (Zoom > 1.5f)
-            {
-                Zoom = 1.5f;
-            }
-        }*/
+            Transform *= Matrix.CreateTranslation(ScreenWidth / 2, ScreenHeight / 2, 0);
+        }
     }
 }

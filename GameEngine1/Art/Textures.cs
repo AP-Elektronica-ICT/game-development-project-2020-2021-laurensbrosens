@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine1.Art
 {
-    class Textures
+    static class Textures
     {
         public static Texture2D heroTexture { get; private set; }
         public static Texture2D BlueBuilding { get; private set; }

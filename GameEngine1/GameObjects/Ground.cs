@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine1.Art;
+using GameEngine1.Collisions;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -14,10 +16,21 @@ namespace GameEngine1.GameObjects
         {
             spriteBatch.Draw(Texture, Position, new Rectangle(0, 0, Length, Height), Color.White, Rotation, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
         }
-        public Ground(int length = 2000, int height = 100)
+        public Ground(Vector2 position, Texture2D texture, int width = 2000)
         {
-            Length = length;
-            Height = height;
+            Length = 2000;
+            Height = 100;
+            RigidBodyCollision collision = new RigidBodyCollision
+            {
+                RectangleHeight = 100,
+                RectangleWidth = 10000
+            };
+            collision.UpdateRectangle(position);
+            _collision = collision;
+            Length = collision.RectangleWidth;
+            Height = 1000;
+            Position = position;
+            Texture = texture;
         }
     }
 }
