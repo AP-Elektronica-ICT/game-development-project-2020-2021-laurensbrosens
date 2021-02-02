@@ -20,10 +20,12 @@ namespace GameEngine1.Art
         public static Texture2D PinkBuilding { get; private set; }
         public static Texture2D RoundBuilding { get; private set; }
         public static Texture2D bulletTexture { get; private set; }
-        public static Texture2D gunTexture { get; private set; }
+        public static Texture2D gunTexture { get; private set; } //Bron: https://community.playstarbound.com/threads/weapon-sprite-megathread.15841/
         public static Texture2D EnemyTexture { get; private set; }
         public static Texture2D GroundTexture { get; private set; }
         public static Texture2D IntroTexture { get; private set; }
+        public static Texture2D HealthBar { get; private set; }
+        public static Texture2D Explosion { get; private set; }
         public static SpriteFont font1 { get; private set; }
         public static SpriteFont font2 { get; private set; }
         public static SpriteFont font3 { get; private set; }
@@ -39,6 +41,8 @@ namespace GameEngine1.Art
             EnemyTexture = Content.Load<Texture2D>("Enemies");
             GroundTexture = Content.Load<Texture2D>("GroundTexture");
             IntroTexture = Content.Load<Texture2D>("IntroBackground");
+            HealthBar = Content.Load<Texture2D>("HealthBarTexture");
+            Explosion = Content.Load<Texture2D>("ExplosionAnimation");
             font1 = Content.Load<SpriteFont>("Arial");
             font2 = Content.Load<SpriteFont>("Arial2");
             font3 = Content.Load<SpriteFont>("Arial3");

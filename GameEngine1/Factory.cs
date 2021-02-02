@@ -12,6 +12,7 @@ using GameEngine1.Input;
 using GameEngine1.Interfaces;
 using GameEngine1.Physics;
 using GameEngine1.Utilities;
+using GameEngine1.View;
 using GameEngine1.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -89,6 +90,21 @@ namespace GameEngine1
             };
             return platform;
         }
+        /*
+        public static List<Animation> ExplosionAnimation()
+        {
+            int Width = 64;
+            int Height = 64;
+            List<Animation> animations = new List<Animation>();
+            animations.Add(CreateAnimation(0, 0, Width, Height, 4, "idleLeft", 5f));
+            animations.Add(CreateAnimation(Width * 4, 0, Width, Height, 4, "idleRight", 5f));
+            animations.Add(CreateAnimation(0, Height, Width, Height, 4, "RunLeft", 5f));
+            animations.Add(CreateAnimation(Width * 4, Height, Width, Height, 4, "RunRight", 5f));
+            animations.Add(CreateAnimation(0, Height * 2, Width, Height, 1, "jumpLeft", 5f));
+            animations.Add(CreateAnimation(Width * 4, Height * 2, Width, Height, 1, "jumpRight", 5f));
+            return animations;
+        }*/
+
         public static List<Animation> CreateHeroAnimations()
         {
             int Width = 16;
@@ -130,6 +146,13 @@ namespace GameEngine1
             weapon.Scale = 0.9f;
             weapon.Team = ((Human)anObject).Team;
             return weapon;
+        }
+        public static HealthBar CreateHealthBar(Human human)
+        {
+            HealthBar healthBar = new HealthBar();
+            healthBar.ParentTransform = human;
+            healthBar.Health = human;
+            return healthBar;
         }
         public static void CreateBullet(ITransform transform, int team, Vector2 direction)
         {
@@ -201,10 +224,12 @@ namespace GameEngine1
                 _AnimationHandler = animationHandler,
                 _collision = collision,
                 Input = input,
-                Health = 20
+                Health = 20,
+                MaxHealth = 20
             };
             hero._collision.Parent = hero;
             hero.Weapon = CreateWeapon(hero, animationHandler.Mouse);
+            hero.healthBar = CreateHealthBar(hero);
             return hero;
         }
         public static IEntity CreateSoldier(Vector2 spawnPosition, List<Entity> obstacles, int teamNumber)
@@ -245,7 +270,8 @@ namespace GameEngine1
                 _AnimationHandler = animationHandler,
                 _collision = collision,
                 Input = input,
-                Health = 15
+                Health = 10,
+                MaxHealth = 10
             };
             AI.Soldier = soldier;
             AI.SoldierHealth = soldier;
@@ -255,6 +281,7 @@ namespace GameEngine1
             soldier._collision.Parent = soldier;
             soldier.Weapon = CreateWeapon(soldier, aiMouse);
             soldier.soldierAI.RandomPlatform();
+            soldier.healthBar = CreateHealthBar(soldier);
             return soldier;
         }
         static public Animation CreateAnimation(int x, int y, int width, int height, int frameAmount, string name, float fps) //Creëert een animatie op dezelfde rij

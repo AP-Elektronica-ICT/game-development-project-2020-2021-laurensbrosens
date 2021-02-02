@@ -34,7 +34,6 @@ namespace GameEngine1.Input
                     soldierAI.RandomPlatform();
                 }
             }
-            
 
             if (soldierAI.Fleeing)
             {
