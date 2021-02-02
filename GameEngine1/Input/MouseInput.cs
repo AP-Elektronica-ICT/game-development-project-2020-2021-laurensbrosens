@@ -44,5 +44,14 @@ namespace GameEngine1.Input
             }
             return false;
         }
+
+        public bool LeftKeyDown()
+        {
+            if (mouseState.LeftButton == ButtonState.Pressed)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

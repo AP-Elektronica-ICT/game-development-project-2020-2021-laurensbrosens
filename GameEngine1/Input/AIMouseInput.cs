@@ -45,5 +45,17 @@ namespace GameEngine1.Input
         {
             throw new NotImplementedException();
         }
+
+        public bool LeftKeyDown()
+        {
+            if (soldierAI.Target != null && soldierAI.TargetHealth.Health > 0)
+            {
+                if (Vector2.Distance(soldierAI.Soldier.Position, soldierAI.Target.Position) < 400)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

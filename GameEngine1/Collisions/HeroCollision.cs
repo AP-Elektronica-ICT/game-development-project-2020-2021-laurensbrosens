@@ -17,7 +17,7 @@ namespace GameEngine1.Collisions
         public int RectangleOffsetY { get; set; }
         public int RectangleWidth { get; set; } = 8;
         public int RectangleHeight { get; set; } = 24;
-        protected List<ICollision> collidableObstacles;
+        public List<ICollision> collidableObstacles;
         public Entity Parent { get; set; }
         public virtual void HanldeCollisions(IPhysicsHandler physics, ITransform transform)
         {

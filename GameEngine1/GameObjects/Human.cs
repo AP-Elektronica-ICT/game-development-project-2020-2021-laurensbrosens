@@ -14,7 +14,7 @@ namespace GameEngine1.GameObjects
     {
         public IInput Input { protected get; set; }
         public int Team { get; set; }
-        public Weapon Weapon {get; set;}
+        public IWeapon Weapon {get; set;}
         public HealthBar healthBar { get; set; }
         public int Health { get; set; }
         public int MaxHealth { get; set; }

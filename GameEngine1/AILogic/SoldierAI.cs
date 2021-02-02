@@ -77,7 +77,7 @@ namespace GameEngine1.AILogic
         }
         public void RandomPlatform()
         {
-            int randomIndex = RandomNumberClass.GenerateRandomNumber(1, (Game1.currentLevel).obstacles.Count);
+            int randomIndex = RandomNumberClass.GenerateRandomNumber(1, (Game1.currentLevel).obstacles.Count-1);
             Location = (Game1.currentLevel).obstacles[randomIndex];
         }
     }

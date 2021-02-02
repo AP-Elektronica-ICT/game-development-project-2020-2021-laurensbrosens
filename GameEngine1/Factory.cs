@@ -147,6 +147,22 @@ namespace GameEngine1
             weapon.Team = ((Human)anObject).Team;
             return weapon;
         }
+        public static RocketLauncher CreateRocketLauncher(Entity anObject, IMouseInput mouse)
+        {
+            RocketLauncher weapon = new RocketLauncher();
+            weapon.Mouse = mouse;
+            GunAnimationHandler animationHandler = new GunAnimationHandler();
+            animationHandler.Texture = Textures.gunTexture;
+            animationHandler.Mouse = mouse;
+            animationHandler.animations = CreateGunAnimations();
+            animationHandler.ParentTransform = anObject; //Volg object
+            weapon._AnimationHandler = animationHandler;
+            weapon._collision = anObject._collision;
+            weapon.Position = anObject.Position; //Startpositie
+            weapon.Scale = 1f;
+            weapon.Team = ((Human)anObject).Team;
+            return weapon;
+        }
         public static HealthBar CreateHealthBar(Human human)
         {
             HealthBar healthBar = new HealthBar();
@@ -166,7 +182,7 @@ namespace GameEngine1
                 }
             }
             targets.Add(((Level)bullet.currentLevel).obstacles[0]._collision); //Voeg grond toe, hardcoded voor nu
-            bullet.Texture = Textures.bulletTexture;
+            bullet.Texture = Textures.BulletTexture;
             BulletPhysicsHandler physicsHandler = new BulletPhysicsHandler();
             physicsHandler.inputAcceleration = 700; //Default 800
             Vector2 accuracyReduction = new Vector2(RandomNumberClass.GenerateRandomFloat(-0.12f,0.12f), RandomNumberClass.GenerateRandomFloat(-0.07f, 0.03f));
@@ -184,7 +200,40 @@ namespace GameEngine1
             bullet.Scale = 2.5f;
             bullet.Rotation = MathUtilities.VectorToAngle(direction);
             bullet.Position = new Vector2(transform.Position.X + 9, transform.Position.Y + 13);
-            ((Level)bullet.currentLevel).bullets.Add(bullet);
+            (bullet.currentLevel).bullets.Add(bullet);
+        }
+        public static void CreateExplosionBullet(ITransform transform, int team, Vector2 direction)
+        {
+            Bullet bullet = new Bullet();
+            List<ICollision> targets = new List<ICollision>(); //is nog leeg
+            foreach (var human in ((Level)bullet.currentLevel).humans)
+            {
+                if (human.Team != team)
+                {
+                    targets.Add(human._collision);
+                }
+            }
+            targets.Add(((Level)bullet.currentLevel).obstacles[0]._collision); //Voeg grond toe, hardcoded voor nu
+            bullet.Texture = Textures.ExplosionBulletTexture;
+            BulletPhysicsHandler physicsHandler = new BulletPhysicsHandler();
+            physicsHandler.inputAcceleration = 700; //Default 800
+            Vector2 accuracyReduction = new Vector2(RandomNumberClass.GenerateRandomFloat(-0.12f, 0.12f), RandomNumberClass.GenerateRandomFloat(-0.07f, 0.03f));
+            direction = Vector2.Normalize(direction);
+            direction += accuracyReduction;
+            physicsHandler.Direction = Vector2.Normalize(direction);
+            bullet._PhysicsHandler = physicsHandler;
+            ExplosionBulletCollision collision = new ExplosionBulletCollision(transform.Position, targets);
+            collision.RectangleWidth = 5;
+            collision.RectangleHeight = 3;
+            //collision.RectangleOffsetX = 13;
+            //collision.RectangleOffsetY = 14;
+            bullet._collision = collision;
+            bullet.Damage = 11;
+            bullet._collision.Parent = bullet;
+            bullet.Scale = 2.5f;
+            bullet.Rotation = MathUtilities.VectorToAngle(direction);
+            bullet.Position = new Vector2(transform.Position.X + 9, transform.Position.Y + 13);
+            (bullet.currentLevel).bullets.Add(bullet);
         }
         public static List<Animation> CreateGunAnimations()
         {
@@ -228,7 +277,7 @@ namespace GameEngine1
                 MaxHealth = 20
             };
             hero._collision.Parent = hero;
-            hero.Weapon = CreateWeapon(hero, animationHandler.Mouse);
+            hero.Weapon = CreateRocketLauncher(hero, animationHandler.Mouse);
             hero.healthBar = CreateHealthBar(hero);
             return hero;
         }

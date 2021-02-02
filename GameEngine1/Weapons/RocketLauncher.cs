@@ -13,7 +13,7 @@ using System.Text;
 
 namespace GameEngine1.Weapons
 {
-    public class Weapon : MovableEntity, IWeapon, ITeam
+    public class RocketLauncher : MovableEntity, IWeapon, ITeam
     {
         private bool canShoot = true;
         public IMouseInput Mouse { get; set; }
@@ -21,16 +21,16 @@ namespace GameEngine1.Weapons
 
         private Cooldown cooldown;
         private float shootingSpeed; //Max kliksnelheid voor schieten
-        public Weapon()
+        public RocketLauncher()
         {
             cooldown = new Cooldown();
-            shootingSpeed = 0.2f;
+            shootingSpeed = 1f;
         }
         public void Shoot(GameTime gameTime)
         {
             ((GunAnimationHandler)_AnimationHandler).Shoot = true;
             Vector2 direction = Mouse.Position - new Vector2(_collision.CollisionRectangle.X, _collision.CollisionRectangle.Y);
-            Factory.CreateBullet(((GunAnimationHandler)_AnimationHandler).ParentTransform, Team, direction);
+            Factory.CreateExplosionBullet(((GunAnimationHandler)_AnimationHandler).ParentTransform, Team, direction);
         }
         public override void Update(GameTime gameTime)
         {
@@ -39,7 +39,7 @@ namespace GameEngine1.Weapons
             {
                 canShoot = true;
             }
-            if (Mouse.LeftKeyDown() && canShoot)
+            if (Mouse.LeftKeyClicked() && canShoot)
             {
                 Shoot(gameTime);
                 canShoot = false;

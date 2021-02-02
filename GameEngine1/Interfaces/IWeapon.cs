@@ -12,5 +12,8 @@ namespace GameEngine1.Interfaces
     public interface IWeapon
     {
         public void Shoot(GameTime gameTime);
+        public void Update(GameTime gameTime);
+        public void Draw(SpriteBatch spriteBatch);
+        public IMouseInput Mouse { get; set; }
     }
 }

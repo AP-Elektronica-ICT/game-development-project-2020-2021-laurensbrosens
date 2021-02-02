@@ -8,6 +8,7 @@ namespace GameEngine1.Input
     public interface IMouseInput
     {
         public bool LeftKeyClicked();
+        public bool LeftKeyDown();
         public bool RightKeyClicked();
         public Vector2 Position { get; set; }
     }

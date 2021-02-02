@@ -12,12 +12,12 @@ namespace GameEngine1.GameObjects
     public class Bullet : MovableEntity
     {
         public Level currentLevel;
-        private Cooldown cooldown;
+        internal Cooldown cooldown;
         public int Damage { get; set; } = 1;
         public Bullet()
         {
             cooldown = new Cooldown();
-            currentLevel = (Level)Game1.currentLevel;
+            currentLevel = Game1.currentLevel;
         }
         public override void Update(GameTime gameTime)
         {

@@ -19,7 +19,8 @@ namespace GameEngine1.Art
         public static Texture2D GreenBuilding { get; private set; }
         public static Texture2D PinkBuilding { get; private set; }
         public static Texture2D RoundBuilding { get; private set; }
-        public static Texture2D bulletTexture { get; private set; }
+        public static Texture2D BulletTexture { get; private set; }
+        public static Texture2D ExplosionBulletTexture { get; private set; }
         public static Texture2D gunTexture { get; private set; } //Bron: https://community.playstarbound.com/threads/weapon-sprite-megathread.15841/
         public static Texture2D EnemyTexture { get; private set; }
         public static Texture2D GroundTexture { get; private set; }
@@ -36,7 +37,8 @@ namespace GameEngine1.Art
             GreenBuilding = Content.Load<Texture2D>("GreenBuilding");
             PinkBuilding = Content.Load<Texture2D>("PinkBuilding");
             RoundBuilding = Content.Load<Texture2D>("RoundBuilding");
-            bulletTexture = Content.Load<Texture2D>("Bullet_Blue");
+            BulletTexture = Content.Load<Texture2D>("Bullet_Blue");
+            ExplosionBulletTexture = Content.Load<Texture2D>("Bullet_Red");
             gunTexture = Content.Load<Texture2D>("blueGun");
             EnemyTexture = Content.Load<Texture2D>("Enemies");
             GroundTexture = Content.Load<Texture2D>("GroundTexture");
