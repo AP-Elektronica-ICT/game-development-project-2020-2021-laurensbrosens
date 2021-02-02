@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine1.Collisions
 {
-    public class HeroCollision : ICollision
+    public class HumanCollision : ICollision
     {
         public Rectangle CollisionRectangle { get; set; }
         public Rectangle CollisionRectangleOld { get; set; }
@@ -47,7 +47,7 @@ namespace GameEngine1.Collisions
         {
             CollisionRectangle = new Rectangle((int)Math.Round(position.X + RectangleOffsetX), (int)Math.Round(position.Y + RectangleOffsetY), RectangleWidth, RectangleHeight);
         }
-        public HeroCollision(Vector2 position, List<ICollision> obstacles)
+        public HumanCollision(Vector2 position, List<ICollision> obstacles)
         {
             UpdateRectangle(position);
             collidableObstacles = obstacles;

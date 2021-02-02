@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine1.Collisions
 {
-    public class BulletCollision : HeroCollision
+    public class BulletCollision : HumanCollision
     {
         public BulletCollision(Vector2 position, List<ICollision> obstacles) : base(position, obstacles) { }
         public override void HanldeCollisions(IPhysicsHandler physics, ITransform transform)

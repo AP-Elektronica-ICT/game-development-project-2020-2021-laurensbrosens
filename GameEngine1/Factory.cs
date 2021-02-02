@@ -21,71 +21,6 @@ namespace GameEngine1
 {
     public static class Factory
     {
-        public static List<Animation> CreateHeroAnimations()
-        {
-            int Width = 16;
-            int Height = 24;
-            List<Animation> animations = new List<Animation>();
-            animations.Add(CreateAnimation(0, 0, Width, Height, 4, "idleLeft", 5f));
-            animations.Add(CreateAnimation(Width * 4, 0, Width, Height, 4, "idleRight", 5f));
-            animations.Add(CreateAnimation(0, Height, Width, Height, 4, "RunLeft", 5f));
-            animations.Add(CreateAnimation(Width * 4, Height, Width, Height, 4, "RunRight", 5f));
-            animations.Add(CreateAnimation(0, Height * 2, Width, Height, 1, "jumpLeft", 5f));
-            animations.Add(CreateAnimation(Width * 4, Height * 2, Width, Height, 1, "jumpRight", 5f));
-            return animations;
-        }
-        public static List<Animation> CreateEnemyAnimations()
-        {
-            int Width = 16;
-            int Height = 24;
-            List<Animation> animations = new List<Animation>();
-            animations.Add(CreateAnimation(0, 0, Width, Height, 4, "idleLeft", 5f));
-            animations.Add(CreateAnimation(0, Height, Width, Height, 4, "idleRight", 5f));
-            animations.Add(CreateAnimation(0, Height * 2, Width, Height, 4, "RunLeft", 5f));
-            animations.Add(CreateAnimation(0, Height * 3, Width, Height, 4, "RunRight", 5f));
-            animations.Add(CreateAnimation(0, Height * 4, Width, Height, 1, "jumpLeft", 5f));
-            animations.Add(CreateAnimation(0, Height * 5, Width, Height, 1, "jumpRight", 5f));
-            return animations;
-        }
-        public static Weapon CreateWeapon(Entity anObject, IMouseInput mouse)
-        {
-            Weapon weapon = new Weapon();
-            weapon.Mouse = mouse;
-            GunAnimationHandler animationHandler = new GunAnimationHandler();
-            animationHandler.Texture = Textures.gunTexture;
-            animationHandler.Mouse = mouse;
-            animationHandler.animations = CreateGunAnimations();
-            animationHandler.ParentTransform = anObject; //Volg object
-            weapon._AnimationHandler = animationHandler;
-            weapon._collision = anObject._collision;
-            weapon.Position = anObject.Position; //Startpositie
-            weapon.Scale = 0.9f;
-            weapon.Team = ((Human)anObject).Team;
-            return weapon;
-        }
-        public static RocketLauncher CreateRocketLauncher(Entity anObject, IMouseInput mouse)
-        {
-            RocketLauncher weapon = new RocketLauncher();
-            weapon.Mouse = mouse;
-            GunAnimationHandler animationHandler = new GunAnimationHandler();
-            animationHandler.Texture = Textures.gunTexture;
-            animationHandler.Mouse = mouse;
-            animationHandler.animations = CreateGunAnimations();
-            animationHandler.ParentTransform = anObject; //Volg object
-            weapon._AnimationHandler = animationHandler;
-            weapon._collision = anObject._collision;
-            weapon.Position = anObject.Position; //Startpositie
-            weapon.Scale = 1f;
-            weapon.Team = ((Human)anObject).Team;
-            return weapon;
-        }
-        public static HealthBar CreateHealthBar(Human human)
-        {
-            HealthBar healthBar = new HealthBar();
-            healthBar.ParentTransform = human;
-            healthBar.Health = human;
-            return healthBar;
-        }
         public static void CreateBullet(ITransform transform, int team, Vector2 direction)
         {
             Bullet bullet = new Bullet();
@@ -109,8 +44,6 @@ namespace GameEngine1
             BulletCollision collision = new BulletCollision(transform.Position, targets);
             collision.RectangleWidth = 5;
             collision.RectangleHeight = 3;
-            //collision.RectangleOffsetX = 13;
-            //collision.RectangleOffsetY = 14;
             bullet._collision = collision;
             bullet._collision.Parent = bullet;
             bullet.Scale = 2.5f;
@@ -150,116 +83,6 @@ namespace GameEngine1
             bullet.Rotation = MathUtilities.VectorToAngle(direction);
             bullet.Position = new Vector2(transform.Position.X + 9, transform.Position.Y + 13);
             (bullet.currentLevel).bullets.Add(bullet);
-        }
-        public static List<Animation> CreateGunAnimations()
-        {
-            int Width = 80;
-            int Height = 80;
-            List<Animation> animations = new List<Animation>();
-            animations.Add(CreateAnimation(0, 0, Width, Height, 9, "ShootLeft", 15f));
-            animations.Add(CreateAnimation(0, Height, Width, Height, 9, "ShootRight", 15f));
-            animations.Add(CreateAnimation(0, Height*2, Width, Height, 1, "idleLeft", 1f));
-            animations.Add(CreateAnimation(Width, Height*2, Width, Height, 1, "idleRight", 1f));
-            return animations;
-        }
-        public static IEntity CreateHero(Vector2 spawnPosition, List<Entity> obstacles)
-        {
-            PhysicsHandler physics = new PhysicsHandler();
-            HeroAnimationHandler animationHandler = new HeroAnimationHandler(Textures.heroTexture);
-            animationHandler.animations = CreateHeroAnimations();
-            animationHandler.Mouse = Game1.mouse;
-            List<ICollision> collidableList = new List<ICollision>();
-            foreach (var obstacle in obstacles)
-            {
-                if (obstacle._collision != null)
-                {
-                    collidableList.Add(obstacle._collision);
-                }
-            }
-            HeroCollision collision = new HeroCollision(spawnPosition, collidableList);
-            
-            PlayerInput input = new PlayerInput(Game1.keyBoard);
-            Hero hero = new Hero
-            {
-                Texture = Textures.heroTexture,
-                Team = 1,
-                Scale = 1f,
-                Position = spawnPosition,
-                _PhysicsHandler = physics,
-                _AnimationHandler = animationHandler,
-                _collision = collision,
-                Input = input,
-                Health = 20,
-                MaxHealth = 20
-            };
-            hero._collision.Parent = hero;
-            hero.Weapon = CreateRocketLauncher(hero, animationHandler.Mouse);
-            hero.healthBar = CreateHealthBar(hero);
-            return hero;
-        }
-        public static IEntity CreateSoldier(Vector2 spawnPosition, List<Entity> obstacles, int teamNumber)
-        {
-            PhysicsHandler physics = new PhysicsHandler();
-            SoldierAI AI = new SoldierAI();
-            HeroAnimationHandler animationHandler;
-            AI.Team = teamNumber;
-            if (AI.Team == 1)
-            {
-                animationHandler = new HeroAnimationHandler(Textures.heroTexture);
-                animationHandler.animations = CreateHeroAnimations();
-            }
-            else
-            {
-                animationHandler = new HeroAnimationHandler(Textures.EnemyTexture);
-                animationHandler.animations = CreateEnemyAnimations();
-            }
-            
-            AIMouseInput aiMouse = new AIMouseInput();
-            animationHandler.Mouse = aiMouse;
-            List<ICollision> collidableList = new List<ICollision>();
-            foreach (var obstacle in obstacles)
-            {
-                if (obstacle._collision != null)
-                {
-                    collidableList.Add(obstacle._collision);
-                }
-            }
-            HeroCollision collision = new HeroCollision(spawnPosition, collidableList);
-            AIInput input = new AIInput();
-            Soldier soldier = new Soldier(teamNumber)
-            {
-                Texture = Textures.heroTexture,
-                Scale = 1f,
-                Position = spawnPosition,
-                _PhysicsHandler = physics,
-                _AnimationHandler = animationHandler,
-                _collision = collision,
-                Input = input,
-                Health = 10,
-                MaxHealth = 10
-            };
-            AI.Soldier = soldier;
-            AI.SoldierHealth = soldier;
-            soldier.soldierAI = AI;
-            aiMouse.soldierAI = AI;
-            input.soldierAI = AI;
-            soldier._collision.Parent = soldier;
-            soldier.Weapon = CreateWeapon(soldier, aiMouse);
-            soldier.soldierAI.RandomPlatform();
-            soldier.healthBar = CreateHealthBar(soldier);
-            return soldier;
-        }
-        static public Animation CreateAnimation(int x, int y, int width, int height, int frameAmount, string name, float fps) //Creëert een animatie op dezelfde rij
-        {
-            Animation animation = new Animation();
-            animation.FramesPerSecond = fps;
-            animation.Name = name;
-            for (int i = 0; i < frameAmount; i++)
-            {
-                animation.AddFrame(new Frame(new Rectangle(x, y, width, height)));
-                x += width;
-            }
-            return animation;
         }
     }
 }

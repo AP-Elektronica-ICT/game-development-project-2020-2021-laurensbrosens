@@ -18,7 +18,7 @@ namespace GameEngine1.GameObjects
             _collision.HanldeCollisions(null, this);
             if (cooldown.CooldownTimer(gameTime, 3)) //Verwijder bullet na 2 seconden
             {
-                ((ExplosionBulletCollision)_collision).Explode(((HeroCollision)_collision).collidableObstacles);
+                ((ExplosionBulletCollision)_collision).Explode(((HumanCollision)_collision).collidableObstacles);
                 Alive = false;
             }
         }

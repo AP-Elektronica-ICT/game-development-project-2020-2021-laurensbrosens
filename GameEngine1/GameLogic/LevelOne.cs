@@ -18,10 +18,12 @@ namespace GameEngine1.GameLogic
     public class LevelOne : Level
     {
         EntityFactory entityFactory;
+        MovableEntityFactory movableEntityFactory;
         public override void Load()
         {
             base.Load();
             entityFactory = new EntityFactory();
+            movableEntityFactory = new MovableEntityFactory();
             obstacles.Add(entityFactory.CreateEntity("Ground", new Vector2(-1000, 2000), Textures.GroundTexture));
             List<Texture2D> buildingTextures = new List<Texture2D>();
             buildingTextures.Add(Textures.GreenBuilding);
@@ -53,7 +55,7 @@ namespace GameEngine1.GameLogic
                 }
                 position.X += buildingSpacing;
             }
-            hero = (Hero)Factory.CreateHero(new Vector2(-320, 1800), obstacles);
+            hero = (Hero)movableEntityFactory.CreateMovableEntity("Hero", new Vector2(-320, 1800), Textures.heroTexture, obstacles, 1);
             humans.Add(hero);
             Soldier soldier;
             Soldier soldier2;
@@ -61,13 +63,13 @@ namespace GameEngine1.GameLogic
             for (int i = 0; i < 25; i++)
             {
                 randomSpacing = RandomNumberClass.GenerateRandomNumber(-10,40);
-                soldier = (Soldier)Factory.CreateSoldier(new Vector2(i*randomSpacing - 300, 1800), obstacles, 1);
+                soldier = (Soldier)movableEntityFactory.CreateMovableEntity("Soldier", new Vector2(i * randomSpacing - 300, 1800), Textures.heroTexture, obstacles, 1);
                 humans.Add(soldier);
             }
             for (int i = 0; i < 20; i++)
             {
                 randomSpacing = RandomNumberClass.GenerateRandomNumber(-10, 40);
-                soldier2 = (Soldier)Factory.CreateSoldier(new Vector2(6000 + i * randomSpacing, 1800), obstacles, 2);
+                soldier2 = (Soldier)movableEntityFactory.CreateMovableEntity("Soldier", new Vector2(6000 + i * randomSpacing, 1800), Textures.heroTexture, obstacles, 2);
                 humans.Add(soldier2);
             }
         }
